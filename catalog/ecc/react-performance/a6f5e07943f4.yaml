@@ -1,0 +1,138 @@
+id: ecc/react-performance
+version: a6f5e07943f4
+source:
+  url: https://github.com/affaan-m/ECC
+  path: react-performance/SKILL.md
+  sha256: a6f5e07943f4c7e8e1989f8b24d938a479ee8073ded43d823cc2a5299fe58f82
+license: MIT
+kind: reference
+stacks:
+- react
+- nextjs
+document_kinds:
+- spec
+- plan
+summary: A catalog of React and Next.js performance patterns for reviewing, diagnosing, and
+  refactoring application code.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: eliminating-waterfalls
+  title: Eliminating Waterfalls
+  applies_to: Use when React or Next.js code performs multiple asynchronous operations or
+    streams data-dependent UI.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 35
+    - 127
+  sha256: f1835d4f8e03b6e16ca0896537c6986847f92199e1834cf5436bcb241892fe42
+- id: bundle-size-optimization
+  title: Bundle Size Optimization
+  applies_to: Use when first-load JavaScript, route-level imports, dynamic components, or
+    third-party scripts affect React or Next.js performance.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 129
+    - 184
+  sha256: 52e5ff7d3730add3970c89f9c88bcd2d690772d8e5d82f5fb923bb4333f16f96
+- id: server-side-performance
+  title: Server-Side Performance
+  applies_to: Use when working with React Server Components, Server Actions, API routes, SSR,
+    or server-side data access.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 185
+    - 264
+  sha256: 0a49fb63e58ceabd1ed1d9e559a2bac43a13e623a3cd5ea041c954c9f521786f
+- id: client-side-data-fetching
+  title: Client-Side Data Fetching
+  applies_to: Use when client components fetch shared data, attach browser event listeners,
+    or persist data in localStorage.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 265
+    - 296
+  sha256: cb1dc4801a5b0c26fd1fdc75c9af46b5bee1c67328632c53762f06d322f91fd9
+- id: rerender-optimization
+  title: Re-render Optimization
+  applies_to: Use when React components re-render frequently, state updates fan out through
+    parent-child trees, or expensive work runs during rendering.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 297
+    - 426
+  sha256: e843f063ee5bc05aed5cf4e1472121d74d1a673f27d58909f6cd79bbfa24c4ca
+- id: rendering-performance
+  title: Rendering Performance
+  applies_to: Use when optimizing long lists, animations, SVGs, hydration behavior, conditional
+    UI, scripts, or resource loading.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 427
+    - 495
+  sha256: cc9dda793c8090f027ba155adfd427c685d14606621ec51cf45770fdbac7ff77
+- id: javascript-performance
+  title: JavaScript Performance
+  applies_to: Use when optimizing hot loops, repeated lookups, synchronous browser APIs, allocations,
+    or other frequently executed JavaScript.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 496
+    - 511
+  sha256: b54a347fcf948776ca4df486eacb86b6767ab14dc6867957fccb4bfec12576a3
+- id: advanced-react-patterns
+  title: Advanced React Patterns
+  applies_to: Use when stabilizing effect integrations, callback identities, event handler
+    references, or module-level initialization in React.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 513
+    - 541
+  sha256: 53925aa5ae1f45132bfc2b9b50e4b93c07d1e5d5907d4aad0faeec4a52220a2d
+- id: automated-performance-tools
+  title: Automated Performance Tools
+  applies_to: Use when determining which build, compiler, bundler, or analysis tools can automate
+    React and Next.js performance work.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 543
+    - 552
+  sha256: 022cc838773c38bd21b3e1035d9a0b7dd481b2f18ebb5b9e75b1aa0f8e944f18
+- id: web-vitals-mapping
+  title: Lighthouse and Web Vitals Mapping
+  applies_to: Use when diagnosing Lighthouse or Core Web Vitals regressions and selecting
+    the relevant performance category to investigate.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 554
+    - 562
+  sha256: ede5ef077e4441100c631c2468c79658f70ff9472e1c7675cc05c03b5e33189c

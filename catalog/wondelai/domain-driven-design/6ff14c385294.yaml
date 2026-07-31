@@ -1,0 +1,102 @@
+id: wondelai/domain-driven-design
+version: 6ff14c385294
+source:
+  url: https://github.com/wondelai/skills
+  path: domain-driven-design\SKILL.md
+  sha256: 6ff14c38529422dc7e47dd815062ff550d2b2e95082753dc7974e783b7a3b4f0
+license: MIT
+kind: reference
+stacks:
+- software-design
+document_kinds:
+- spec
+summary: A framework for modeling software around business domains using bounded contexts,
+  aggregates, ubiquitous language, and strategic design to reduce complexity.
+decomposed_by: qwen/qwen3.6-flash
+parts:
+- id: ubiquitous-language
+  title: Ubiquitous Language
+  applies_to: Use when naming classes, methods, or modules, or when aligning code terminology
+    with business experts.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 24
+    - 44
+  sha256: a8ac58ebfcb9423dc007a91c70830c304df662cb79164291cec2e21a23ad6294
+- id: bounded-contexts-and-context-mapping
+  title: Bounded Contexts and Context Mapping
+  applies_to: Use when defining service boundaries, integrating external systems, or resolving
+    conflicting terminology across teams.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 47
+    - 68
+  sha256: 29ad6887b81a3792a5fa28aa617f9f21710fa47c0ef8df55102884766940d378
+- id: entities-value-objects-and-aggregates
+  title: Entities, Value Objects, and Aggregates
+  applies_to: Use when designing data models, enforcing consistency boundaries, or deciding
+    what should be mutable versus immutable.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 71
+    - 92
+  sha256: c6beef45f96795096997438ab98e6f82a3416c84432fc0ae3c49cc33d4ecfa41
+- id: domain-events
+  title: Domain Events
+  applies_to: Use when decoupling system components, handling state transitions, or designing
+    asynchronous cross-context communication.
+  kind: pipeline
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 95
+    - 115
+  sha256: 9a79c8200b332f8c7f01b16b03926fe4b2902f1ea17be52d928471087e15d5a1
+- id: repositories-and-factories
+  title: Repositories and Factories
+  applies_to: Use when abstracting persistence logic, encapsulating complex object creation,
+    or writing query specifications.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 118
+    - 138
+  sha256: 473d7bd3db256d57cce23452f2652625613d1131b479031e045a61c70ca358ba
+- id: strategic-design-and-distillation
+  title: Strategic Design and Distillation
+  applies_to: Use when prioritizing engineering effort, classifying subdomains, or allocating
+    team resources to different parts of the system.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 141
+    - 160
+  sha256: 089dc42bf3a74c6fe571b102b9f34bbab2da418f307570df6ccbd8be250e3eee
+- id: scoring-and-diagnostic
+  title: Scoring and Diagnostic
+  applies_to: Use when evaluating an existing domain model, auditing code against DDD principles,
+    or identifying architectural debt.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 18
+    - 20
+  - - 174
+    - 184
+  sha256: 8e5dedce7b23422022bfb9a62a50b2cfb668fd40af92a9d4aaef6d775a0ea937

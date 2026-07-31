@@ -1,0 +1,117 @@
+id: wondelai/clean-code
+version: f9efbdff87b0
+source:
+  url: https://github.com/wondelai/skills
+  path: clean-code\SKILL.md
+  sha256: f9efbdff87b038b6e70f74a62a334af6f28945a511019d24c258b4831342bc9b
+license: MIT
+kind: lens
+stacks:
+- any
+document_kinds:
+- spec
+summary: A disciplined framework for evaluating and writing readable, maintainable code through
+  six core disciplines with a scoring rubric and diagnostic checklist.
+decomposed_by: xiaomi/mimo-v2.5
+parts:
+- id: evaluation-framework
+  title: Core Principle and Scoring Rubric
+  applies_to: Use when scoring code quality or establishing what 'clean' means for a review
+  kind: lens
+  spans:
+  - - 12
+    - 26
+  sha256: 2a6ddad55029f06d85dcc74cb0fd478e42f7e72a58487ea26a7584de68f98ff1
+- id: meaningful-names
+  title: Meaningful Names
+  applies_to: Use when reviewing, renaming, or debating variable, function, or class naming
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 30
+  spans:
+  - - 32
+    - 55
+  sha256: b843750e11016dd3a6183d4872552a1070768fdbf5703d805a5aa5fda95a05b2
+- id: functions
+  title: Functions
+  applies_to: Use when splitting long functions, reducing argument counts, or improving function
+    design
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 30
+  spans:
+  - - 57
+    - 81
+  sha256: 73dfe15a8aae4546664138492c0abca1839599e720150ece600f6116381749cf
+- id: comments-formatting
+  title: Comments and Formatting
+  applies_to: Use when deciding whether a comment earns its place or when applying formatting
+    standards
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 30
+  spans:
+  - - 83
+    - 105
+  sha256: 72648f577e0dcd7a627e3375add62a72042f30c54577106d99d1042ac0e930b5
+- id: error-handling
+  title: Error Handling
+  applies_to: Use when designing exception strategy, replacing null returns, or wrapping third-party
+    APIs
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 30
+  spans:
+  - - 107
+    - 130
+  sha256: eecbaed0259d46ad0d0d5f70cf9cefc96e38c3ab96432ca274697dea6dd0dbad
+- id: unit-testing
+  title: Unit Testing
+  applies_to: Use when writing, cleaning, or reviewing unit tests for structure and quality
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 30
+  spans:
+  - - 132
+    - 154
+  sha256: a0b52ae2e35f010efceab9f4211142e03f05c745025d1b5c0ebd39a9d36eb0cc
+- id: code-smells-heuristics
+  title: Code Smells and Heuristics
+  applies_to: Use when identifying code smells, prioritizing refactorings, or reviewing for
+    design issues
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 30
+  spans:
+  - - 156
+    - 179
+  sha256: e1c3726bab62f316ae35ff87d9900802dec39b7842c55d79aca82cc62b8ea081
+- id: common-mistakes
+  title: Common Mistakes
+  applies_to: Use when reviewing code for frequent anti-patterns or explaining why a practice
+    fails
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 26
+  spans:
+  - - 181
+    - 194
+  sha256: fdba26934fdb55fa711b8ba37a39a1c2817afb30fb38ae88ff85e7e533d2b3ca
+- id: quick-diagnostic
+  title: Quick Diagnostic Checklist
+  applies_to: Use when performing a rapid code quality audit or checklist-based review
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 26
+  spans:
+  - - 196
+    - 209
+  sha256: 26ae53911748ad076ec0a3b9e6c99eb7a57857fb99264b5428cdc2fac908bd34

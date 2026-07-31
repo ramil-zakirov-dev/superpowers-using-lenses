@@ -1,0 +1,101 @@
+id: wondelai/ux-heuristics
+version: 92cddfb89e9a
+source:
+  url: https://github.com/wondelai/skills
+  path: ux-heuristics\SKILL.md
+  sha256: 92cddfb89e9a46590cd4dbb77b63bce0f1b2f0f675e3bbac32cfa55b34f48c30
+license: MIT
+kind: lens
+stacks:
+- any
+document_kinds:
+- spec
+summary: A heuristic evaluation framework providing Krug's and Nielsen's usability principles,
+  a severity rating scale, a quick diagnostic checklist, and conflict-resolution guidance
+  for auditing interface usability.
+decomposed_by: xiaomi/mimo-v2.5
+parts:
+- id: krug-usability-principles
+  title: Krug's Usability Principles
+  applies_to: Use when evaluating navigation clarity, page copy brevity, click-depth decisions,
+    or site orientation
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 16
+  spans:
+  - - 22
+    - 115
+  sha256: 294dc0615c5c7630c31313d3bebe91e9572b20a553818a9f4ae797aeb9ff6916
+- id: nielsen-heuristics
+  title: Nielsen's 10 Usability Heuristics
+  applies_to: Use when auditing an interface against established usability principles or identifying
+    common violation patterns
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 16
+  spans:
+  - - 117
+    - 149
+  sha256: 5c7aea03a1e753d8e129c9f5fed57f6db51219ef81c0850d679101a234ea9b25
+- id: severity-rating-scale
+  title: Severity Rating Scale
+  applies_to: Use when assigning severity ratings to usability issues found during an audit
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 20
+  spans:
+  - - 151
+    - 165
+  sha256: 261faa0112fa95e0a0be1e19a3efdba7995346a5a7a38028a6132b4a26b5c171
+- id: common-mistakes
+  title: Common Usability Mistakes
+  applies_to: Use when checking an interface for well-known usability anti-patterns and quick
+    fixes
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 16
+  spans:
+  - - 167
+    - 187
+  sha256: cc99eb127b306cf1a2b86633dfcb7ec11809fe029d83156d686787018ddbf10a
+- id: quick-diagnostic
+  title: Quick Diagnostic Checklist
+  applies_to: Use when performing a rapid first-pass usability assessment of any interface
+  kind: lens
+  preamble_spans:
+  - - 10
+    - 20
+  spans:
+  - - 189
+    - 202
+  sha256: 71cd7ebf9d2bbd408d47c1470b2bd815791f077ed4a5948b0b9a20d23bf3ddae
+- id: heuristic-conflicts
+  title: Heuristic Conflict Resolution
+  applies_to: Use when two usability heuristics pull in opposite directions and a design trade-off
+    decision is needed
+  kind: lens
+  preamble_spans:
+  - - 10
+    - 16
+  spans:
+  - - 204
+    - 212
+  requires:
+  - nielsen-heuristics
+  sha256: c379ada6964245f049fd1aae7c68e72509bdd8e741c316722d52e32c24d89822
+- id: method-selection
+  title: UX Method Selection Guide
+  applies_to: Use when deciding which UX evaluation method to apply based on project phase
+    and time available
+  kind: lens
+  preamble_spans:
+  - - 10
+    - 16
+  spans:
+  - - 220
+    - 227
+  sha256: 68ee83da478c47201b336c202b84500b5402cbbf0f099f53ceebac5b86934f4c

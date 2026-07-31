@@ -1,0 +1,80 @@
+id: ecc/postgres-patterns
+version: 799884064b41
+source:
+  url: https://github.com/affaan-m/ECC
+  path: postgres-patterns\SKILL.md
+  sha256: 799884064b41773a3777f10dfd49abcfacefb64d8fa1756d2ee10aa0384d28d1
+license: MIT
+kind: reference
+stacks:
+- postgresql
+document_kinds:
+- milestone
+- spec
+- plan
+summary: A quick reference of PostgreSQL patterns for indexing, data types, operational SQL,
+  anti-pattern detection, and database configuration.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: indexing-patterns
+  title: Indexing Patterns
+  applies_to: Use when choosing index types, ordering composite indexes, or optimizing common
+    query patterns.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 20
+  spans:
+  - - 22
+    - 31
+  - - 43
+    - 62
+  sha256: bdda2477151c73c6f6f5e7b7a7d76687d2c077d5f6653691aacc86f3dc8bd456
+- id: data-type-selection
+  title: Data Type Selection
+  applies_to: Use when selecting PostgreSQL column types for identifiers, strings, timestamps,
+    monetary values, or boolean flags.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 20
+  spans:
+  - - 33
+    - 41
+  sha256: 0b7a34c3363459edd3961a6ceb190e7ea70aaca7cc3ba4486bb613083e9a1d32
+- id: operational-sql-patterns
+  title: Operational SQL Patterns
+  applies_to: Use when implementing row-level security, upserts, cursor pagination, or concurrent
+    queue processing.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 20
+  spans:
+  - - 64
+    - 92
+  sha256: ab2e59229ad54d64779b16616030333d8115d57351adf8b75aba5c3ee18264e9
+- id: anti-pattern-detection
+  title: Anti-Pattern Detection Queries
+  applies_to: Use when auditing a PostgreSQL database for unindexed foreign keys, slow queries,
+    or table bloat.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 20
+  spans:
+  - - 94
+    - 118
+  sha256: 302a64744aa54cf3c8b944269d29c84de460f21e992f9717c69a6f37fbad94d4
+- id: postgres-configuration
+  title: PostgreSQL Configuration
+  applies_to: Use when configuring connection limits, query timeouts, monitoring extensions,
+    or default schema permissions.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 20
+  spans:
+  - - 120
+    - 138
+  sha256: cb87113c1e6419ad55df060e9f52caa4629896c3442dce8ef857f3694e8f8b42

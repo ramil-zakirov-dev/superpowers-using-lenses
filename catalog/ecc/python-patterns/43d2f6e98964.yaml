@@ -1,0 +1,168 @@
+id: ecc/python-patterns
+version: 43d2f6e98964
+source:
+  url: https://github.com/affaan-m/ECC
+  path: python-patterns/SKILL.md
+  sha256: 43d2f6e989645197a309a4d1371069cd1a72a6cae3cd8ea15ed0366fdc9b2a9a
+license: MIT
+kind: reference
+stacks:
+- python
+document_kinds: []
+summary: A reference for applying idiomatic Python patterns, typing, error handling, organization,
+  performance, and tooling practices.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: python-core-principles
+  title: Core Python Principles
+  applies_to: Use when choosing or reviewing general Python coding style and control-flow
+    idioms.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 19
+    - 73
+  sha256: c7f82ce26a7605bde7526e700718f4a8d3a91447d7a82089c4348911a254164f
+- id: python-type-hints
+  title: Type Hints
+  applies_to: Use when adding, reviewing, or modernizing type annotations in Python code.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 75
+    - 138
+  sha256: 1fe36bb207742da5a7adbd1dbbbee69062b377600369bd507037a931da1b0335
+- id: python-error-handling
+  title: Error Handling Patterns
+  applies_to: Use when designing exception behavior or reviewing failure handling in Python
+    applications.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 140
+    - 196
+  sha256: de7f8b6a8ef39ac676011891424789ae3455ad7930f941e3124d917c63d2d345
+- id: python-context-managers
+  title: Context Managers
+  applies_to: Use when managing resources, transactions, or setup and teardown around a block
+    of Python code.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 198
+    - 257
+  sha256: f6835fa36d2989085ff75b155f4d75558fac4d2ae7b081398ab6ca4fa395a94e
+- id: python-comprehensions-generators
+  title: Comprehensions and Generators
+  applies_to: Use when transforming collections or processing data lazily and memory-efficiently.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 259
+    - 308
+  sha256: 0f7b94a3d820a8941370ad9db008d79d5b9903dca92c6695237b5db3a8d2ea43
+- id: python-data-containers
+  title: Data Classes and Named Tuples
+  applies_to: Use when defining compact data containers with generated behavior, validation,
+    or immutability requirements.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 310
+    - 369
+  sha256: 09e33abd19abdf1585862d27343aec0a6a8a03b25396fa4f45137f1b498586f1
+- id: python-decorators
+  title: Decorators
+  applies_to: Use when adding reusable behavior around functions or implementing callable
+    decorator objects.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 371
+    - 439
+  sha256: e90272180c8e4467d5b69675b3d19920ce153090aa22217a9289f1fe17f688b3
+- id: python-concurrency
+  title: Concurrency Patterns
+  applies_to: Use when selecting or implementing concurrency for I/O-bound, CPU-bound, or
+    asynchronous Python work.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 441
+    - 500
+  sha256: 040ab3d2881b6dd3c5d63d776d3de50f0de309dcccfdc7278864872fc4ad23cc
+- id: python-package-organization
+  title: Package Organization
+  applies_to: Use when structuring a Python package, arranging imports, or defining package-level
+    exports.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 502
+    - 562
+  sha256: 43f4f05e3a6df39cafcdcc77bb6d3543fa2af9cf8f718b35b621455f90f6f18e
+- id: python-performance-memory
+  title: Memory and Performance
+  applies_to: Use when reducing Python memory usage or improving performance of object storage
+    and data processing.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 564
+    - 617
+  sha256: b78c85662f3e0a5d31389bcbb8d3805c7634e88fe666b7b5e3d2caab05b63e7b
+- id: python-tooling
+  title: Python Tooling Integration
+  applies_to: Use when configuring or running Python formatting, linting, type checking, testing,
+    security, and dependency tools.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 619
+    - 684
+  sha256: 2d0c56a388edcc9402b13a93f111e6c73e7788d68452b8a19423fd6c345190f5
+- id: python-idiom-quick-reference
+  title: Python Idiom Quick Reference
+  applies_to: Use when quickly matching a common Python idiom to its intended purpose.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 686
+    - 700
+  sha256: 692ee3d4d0b174973b02d339604405cdc565ae8458cc14dfcd1e90ddbb950e0f
+- id: python-anti-patterns
+  title: Anti-Patterns to Avoid
+  applies_to: Use when reviewing Python code for common correctness, maintainability, and
+    style mistakes.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 701
+    - 749
+  sha256: 93f0e0acfa74d1a7e1c2efce0141d19455e4c2097d42fc04c0834a1528bc1991

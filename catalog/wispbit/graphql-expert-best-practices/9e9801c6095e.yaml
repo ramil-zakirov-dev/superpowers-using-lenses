@@ -1,0 +1,334 @@
+id: wispbit/graphql-expert-best-practices
+version: 9e9801c6095e
+source:
+  url: https://github.com/wispbit/ai-skills
+  path: graphql-expert-best-practices/SKILL.md
+  sha256: 9e9801c6095ea09cd0047fa19a8bcd6b87539633326060e4431a3bc10358fb00
+license: MIT
+kind: reference
+stacks: []
+document_kinds: []
+summary: GraphQL performance optimization and best practices for building scalable APIs. This
+  skill should be used when writing, reviewing, or refactoring GraphQL schemas, resolvers,
+  or query execution code. Triggers on tasks involving GraphQL APIs, resolver optimization,
+  query performance, or data fetching patterns.
+decomposed_by: author
+parts:
+- id: dataloader-n-plus-one
+  title: Use DataLoader to Prevent N+1 Queries
+  applies_to: Use DataLoader to Prevent N+1 Queries — Prevents exponential query growth in
+    nested GraphQL resolvers.
+  file: rules/dataloader-n-plus-one.md
+  spans:
+  - - 1
+    - 177
+  tags:
+  - performance
+  - dataloader
+  - n+1
+  - batching
+  - graphql
+  sha256: c7d30dc6063a40576cbce1f4a89a7124c89d1bd0e6cdd581b3f9764cef9fabe6
+- id: mutation-avoid-validation-scalars
+  title: Avoid Custom Validation Scalars in Mutation Inputs
+  applies_to: Avoid Custom Validation Scalars in Mutation Inputs — Prevents multi-request
+    error-discovery loop and improves UX.
+  file: rules/mutation-avoid-validation-scalars.md
+  spans:
+  - - 1
+    - 621
+  tags:
+  - mutation
+  - scalars
+  - validation
+  - ux
+  - error-handling
+  sha256: 12a40ea453821a883fdce63969e7878b567cfc5b4cb7fc0ff28b082ff6a48c42
+- id: mutation-explicit-actions
+  title: Design Mutations Around Explicit Actions
+  applies_to: Design Mutations Around Explicit Actions — Improves API clarity, maintainability,
+    and prevents hidden capabilities.
+  file: rules/mutation-explicit-actions.md
+  spans:
+  - - 1
+    - 514
+  tags:
+  - mutation
+  - api-design
+  - maintainability
+  - schema
+  - actions
+  sha256: 6dad4cd4db7cefa045e11fc8d4384a077102d7ec0911c5f563e44bfdb354f7db
+- id: mutation-no-file-uploads
+  title: Avoid File Uploads Through GraphQL
+  applies_to: Avoid File Uploads Through GraphQL — Prevents memory exhaustion, stream leaks,
+    and security vulnerabilities.
+  file: rules/mutation-no-file-uploads.md
+  spans:
+  - - 1
+    - 658
+  tags:
+  - mutation
+  - security
+  - files
+  - uploads
+  - memory
+  - performance
+  sha256: d00598535f64580398458b39fc1bfc53e0fb186a43de76279c453d023b06d099
+- id: mutation-separate-input-types
+  title: Separate Input Types for Create and Update
+  applies_to: Separate Input Types for Create and Update — Improves type safety and makes
+    mutation requirements explicit.
+  file: rules/mutation-separate-input-types.md
+  spans:
+  - - 1
+    - 548
+  tags:
+  - mutation
+  - input-types
+  - type-safety
+  - api-design
+  - validation
+  sha256: 0621c84fb2187f533b26f2ce75844714d7409ff0b6ff0413bedc839e8d7b1c6a
+- id: mutation-single-input-object
+  title: Use Single Input Object for Mutation Arguments
+  applies_to: Use Single Input Object for Mutation Arguments — Improves API evolvability and
+    client ergonomics.
+  file: rules/mutation-single-input-object.md
+  spans:
+  - - 1
+    - 625
+  tags:
+  - mutation
+  - input
+  - arguments
+  - api-design
+  - evolvability
+  sha256: 4c32ba178a23fa0bad1b34067a7c31b5b295c9b50416a4a892fd3d353757d498
+- id: mutation-union-result-types
+  title: Use Union Result Types for Mutation Responses
+  applies_to: Use Union Result Types for Mutation Responses — Enables type-safe error handling
+    and explicit error cases.
+  file: rules/mutation-union-result-types.md
+  spans:
+  - - 1
+    - 771
+  tags:
+  - mutation
+  - errors
+  - union-types
+  - type-safety
+  - error-handling
+  sha256: 1decb7262ac28b085364bcb8fde48c49662b61c2bb7827d21278739ca3aa82e0
+- id: operations-require-client-headers
+  title: Require Client Identification Headers
+  applies_to: Require Client Identification Headers — Enables proper debugging, monitoring,
+    and client tracking in production.
+  file: rules/operations-require-client-headers.md
+  spans:
+  - - 1
+    - 555
+  tags:
+  - operations
+  - monitoring
+  - debugging
+  - headers
+  - middleware
+  - observability
+  sha256: ab1e516fcbef733866fb20633cbc9f000cddfe6324dbfe087823525e6588b752
+- id: pagination-no-default-totalcount
+  title: Avoid Default totalCount in Connections
+  applies_to: Avoid Default totalCount in Connections — Prevents performance degradation and
+    maintains API flexibility.
+  file: rules/pagination-no-default-totalcount.md
+  spans:
+  - - 1
+    - 534
+  tags:
+  - pagination
+  - performance
+  - connections
+  - relay
+  - scalability
+  sha256: cf2feee896ff5a098ce2f45eef31a6a109cdc0b513328d151dc2d40cf7f09126
+- id: query-unique-identifiers
+  title: Use Unique Identifiers Over Composite Parameters
+  applies_to: Use Unique Identifiers Over Composite Parameters — Simplifies API surface and
+    reduces coupling.
+  file: rules/query-unique-identifiers.md
+  spans:
+  - - 1
+    - 485
+  tags:
+  - query
+  - parameters
+  - api-design
+  - identifiers
+  - simplicity
+  sha256: 3ca8dca41299feb32c884564f0b8d85bc9b6ff25bbb16c2ba22f68dd24c4cc45
+- id: schema-field-overload
+  title: Avoid Field Overloads for Viewer vs User
+  applies_to: Avoid Field Overloads for Viewer vs User — Prevents security issues and improves
+    API clarity.
+  file: rules/schema-field-overload.md
+  spans:
+  - - 1
+    - 130
+  tags:
+  - schema
+  - security
+  - api-design
+  - viewer
+  - user
+  sha256: b07a44f6dbd3a5874d3594b1dce7ab70c75ab145c2f3cc100cbf24ffd848cb4c
+- id: schema-minimize-nullable-args
+  title: Minimize Nullable Arguments
+  applies_to: Minimize Nullable Arguments — Improves API clarity and prevents ambiguous behavior.
+  file: rules/schema-minimize-nullable-args.md
+  spans:
+  - - 1
+    - 540
+  tags:
+  - schema
+  - api-design
+  - nullable
+  - arguments
+  - type-safety
+  sha256: f4c1d607a995e10b933d7267315db47698d7ce7be5314ad7c58d26d332e9b1b5
+- id: schema-no-binary-data
+  title: Avoid Large Binary Data in Schema
+  applies_to: Avoid Large Binary Data in Schema — Prevents payload bloat, memory issues, and
+    performance degradation.
+  file: rules/schema-no-binary-data.md
+  spans:
+  - - 1
+    - 297
+  tags:
+  - schema
+  - binary
+  - performance
+  - files
+  - upload
+  sha256: 5a6ff95fc76f0d34dafb4f666cf56b010a471716b5a6eb8f6e674f3a14e893ba
+- id: schema-no-duplicate-fields
+  title: Prevent Duplicate Fields Through Nested Objects
+  applies_to: Prevent Duplicate Fields Through Nested Objects — Reduces schema bloat and maintains
+    single source of truth.
+  file: rules/schema-no-duplicate-fields.md
+  spans:
+  - - 1
+    - 523
+  tags:
+  - schema
+  - design
+  - duplication
+  - normalization
+  - best-practices
+  sha256: 2ad6c54fef51404962d20b4b616bd57cb4f97325f6eef770301bc78fe1f16324
+- id: schema-no-json-filters
+  title: Ban Arbitrary JSON Filter Scalars
+  applies_to: Ban Arbitrary JSON Filter Scalars — Prevents NoSQL injection and unauthorized
+    data access.
+  file: rules/schema-no-json-filters.md
+  spans:
+  - - 1
+    - 356
+  tags:
+  - security
+  - schema
+  - nosql-injection
+  - filters
+  - input-validation
+  sha256: 2df613b21e922a2a66393d5ad3b882a14bde146b9065af4945749bd1c3187ab3
+- id: schema-prefer-deprecation
+  title: Prefer Deprecation Over Versioned APIs
+  applies_to: Prefer Deprecation Over Versioned APIs — Enables continuous API evolution without
+    breaking changes.
+  file: rules/schema-prefer-deprecation.md
+  spans:
+  - - 1
+    - 590
+  tags:
+  - schema
+  - deprecation
+  - versioning
+  - api-evolution
+  - migration
+  sha256: a79758e9e3ef64196e8acc225c62380fd2b3b0ef597ff88317df405211e0f7ff
+- id: schema-split-types-by-role
+  title: Split Types by Role to Prevent Field Leakage
+  applies_to: Split Types by Role to Prevent Field Leakage — Prevents privacy field leakage
+    and eliminates runtime authorization complexity.
+  file: rules/schema-split-types-by-role.md
+  spans:
+  - - 1
+    - 638
+  tags:
+  - schema
+  - security
+  - types
+  - authorization
+  - privacy
+  - interfaces
+  sha256: 5291831fdbc49fbfbf228eb0b1cb7f7e578227eccee2f6c7f2e8c77c58f48111
+- id: schema-stable-identifiers
+  title: Use Globally Stable Opaque Identifiers
+  applies_to: Use Globally Stable Opaque Identifiers — Prevents information leakage and enables
+    cross-environment portability.
+  file: rules/schema-stable-identifiers.md
+  spans:
+  - - 1
+    - 501
+  tags:
+  - schema
+  - security
+  - identifiers
+  - uuid
+  - database
+  - portability
+  sha256: 2cfc30253cfd982082f21a2187d6ea3c7b705bed093d65c4a54692b217033916
+- id: schema-structured-types
+  title: Use Structured Types Over Unstructured Strings
+  applies_to: Use Structured Types Over Unstructured Strings — Improves type safety, validation,
+    and API discoverability.
+  file: rules/schema-structured-types.md
+  spans:
+  - - 1
+    - 673
+  tags:
+  - schema
+  - types
+  - enums
+  - type-safety
+  - validation
+  - json
+  sha256: 37295537bb60311869d38035bcf495ef4a3f224c63c63448daff875abdd60a3f
+- id: security-complexity-limits
+  title: Require Complexity and Query Node Limits
+  applies_to: Require Complexity and Query Node Limits — Prevents resource exhaustion and
+    denial of service attacks.
+  file: rules/security-complexity-limits.md
+  spans:
+  - - 1
+    - 576
+  tags:
+  - security
+  - complexity
+  - dos-prevention
+  - validation
+  - rate-limiting
+  sha256: 87c4fef11c84cfb16579965dd50a65f01ada19c42486b40bb84e9296ee3ac85a
+- id: security-disable-introspection
+  title: Disable Introspection in Production
+  applies_to: Disable Introspection in Production — Prevents schema disclosure and information
+    leakage.
+  file: rules/security-disable-introspection.md
+  spans:
+  - - 1
+    - 426
+  tags:
+  - security
+  - introspection
+  - production
+  - configuration
+  sha256: 130b357f0a0271551ea86aafac7a165e936b2806a6347ebcbd2721c6efe4d1b9

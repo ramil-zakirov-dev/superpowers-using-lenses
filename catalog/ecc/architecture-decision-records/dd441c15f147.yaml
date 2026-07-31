@@ -1,0 +1,106 @@
+id: ecc/architecture-decision-records
+version: dd441c15f147
+source:
+  url: https://github.com/affaan-m/ECC
+  path: architecture-decision-records\SKILL.md
+  sha256: dd441c15f147345d59de8945676b5a595e1335d5a88289ccefce43d388a4fdeb
+license: MIT
+kind: pipeline
+stacks:
+- any
+document_kinds:
+- spec
+summary: Captures architectural decisions made during coding sessions as structured ADR documents,
+  from detection through recording to maintenance.
+decomposed_by: xiaomi/mimo-v2.5
+parts:
+- id: adr-format
+  title: ADR Document Format
+  applies_to: Use when writing, reviewing, or validating the content structure of an individual
+    ADR file.
+  kind: reference
+  preamble_spans:
+  - - 8
+    - 10
+  spans:
+  - - 22
+    - 69
+  sha256: 1aec122d423c785b0f2ac6bb5a79239b4d79f9dcc63d6b0a59956bbb4f5381fb
+- id: adr-directory-and-index
+  title: ADR Directory Structure and Index
+  applies_to: Use when setting up the ADR directory, creating the index README, or understanding
+    where ADR files are stored.
+  kind: reference
+  preamble_spans:
+  - - 8
+    - 10
+  spans:
+  - - 95
+    - 117
+  sha256: 05ef31182364a14b9a8759e7b487abdcf6faa6bba6303f3a7d09f1764db91d85
+- id: capture-new-adr
+  title: Capturing a New ADR
+  applies_to: Use when recording a new architectural decision as an ADR, from initial detection
+    through file creation and index update.
+  kind: pipeline
+  preamble_spans:
+  - - 8
+    - 10
+  - - 22
+    - 69
+  - - 95
+    - 117
+  spans:
+  - - 71
+    - 84
+  sha256: a181aa5567b29562485df2c854efb7291cf7c8b42ef079abfbc634bbb85751a7
+- id: read-existing-adrs
+  title: Reading Existing ADRs
+  applies_to: Use when a user asks about the rationale behind a past architectural decision
+    and needs to look up existing ADRs.
+  kind: pipeline
+  preamble_spans:
+  - - 95
+    - 117
+  spans:
+  - - 86
+    - 93
+  sha256: 2a453dd214bdec93d1e8d8b28a359bf4078702c6df1a41825ffb254501efd7af
+- id: decision-detection
+  title: Decision Detection Signals
+  applies_to: Use when evaluating whether a conversation moment represents an architectural
+    decision that should be recorded as an ADR.
+  kind: lens
+  spans:
+  - - 12
+    - 18
+  - - 119
+    - 134
+  sha256: 88061e4ab4c8ec72afd9b29985feb4393941bb13cdf6f958b8efa894aa9c7d6a
+- id: adr-quality-criteria
+  title: ADR Quality Criteria
+  applies_to: Use when judging whether a drafted or existing ADR meets quality standards,
+    or when deciding what to include or omit.
+  kind: lens
+  spans:
+  - - 136
+    - 151
+  sha256: f3f290254d370e7007a0e6ebe1a8b3a97c28471c64e0306b2cbe52a6907eff2d
+- id: adr-lifecycle
+  title: ADR Lifecycle and Statuses
+  applies_to: Use when managing or interpreting the status field of an ADR, including transitions
+    between proposed, accepted, deprecated, and superseded.
+  kind: reference
+  spans:
+  - - 153
+    - 162
+  sha256: cd56c580a13f887c40774ff8a5e8184b1702425f54f5b845c9c68b1780902a47
+- id: decision-categories
+  title: Categories of Decisions Worth Recording
+  applies_to: Use when determining whether a particular choice or discussion qualifies as
+    an architectural decision worth documenting in an ADR.
+  kind: lens
+  spans:
+  - - 164
+    - 175
+  sha256: 973270798227d08b85356a6a59759855e6b34fd94ab23266f3ed6650c479a58c

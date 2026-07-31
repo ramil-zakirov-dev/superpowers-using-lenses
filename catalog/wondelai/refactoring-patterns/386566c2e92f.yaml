@@ -1,0 +1,123 @@
+id: wondelai/refactoring-patterns
+version: 386566c2e92f
+source:
+  url: https://github.com/wondelai/skills
+  path: refactoring-patterns\SKILL.md
+  sha256: 386566c2e92f1dc399c2043abe9cdaa29d6f76d20b8f705eec539ed19eafeaaf
+license: MIT
+kind: lens
+stacks:
+- any
+document_kinds:
+- spec
+summary: A pattern-based framework for applying named, test-backed refactoring transformations
+  to improve code structure without changing behavior.
+decomposed_by: xiaomi/mimo-v2.5
+parts:
+- id: core-principle
+  title: Core Refactoring Principle
+  applies_to: Use when starting any refactoring task to establish the fundamental discipline
+    of behavior-preserving, test-backed transformations.
+  kind: lens
+  spans:
+  - - 12
+    - 18
+  sha256: 03db4bd667b079b845d074bb958d644c040ac4b5c4f717becaefbb799cf846cb
+- id: scoring-and-diagnostic
+  title: Scoring and Quick Diagnostic
+  applies_to: Use when evaluating the structural quality of code or determining which refactorings
+    are most urgently needed to reach target quality.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 20
+    - 27
+  - - 189
+    - 200
+  sha256: 23a410b64b0977800f801f850806714997873c08c1203c719fc7792634faf5c3
+- id: code-smells-as-triggers
+  title: Code Smells as Refactoring Triggers
+  applies_to: Use when identifying which refactoring to apply based on observed code smells
+    and their family groupings (Bloaters, OO Abusers, Change Preventers, Dispensables, Couplers).
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 33
+    - 55
+  sha256: b68ca6d9d09a4128b512b61950e2d8855c3929af8664f7f03fd424c90a1eedce
+- id: composing-methods
+  title: Composing Methods
+  applies_to: Use when a method is too long, has confusing local variables, or needs to be
+    broken into smaller named pieces through Extract/Inline Method or Variable transformations.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 57
+    - 79
+  sha256: 27c8fede2ba55aa49695d5a300fe11db9f17cddb3ee254a36af7a4a96140d38d
+- id: moving-features
+  title: Moving Features Between Objects
+  applies_to: Use when responsibilities are in the wrong class, causing Feature Envy, Shotgun
+    Surgery, God classes, or Law of Demeter violations.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 81
+    - 102
+  sha256: da5b03ace143a096f587d014a5d62b21b9c73f5e1c9dfe76ae23b1ed49442e48
+- id: organizing-data
+  title: Organizing Data
+  applies_to: Use when raw primitives, magic numbers, exposed mutable fields, or integer type
+    codes need to be replaced with encapsulating objects.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 104
+    - 126
+  sha256: 38eb2d901622e67d92dd4c4014dbfdc85ff86c9f5ec6a27c1da9aa7f784e0a8c
+- id: simplifying-conditionals
+  title: Simplifying Conditional Logic
+  applies_to: Use when deeply nested conditionals, long switch statements, or scattered null
+    checks make code hard to follow and bug-prone.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 128
+    - 150
+  sha256: 516bcb80b153520b48c22628f72ccbcf72e4ac2dbba9c14b5a369e2a371d3252
+- id: safe-refactoring-workflow
+  title: Safe Refactoring Workflow
+  applies_to: Use when planning the sequence and safety of refactoring steps, especially for
+    large or risky changes in production code.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 152
+    - 174
+  sha256: 3ab9e962f731f71bd42206b41e6bc6f5243ae7ff7d6ba99152121cb5eb202872
+- id: common-mistakes
+  title: Common Refactoring Mistakes
+  applies_to: Use when reviewing a refactoring approach to check for known anti-patterns and
+    pitfalls before or during the transformation.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 18
+  spans:
+  - - 176
+    - 187
+  sha256: a170079cb13859280d0deb95d987389e38478b9d30bb3cfb1b3fb9963a8cbd05

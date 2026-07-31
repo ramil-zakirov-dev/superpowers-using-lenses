@@ -1,0 +1,66 @@
+id: ecc/accessibility
+version: f817cb68304c
+source:
+  url: https://github.com/affaan-m/ECC
+  path: accessibility\SKILL.md
+  sha256: f817cb68304c6c2a6a206622d8d21178051b937feb6c1c86138aa8a123f8ee56
+license: MIT
+kind: pipeline
+stacks:
+- any
+document_kinds:
+- spec
+summary: A cross-platform guide for designing, implementing, and auditing WCAG 2.2 Level AA
+  accessibility in Web, iOS, and Android interfaces.
+decomposed_by: xiaomi/mimo-v2.5
+parts:
+- id: implementation-pipeline
+  title: Accessibility Implementation Pipeline
+  applies_to: Use when implementing or auditing WCAG 2.2 accessibility for a UI component
+    on any platform
+  kind: pipeline
+  preamble_spans:
+  - - 9
+    - 11
+  - - 20
+    - 26
+  spans:
+  - - 28
+    - 56
+  sha256: 8a1868878454a70ecb50e03fd3c466913ec8713fa696cecfdbad3750aee6c95c
+- id: cross-platform-mapping
+  title: Cross-Platform Accessibility Attribute Mapping
+  applies_to: Use when mapping accessibility labels, hints, roles, and live regions between
+    Web, iOS, and Android
+  kind: reference
+  preamble_spans:
+  - - 9
+    - 11
+  spans:
+  - - 57
+    - 78
+  sha256: 2598afd8499999ff299d7a217bc7d2034b2cb2fb73a91b0b3ac737cb9bc69ec8
+- id: platform-code-examples
+  title: Platform-Specific Accessibility Code Examples
+  applies_to: Use when writing accessible component code for Web (HTML/ARIA), iOS (SwiftUI),
+    or Android (Compose)
+  kind: reference
+  preamble_spans:
+  - - 71
+    - 78
+  spans:
+  - - 80
+    - 115
+  sha256: 066f5cdeddc66c01c84d933c3000d458b47aa708ab960d40aef1abc1b5a7802a
+- id: anti-patterns-and-checklist
+  title: Anti-Patterns and Validation Checklist
+  applies_to: Use when reviewing an accessibility implementation for common mistakes or validating
+    WCAG 2.2 compliance
+  kind: reference
+  preamble_spans:
+  - - 20
+    - 26
+  spans:
+  - - 117
+    - 132
+  sha256: d94415eadc4398f4983d664d40412ab56f16385df90da1a3fa4bc998f8b3e644

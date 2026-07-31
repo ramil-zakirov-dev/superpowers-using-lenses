@@ -1,0 +1,256 @@
+id: wispbit/rust-expert-best-practices-code-review
+version: 1b957c87a605
+source:
+  url: https://github.com/wispbit/ai-skills
+  path: rust-expert-best-practices-code-review/SKILL.md
+  sha256: 1b957c87a60570c5b4c176b7359547f95d39470c76e06530cc66361ee1b6249b
+license: MIT
+kind: reference
+stacks: []
+document_kinds: []
+summary: Rust best practices and code quality guidelines for writing idiomatic, safe, and
+  performant Rust code. This skill should be used when writing, reviewing, or refactoring
+  Rust code. Triggers on tasks involving Rust programming, code review, error handling, type
+  safety, or performance optimization.
+decomposed_by: author
+parts:
+- id: avoid-boolean-params
+  title: Avoid Boolean Parameters in Function Signatures
+  applies_to: Avoid Boolean Parameters in Function Signatures — Improves code readability
+    and prevents boolean confusion at call sites.
+  file: rules/avoid-boolean-params.md
+  spans:
+  - - 1
+    - 110
+  tags:
+  - api-design
+  - function-parameters
+  - enums
+  - readability
+  - rust
+  sha256: d67a9e36d5f0fdc6c3f70442c6170e669ad064593b5604b46a9bddd7e31f45be
+- id: avoid-box
+  title: Avoid Unnecessary Box<T> for Concrete Types
+  applies_to: Avoid Unnecessary Box<T> for Concrete Types — Reduces unnecessary heap allocations
+    and improves performance.
+  file: rules/avoid-box.md
+  spans:
+  - - 1
+    - 80
+  tags:
+  - box
+  - heap-allocation
+  - performance
+  - memory-management
+  - rust
+  sha256: 4dd47cb5815c4b347e7ead71858b750e36eddadde44ceeede780734bf9f670b0
+- id: avoid-panic
+  title: Avoid Panic - Use Appropriate Error Handling
+  applies_to: Avoid Panic - Use Appropriate Error Handling — Prevents unexpected crashes and
+    enables graceful error handling.
+  file: rules/avoid-panic.md
+  spans:
+  - - 1
+    - 193
+  tags:
+  - error-handling
+  - panic
+  - assert
+  - result
+  - rust
+  sha256: 4b5f2e09defe71ffd86d02a04e878b5190e8c4432570b4cfa5e4e1632cc72f5f
+- id: avoid-rc
+  title: Avoid Unnecessary Rc<T> Usage
+  applies_to: Avoid Unnecessary Rc<T> Usage — Simplifies ownership patterns and reduces reference
+    counting overhead.
+  file: rules/avoid-rc.md
+  spans:
+  - - 1
+    - 111
+  tags:
+  - ownership
+  - rc
+  - memory-management
+  - performance
+  - rust
+  sha256: f9f3d390e18cfddb2feababe70d7a2c8584da8926c4403fed9e1375792e7f358
+- id: calculated-field-as-method
+  title: Implement Calculated Fields as Methods
+  applies_to: Implement Calculated Fields as Methods — Prevents data duplication and maintains
+    single source of truth.
+  file: rules/calculated-field-as-method.md
+  spans:
+  - - 1
+    - 88
+  tags:
+  - struct-design
+  - methods
+  - calculated-fields
+  - data-modeling
+  - rust
+  sha256: 4ec0d28dc77ff4b7d3a6434490b5c07d986d05152ab193b2130f227361946272
+- id: decimal-comparison
+  title: Use is_sign_negative() for Decimal Comparisons
+  applies_to: Use is_sign_negative() for Decimal Comparisons — Improves code clarity and uses
+    idiomatic Decimal methods.
+  file: rules/decimal-comparison.md
+  spans:
+  - - 1
+    - 89
+  tags:
+  - decimal
+  - comparison
+  - rust-decimal
+  - readability
+  - rust
+  sha256: 5b3b1bfc92601fadf1f23989f9e80daec72d32dc01ccdd47967d28de21e4a941
+- id: match-statements-handle-all-cases
+  title: Match Statements Should Handle All Cases Explicitly
+  applies_to: Match Statements Should Handle All Cases Explicitly — Prevents bugs when new
+    enum variants are added through exhaustive matching.
+  file: rules/match-statements-handle-all-cases.md
+  spans:
+  - - 1
+    - 106
+  tags:
+  - pattern-matching
+  - enums
+  - exhaustive-match
+  - type-safety
+  - rust
+  sha256: 1a4083fa35fb66b87b0cee2278dd9bb6581251caede2ca7fbeb5c9a596fed1ee
+- id: prefer-builder-pattern-for-complex
+  title: Prefer Builder Pattern for Complex Constructors
+  applies_to: Prefer Builder Pattern for Complex Constructors — Improves API ergonomics and
+    prevents parameter confusion.
+  file: rules/prefer-builder-pattern-for-complex.md
+  spans:
+  - - 1
+    - 144
+  tags:
+  - builder-pattern
+  - api-design
+  - constructors
+  - ergonomics
+  - rust
+  sha256: 91033373a4dbe40b2065be7b6b0881e09f45477e2cfa9ab6212d14d103b42af0
+- id: prefer-format
+  title: Prefer format! Over Manual String Concatenation
+  applies_to: Prefer format! Over Manual String Concatenation — Improves code clarity and
+    reduces string building complexity.
+  file: rules/prefer-format.md
+  spans:
+  - - 1
+    - 53
+  tags:
+  - strings
+  - format-macro
+  - concatenation
+  - readability
+  - rust
+  sha256: 3e4799d6a430b1677fa7ac793f0ec17a211cba3e79b9beb66405f772bda68601
+- id: result-error-returns
+  title: Proper Error Handling in Result-Returning Functions
+  applies_to: Proper Error Handling in Result-Returning Functions — Ensures proper error propagation
+    and prevents panics in error paths.
+  file: rules/result-error-returns.md
+  spans:
+  - - 1
+    - 112
+  tags:
+  - error-handling
+  - result
+  - question-mark-operator
+  - unwrap
+  - rust
+  sha256: 09588b62ecda6d48029c86b859c2c5e9e5b61ffa66fc0d9abe16abb8577e8be5
+- id: use-borrowed-argument-types
+  title: Use Borrowed Argument Types Instead of Owned Types
+  applies_to: Use Borrowed Argument Types Instead of Owned Types — Improves API flexibility
+    and enables deref coercion for better ergonomics.
+  file: rules/use-borrowed-argument-types.md
+  spans:
+  - - 1
+    - 83
+  tags:
+  - api-design
+  - function-parameters
+  - deref-coercion
+  - ergonomics
+  - rust
+  sha256: ae1bc8f09a531199af0bfc16924fd03a9033cd4111847ae707c63ecf37bec10d
+- id: use-copied
+  title: Use .copied() for Copy Types in Iterators
+  applies_to: Use .copied() for Copy Types in Iterators — Simplifies dereferencing patterns
+    and improves code readability.
+  file: rules/use-copied.md
+  spans:
+  - - 1
+    - 92
+  tags:
+  - iterators
+  - copy-types
+  - dereferencing
+  - readability
+  - rust
+  sha256: 6ea7d4cf2c4a3660a112e2bb89cbd2c9470d5dbf30b1cc8481ea00db3ee47aa5
+- id: use-enum-deserialization
+  title: Use Exhaustive Enum Deserialization with Pattern Matching
+  applies_to: Use Exhaustive Enum Deserialization with Pattern Matching — Prevents invalid
+    states and unsafe vector access through type-level safety.
+  file: rules/use-enum-deserialization.md
+  spans:
+  - - 1
+    - 121
+  tags:
+  - deserialization
+  - type-safety
+  - pattern-matching
+  - serde
+  - enums
+  - rust
+  sha256: f2d7662822a7dd794dc12dc9db74a67fa90e9e3686d5f8e712a15dbc7a1c2ea5
+- id: use-iterator-transforms
+  title: Use Iterator Transforms Instead of Push Loops
+  applies_to: Use Iterator Transforms Instead of Push Loops — Improves code clarity and functional
+    programming style.
+  file: rules/use-iterator-transforms.md
+  spans:
+  - - 1
+    - 91
+  tags:
+  - iterators
+  - functional-programming
+  - collections
+  - idiomatic-rust
+  - rust
+  sha256: a2ea47fbdbb05a614f2047badcd137546bb88dce20b085441e2cce233776c567
+- id: use-named-placeholders
+  title: Use Named Placeholders in Destructuring
+  applies_to: Use Named Placeholders in Destructuring — Improves code readability and self-documentation.
+  file: rules/use-named-placeholders.md
+  spans:
+  - - 1
+    - 58
+  tags:
+  - pattern-matching
+  - destructuring
+  - readability
+  - self-documenting
+  - rust
+  sha256: 75bd689cfdf46200acc383fff818b8fcf3de1c875844c822fe78f365c603bd65
+- id: use-typesafe-index-wrappers
+  title: Use Type-Safe Index Wrappers
+  applies_to: Use Type-Safe Index Wrappers — Prevents index mixing bugs at compile time through
+    newtype pattern.
+  file: rules/use-typesafe-index-wrappers.md
+  spans:
+  - - 1
+    - 110
+  tags:
+  - type-safety
+  - newtype
+  - indices
+  - compile-time-safety
+  - rust
+  sha256: 8fe9ed2fbb531eb414d06848cca7a3c9f3b4ffe018d82c43d7cc3226b55cf26e

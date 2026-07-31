@@ -1,0 +1,129 @@
+id: ecc/error-handling
+version: bca77baf7611
+source:
+  url: https://github.com/affaan-m/ECC
+  path: error-handling\SKILL.md
+  sha256: bca77baf7611044cf8dea30309b9f2733244499b238d0a15b19dc832594fd37c
+license: MIT
+kind: reference
+stacks:
+- typescript
+- python
+- go
+- react
+document_kinds:
+- milestone
+- spec
+- plan
+summary: Patterns and implementation examples for designing, propagating, retrying, and presenting
+  errors across TypeScript, Python, and Go applications.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: core-error-principles
+  title: Core Error Principles
+  applies_to: Use when evaluating or designing error behavior in an application or service.
+  kind: lens
+  spans:
+  - - 20
+    - 26
+  sha256: a5cb80680b06f14b7e6f099185bc5d8676e36fcc240ac52dc6c5e2c62ff2c3a4
+- id: typescript-error-classes
+  title: TypeScript Typed Error Classes
+  applies_to: Use when defining structured domain errors or exception hierarchies in TypeScript
+    or JavaScript.
+  kind: reference
+  spans:
+  - - 28
+    - 73
+  sha256: 732dc260860299b490ffb42c01bc656bec52970f2ad136c000864a2897bbb9e3
+- id: typescript-result-pattern
+  title: TypeScript Result Pattern
+  applies_to: Use when implementing operations where failure is expected and should be represented
+    without throwing.
+  kind: reference
+  preamble_spans:
+  - - 34
+    - 47
+  - - 50
+    - 54
+  spans:
+  - - 75
+    - 111
+  sha256: 90936e9de3ddb6e88203101cc9ce632d876aa3c245616b6ab09d13feb147236c
+- id: typescript-api-error-handler
+  title: TypeScript API Error Handler
+  applies_to: Use when adding centralized error responses to Next.js or Express-style API
+    endpoints.
+  kind: reference
+  preamble_spans:
+  - - 34
+    - 47
+  spans:
+  - - 113
+    - 165
+  sha256: 6b936439fd24f8947d5eb3e2904e51b925079745c30a0f662254b52a5bdb422b
+- id: react-error-boundary
+  title: React Error Boundary
+  applies_to: Use when isolating rendering errors and displaying fallback UI in React applications.
+  kind: reference
+  spans:
+  - - 167
+    - 205
+  sha256: 4da5ff41890fc2923ec0772fc92728b40232d4e9cfeb04f80fb9bcbea8e2383b
+- id: python-exception-hierarchy
+  title: Python Exception Hierarchy
+  applies_to: Use when defining structured application exceptions and HTTP-related error metadata
+    in Python.
+  kind: reference
+  spans:
+  - - 207
+    - 227
+  sha256: 81da15f1149c5d92a6748d4b3cdb212e9c717750581a896b97a4b82e7035d8f1
+- id: fastapi-global-error-handlers
+  title: FastAPI Global Exception Handlers
+  applies_to: Use when configuring centralized application and unexpected-error responses
+    in FastAPI.
+  kind: reference
+  preamble_spans:
+  - - 212
+    - 227
+  spans:
+  - - 229
+    - 252
+  sha256: 04dbd7e99c9142c1dbd25f243cdee8574875d9b7859b4853fbd8d48180c71790
+- id: go-sentinel-errors
+  title: Go Sentinel Errors and Wrapping
+  applies_to: Use when defining, wrapping, classifying, and translating errors in Go repositories,
+    services, and HTTP handlers.
+  kind: reference
+  spans:
+  - - 254
+    - 299
+  sha256: ab7d1c3a68897abb84406888016743abb92f3a96806e08595615da4850d639f0
+- id: exponential-retry
+  title: Exponential Backoff Retry
+  applies_to: Use when adding retries for transient failures from unreliable external or network
+    dependencies.
+  kind: pipeline
+  spans:
+  - - 301
+    - 345
+  sha256: 9a28e72a947043beb1555318801df2d4cc72ac30f16fbcffdfd29f038da4bf0f
+- id: user-facing-error-messages
+  title: User-Facing Error Messages
+  applies_to: Use when mapping internal error codes to safe, human-readable messages for application
+    users.
+  kind: reference
+  spans:
+  - - 347
+    - 364
+  sha256: ee9b84630e567ea63fc0d9af77210bd9cce35b0c03df18118ba64b09eccba1db
+- id: error-handling-checklist
+  title: Error Handling Review Checklist
+  applies_to: Use when reviewing or preparing code that adds or changes error handling before
+    merging.
+  kind: reference
+  spans:
+  - - 366
+    - 377
+  sha256: 3326452b2d60581a546132687733148195064e1bdf7ba780a07eb18952410755

@@ -1,0 +1,96 @@
+id: ecc/regex-vs-llm-structured-text
+version: cfa3a0a552aa
+source:
+  url: https://github.com/affaan-m/ECC
+  path: regex-vs-llm-structured-text\SKILL.md
+  sha256: cfa3a0a552aa0288062fa08bb8a799db0e4524d2ba84fa042683ddc45181dcb0
+license: MIT
+kind: pipeline
+stacks:
+- any
+document_kinds:
+- spec
+- plan
+summary: A framework and implementation pattern for combining deterministic regex parsing
+  with confidence-based LLM validation for structured text.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: structured-text-decision
+  title: Regex-versus-LLM Decision Framework
+  applies_to: Use when choosing a parsing strategy for structured, repeating, or highly variable
+    text.
+  kind: lens
+  spans:
+  - - 12
+    - 27
+  sha256: aa61d290fe0f098fe22b5dfb1072ab87fc6fb7655768d0289e0a070a98027d31
+- id: hybrid-architecture
+  title: Hybrid Parsing Architecture
+  applies_to: Use when designing a parser that combines regex extraction, cleanup, confidence
+    scoring, and selective LLM validation.
+  kind: pipeline
+  spans:
+  - - 29
+    - 46
+  sha256: 50e79e60c9be0f6ce035cdfc2db33866e794896e519eb91254ce202268a68c83
+- id: regex-parser
+  title: Regex Structured-Text Parser
+  applies_to: Use when implementing deterministic extraction for text with recurring item,
+    choice, and answer patterns.
+  kind: reference
+  spans:
+  - - 48
+    - 84
+  sha256: 632f063f642c2a47badb4da23d482feeca5b3f2d5e7841e393acf7ade0cefd85
+- id: confidence-scoring
+  title: Extraction Confidence Scoring
+  applies_to: Use when flagging parsed items that may need review or fallback validation.
+  kind: reference
+  spans:
+  - - 86
+    - 127
+  requires:
+  - regex-parser
+  sha256: f8fcc38bf44dfee278dc105d874be230cc653181225778f1462d9e5486c65e49
+- id: llm-edge-case-validator
+  title: LLM Edge-Case Validation
+  applies_to: Use when correcting or verifying extractions that fall below the confidence
+    threshold.
+  kind: reference
+  spans:
+  - - 129
+    - 153
+  requires:
+  - regex-parser
+  sha256: beb4e923e3e33392bc4940878c0e59dbe380dbec28bb3f78ce9a1d263fc827fe
+- id: hybrid-processing-pipeline
+  title: Regex-to-LLM Processing Pipeline
+  applies_to: Use when processing a complete document with regex first and optional LLM validation
+    for flagged items.
+  kind: pipeline
+  spans:
+  - - 155
+    - 184
+  requires:
+  - regex-parser
+  - confidence-scoring
+  - llm-edge-case-validator
+  sha256: cf0d5c877e675db009cad50d8bcf085f97564d1b43db9c93eff3745502b397db
+- id: production-metrics
+  title: Production Parsing Metrics
+  applies_to: Use when benchmarking regex success, fallback volume, cost savings, or test
+    coverage for a structured-text parser.
+  kind: reference
+  spans:
+  - - 186
+    - 196
+  sha256: 9117a4ba8d28fdaa1bea6e578f97ac9e9913fea6ffd7127af2b49fd0607c1592
+- id: parser-practices-and-antipatterns
+  title: Parser Practices and Anti-Patterns
+  applies_to: Use when reviewing implementation choices for cost, correctness, immutability,
+    testing, and operational observability.
+  kind: lens
+  spans:
+  - - 198
+    - 213
+  sha256: fd52c289c352f06c7ab46b5e639bc35e1be32b5a93f9f5c96ded1fa6fd8e05ac

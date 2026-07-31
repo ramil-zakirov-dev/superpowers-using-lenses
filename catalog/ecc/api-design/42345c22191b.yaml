@@ -1,0 +1,111 @@
+id: ecc/api-design
+version: 42345c22191b
+source:
+  url: https://github.com/affaan-m/ECC
+  path: api-design\SKILL.md
+  sha256: 42345c22191b4cc4801874878049d3efdbd41e3870a82cde5cd27d6e8cfe941e
+license: MIT
+kind: reference
+stacks:
+- any
+document_kinds:
+- spec
+summary: Comprehensive reference for designing consistent, developer-friendly REST APIs covering
+  resource naming, status codes, response formats, pagination, filtering, auth, rate limiting,
+  versioning, and implementation patterns.
+decomposed_by: xiaomi/mimo-v2.5
+parts:
+- id: resource-naming
+  title: Resource Naming and URL Structure
+  applies_to: Use when designing API endpoint URLs, naming resources, or structuring sub-resource
+    relationships.
+  kind: reference
+  spans:
+  - - 21
+    - 57
+  sha256: 80367a029aa5ca6642b544d3588c317b22ed646f9efc886f07a985613b21705b
+- id: http-methods-status-codes
+  title: HTTP Methods and Status Codes
+  applies_to: Use when choosing HTTP methods for endpoints or selecting the correct status
+    code for a response.
+  kind: reference
+  spans:
+  - - 59
+    - 113
+  sha256: 82abb902bee186fbd89218432c31ad045f97d8893fe0dfd2c72db92a071b8bb8
+- id: response-format
+  title: Response Format Standards
+  applies_to: Use when defining the JSON shape of success responses, error responses, or collection/pagination
+    envelopes.
+  kind: reference
+  spans:
+  - - 115
+    - 197
+  sha256: d56daeb321ea595a389e4e895d457edd280df0e335d73f9b7eba28ed64f870b3
+- id: pagination
+  title: Pagination Strategies
+  applies_to: Use when implementing pagination for list endpoints and deciding between offset-based
+    and cursor-based approaches.
+  kind: reference
+  spans:
+  - - 199
+    - 248
+  sha256: 8860c46b4be083b27e0600bfa70e49e05beacae7c255328150d32a8261efd6a4
+- id: filtering-sorting-search
+  title: Filtering, Sorting, and Search
+  applies_to: Use when designing query parameter conventions for filtering, sorting, full-text
+    search, or sparse fieldsets.
+  kind: reference
+  spans:
+  - - 249
+    - 294
+  sha256: 09eca5310a41b9c1389b304f2668a776e310c47227622e50e8340b82921f7c61
+- id: auth
+  title: Authentication and Authorization Patterns
+  applies_to: Use when implementing token-based authentication headers or resource-level and
+    role-based authorization checks.
+  kind: reference
+  spans:
+  - - 296
+    - 326
+  sha256: fd091e4d3e4bc20927292fff8c6004d049e0c64afd2e2363488a02b41742d1ad
+- id: rate-limiting
+  title: Rate Limiting Headers and Tiers
+  applies_to: Use when configuring rate limit response headers, 429 responses, or selecting
+    rate limit tiers by caller type.
+  kind: reference
+  spans:
+  - - 328
+    - 356
+  sha256: 8644a33287035d1c30f940137e412a731300cfab40a75ff9ca5777bc9b6db50a
+- id: versioning
+  title: API Versioning Strategy
+  applies_to: Use when choosing a versioning approach (URL path vs header) or planning a deprecation
+    and sunset timeline.
+  kind: reference
+  spans:
+  - - 358
+    - 398
+  sha256: a2c0150d69884a7b41139c0b3a8c1d74d16f3767bcedd4b47e4e1e4620fbea64
+- id: implementation-patterns
+  title: Implementation Patterns by Language
+  applies_to: Use when implementing a create-resource endpoint in TypeScript (Next.js), Python
+    (Django REST Framework), or Go (net/http).
+  kind: reference
+  preamble_spans:
+  - - 75
+    - 94
+  - - 115
+    - 197
+  spans:
+  - - 400
+    - 507
+  sha256: 2fc689233ac7f596433be9c391c9139f4765f57bd0e8cbf2d9d4999a6a6ffc8c
+- id: design-checklist
+  title: API Design Pre-Ship Checklist
+  applies_to: Use when reviewing a new or modified endpoint before shipping to production.
+  kind: reference
+  spans:
+  - - 509
+    - 524
+  sha256: 29c5b27fab3809a66ae7be2c47ff0847e75a7eba70ae3a996cde6a0fc10248dd

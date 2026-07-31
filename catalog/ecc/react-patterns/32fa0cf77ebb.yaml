@@ -1,0 +1,117 @@
+id: ecc/react-patterns
+version: 32fa0cf77ebb
+source:
+  url: https://github.com/affaan-m/ECC
+  path: react-patterns/SKILL.md
+  sha256: 32fa0cf77ebb072f290e5057a65cd4bc68cf4b8d607ac30c29483cf4e2e423e4
+license: MIT
+kind: lens
+stacks:
+- react
+document_kinds:
+- milestone
+- spec
+- plan
+summary: Guidance for designing, implementing, and reviewing idiomatic React 18/19 components,
+  state, data flows, boundaries, and accessible composition.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: rendering-principles
+  title: Rendering Principles
+  applies_to: Use when evaluating whether component rendering, side effects, or composition
+    follow idiomatic React design.
+  kind: lens
+  spans:
+  - - 23
+    - 53
+  sha256: a344f5d41942d0ba76431ae9d439253b3679aa2dfb90e61a18eb6d5bf8202791
+- id: hooks-discipline
+  title: Hooks Discipline
+  applies_to: Use when writing, reviewing, migrating, or extracting React hooks and custom
+    hooks.
+  kind: lens
+  preamble_spans:
+  - - 23
+    - 25
+  spans:
+  - - 54
+    - 63
+  sha256: a0fe0ff150993e7df2537fbcdfd8bee117ae552b4d824350b94fed1686894403
+- id: state-location
+  title: State Location Decision Tree
+  applies_to: Use when choosing between component state, lifted state, context, external stores,
+    and server-state libraries.
+  kind: reference
+  preamble_spans:
+  - - 23
+    - 25
+  spans:
+  - - 64
+    - 83
+  sha256: a342b14e72079e0851830cda59ca099b4953691ba5e126be0698afe5345fed28
+- id: server-client-boundaries
+  title: Server and Client Components
+  applies_to: Use when designing or reviewing React Server Component and Client Component
+    boundaries, especially in Next.js App Router or RSC applications.
+  kind: reference
+  spans:
+  - - 85
+    - 115
+  sha256: 612c217940940ee9f157b1071b07b054ea47a48d4333e5ac8447b56ee4cf1d0c
+- id: suspense-error-boundaries
+  title: Suspense and Error Boundaries
+  applies_to: Use when adding loading states, progressive rendering, or error handling around
+    React component subtrees.
+  kind: reference
+  spans:
+  - - 116
+    - 129
+  sha256: 28797ebbd336f9cc4fafbd248dc644f7c7f1024c5f88588a9f76ecb0faafc202
+- id: react-forms
+  title: React Forms
+  applies_to: Use when implementing React 19 form actions, controlled inputs, validation,
+    or complex multi-step forms.
+  kind: reference
+  spans:
+  - - 130
+    - 167
+  sha256: 9c3712e21c2549fcf614909e5b92802c639047bd835cd91aa3ddbb8c0a1fa54e
+- id: data-fetching
+  title: Data Fetching Decision Matrix
+  applies_to: Use when selecting a data-fetching, caching, mutation, subscription, or revalidation
+    approach for a React application.
+  kind: reference
+  spans:
+  - - 168
+    - 179
+  sha256: 8713d6c9b4913ff5dc5ab12781107c7af6e814ade8aa890782e673bfcf1b57fe
+- id: composition-recipes
+  title: Composition Recipes
+  applies_to: Use when designing reusable React component APIs with children, named slots,
+    compound components, render props, or hooks.
+  kind: reference
+  preamble_spans:
+  - - 50
+    - 52
+  spans:
+  - - 180
+    - 222
+  sha256: 8367cc911b272daa8c7c6ba597937b2a041dc0ee3599c76b96f39b552a12f2ec
+- id: react-performance
+  title: React Performance
+  applies_to: Use when diagnosing unnecessary re-renders, deciding whether to memoize, or
+    optimizing contexts and long lists.
+  kind: lens
+  spans:
+  - - 224
+    - 245
+  sha256: 36d7d39647a5284f66b6e61c3fc52053e06eb6a24eca0ba6cc90f2a3c6001fdd
+- id: accessibility-first-composition
+  title: Accessibility-First Composition
+  applies_to: Use when creating or reviewing interactive React components, forms, navigation,
+    dialogs, and other user-facing UI.
+  kind: lens
+  spans:
+  - - 247
+    - 255
+  sha256: 40394bb3d2442bde95dd1fa97788a4b523ae846e5b83f23462d56f01b2f03fe1

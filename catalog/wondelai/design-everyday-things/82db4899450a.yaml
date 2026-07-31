@@ -1,0 +1,124 @@
+id: wondelai/design-everyday-things
+version: 82db4899450a
+source:
+  url: https://github.com/wondelai/skills
+  path: design-everyday-things\SKILL.md
+  sha256: 82db4899450a68c0cb7cd799814745bc0f4318709dd4165e408cdfcd5347b33d
+license: MIT
+kind: lens
+stacks:
+- any
+document_kinds:
+- spec
+summary: A framework of foundational design principles — affordances, signifiers, constraints,
+  feedback, mapping, and conceptual models — for evaluating and improving the intuitiveness
+  of any human-designed product.
+decomposed_by: xiaomi/mimo-v2.5
+parts:
+- id: two-gulfs
+  title: The Two Gulfs
+  applies_to: Use when analysing any interaction to identify whether the problem lies in execution
+    (user cannot figure out how to act) or evaluation (user cannot figure out what happened)
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 22
+    - 50
+  sha256: a3ba7414b333fb8930cb4e24d005b79102c80922ee588d17a27059559dbf2058
+- id: affordances
+  title: Affordances
+  applies_to: Use when interactive elements are not being used, users cannot tell what is
+    clickable, or flat design has erased perceived affordances
+  kind: reference
+  spans:
+  - - 62
+    - 86
+  sha256: 2f9d624e46c82a2534664e465badbbbc99a06011886b465dba1234bea356247c
+- id: signifiers
+  title: Signifiers
+  applies_to: Use when users cannot find features, do not know where to act, or controls lack
+    visual cues indicating interactivity
+  kind: reference
+  spans:
+  - - 88
+    - 108
+  sha256: 92d1a9e4e24102657b7ddc3157986f62088bfee5bd918af21b065c2660c6fd30
+- id: mappings
+  title: Mappings
+  applies_to: Use when control layouts do not correspond to their effects or spatial relationships
+    between controls and outputs are confusing
+  kind: reference
+  spans:
+  - - 110
+    - 129
+  sha256: 47fa0f145ae0a3c0584a1f11746bc0f89dfa7cd58f97bb2f8e4b666fcd22c5c4
+- id: constraints
+  title: Constraints
+  applies_to: Use when users make errors that could be prevented by limiting available actions
+    or hiding invalid options
+  kind: reference
+  spans:
+  - - 131
+    - 152
+  sha256: 70c4040f144826525d7767eaadf71fe6abf17f8c568ae3b8e0c600d8960c0951
+- id: feedback
+  title: Feedback
+  applies_to: Use when actions give no clear result, users do not know whether their click
+    registered, or response times feel broken
+  kind: reference
+  spans:
+  - - 154
+    - 177
+  sha256: c382969b5abee23e8cdfb17aaf43a3363e96f53c98f2ad7dfa9de5343e31e76e
+- id: conceptual-models
+  title: Conceptual Models
+  applies_to: Use when users' understanding of how the product works diverges from its actual
+    behaviour or when metaphor and visible system state are unclear
+  kind: reference
+  spans:
+  - - 179
+    - 195
+  sha256: 312be9a752f9e4a809d5ceb9eae2545377d0ec9cfafdfb1eca9615d785115fce
+- id: human-error
+  title: Human Error Diagnosis and Prevention
+  applies_to: Use when diagnosing why users make mistakes, distinguishing slips from mistakes,
+    or designing error prevention and recovery
+  kind: lens
+  spans:
+  - - 197
+    - 232
+  sha256: 83b842b68e1835fd12440d45067005cfa6d7c2b3dec7f52d0cff40e5fbd8aa91
+- id: seven-stages
+  title: Seven Stages of Action
+  applies_to: Use when walking through a specific interaction step-by-step to find where users
+    get stuck between intention and outcome
+  kind: lens
+  preamble_spans:
+  - - 22
+    - 48
+  spans:
+  - - 234
+    - 252
+  sha256: 0f056a07aa39d6cbe17644bdc27881e24dcc867e985cd9787f7bd5bac00ec995
+- id: quick-diagnostic
+  title: Quick Diagnostic and Scoring
+  applies_to: Use when auditing or scoring a design's usability across discoverability, evaluation,
+    error recovery, mapping, and constraints
+  kind: pipeline
+  spans:
+  - - 18
+    - 20
+  - - 273
+    - 283
+  sha256: 3d8fa1e314eba70ce299b866962f37882b49fa8e3c4c0f64e5c62e326dc6dc07
+- id: common-mistakes
+  title: Common Design Mistakes
+  applies_to: Use when reviewing a design for frequent anti-patterns such as missing signifiers,
+    missing feedback, or feature creep
+  kind: reference
+  spans:
+  - - 262
+    - 271
+  sha256: a8b9bcd9b64b13638da0ecb2fc276e2d5130d168b839671df07973d6b63c7402

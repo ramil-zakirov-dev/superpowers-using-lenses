@@ -1,0 +1,95 @@
+id: wondelai/clean-architecture
+version: a96f8d010306
+source:
+  url: https://github.com/wondelai/skills
+  path: clean-architecture\SKILL.md
+  sha256: a96f8d0103068bd9e1cbedc980d86c3c9af48b127acd96b4beac555658284a2e
+license: MIT
+kind: lens
+stacks:
+- any
+document_kinds:
+- spec
+summary: A framework for structuring software around the Dependency Rule — source code dependencies
+  point inward from frameworks to use cases to entities — with scoring criteria, layer definitions,
+  component principles, SOLID principles, boundary patterns, and a diagnostic checklist.
+decomposed_by: xiaomi/mimo-v2.5
+parts:
+- id: scoring-and-diagnostic
+  title: Architecture Scoring and Quick Diagnostic
+  applies_to: Use when evaluating how well an existing or proposed architecture follows the
+    Dependency Rule and you need a scoring rubric with actionable yes/no diagnostic questions.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 18
+    - 20
+  - - 176
+    - 186
+  sha256: e4deff0f9db328291a9d02e93c025a16c27c9507e5706eb0b45a520c85f833bc
+- id: dependency-rule
+  title: Dependency Rule and Concentric Circles
+  applies_to: Use when deciding which architectural layer a piece of code belongs in, diagnosing
+    dependency direction violations, or implementing Dependency Inversion at boundaries.
+  kind: reference
+  spans:
+  - - 22
+    - 43
+  sha256: 3ac419a6979747dce8a3cecac42b9d261f27f8735589b9434ba28a5d6ac2f1c4
+- id: entities-and-use-cases
+  title: Entities and Use Cases
+  applies_to: Use when deciding what belongs in an Entity versus a Use Case, designing Interactor
+    classes, or defining request/response models that cross architectural boundaries.
+  kind: reference
+  spans:
+  - - 45
+    - 67
+  sha256: 7376d95b5eeb1cb372d420e2825dcc189a97b4f8294503e50efcf4f09f80f635
+- id: adapters-and-frameworks
+  title: Interface Adapters and Frameworks
+  applies_to: Use when wiring controllers, presenters, or gateways, confining a framework
+    to the outermost circle, or isolating business rules from delivery mechanisms and persistence.
+  kind: reference
+  spans:
+  - - 69
+    - 90
+  sha256: b97b32fb182e463ea4ffbcf6429bb87aaa28c547f625f7eccbef72a8ad85be3e
+- id: component-principles
+  title: Component Principles
+  applies_to: Use when grouping classes into deployable components, breaking dependency cycles,
+    or applying REP, CCP, CRP, ADP, SDP, and SAP principles.
+  kind: reference
+  spans:
+  - - 92
+    - 114
+  sha256: a5be9bc1d9607c56b4fe7186a30e59aa840326437f44441c6939a44165991f85
+- id: solid-principles
+  title: SOLID Principles
+  applies_to: Use when applying or diagnosing violations of SRP, OCP, LSP, ISP, or DIP at
+    the class or module level.
+  kind: reference
+  spans:
+  - - 116
+    - 139
+  sha256: fb00ec82493594fcccfdbc62b1b21dab21786524a8e1833fef6f143ded37cac1
+- id: boundaries
+  title: Boundaries and Boundary Anatomy
+  applies_to: Use when deciding where to draw an architectural boundary, choosing between
+    full and partial boundaries, or applying the Humble Object pattern.
+  kind: reference
+  spans:
+  - - 141
+    - 162
+  sha256: cce07f582077f4f026173a4569b8b2d114f34720d1f384a42fe440345fc9235e
+- id: common-mistakes
+  title: Common Architecture Mistakes
+  applies_to: Use when diagnosing a specific anti-pattern such as ORM leaking into business
+    logic, business rules in controllers, circular component dependencies, or framework-first
+    architecture.
+  kind: reference
+  spans:
+  - - 164
+    - 174
+  sha256: cb23426cdc022d4f1a557d4c8fcaa2eff3415acfc8214e5857f861dffd22887b

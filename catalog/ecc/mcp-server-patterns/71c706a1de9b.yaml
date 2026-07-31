@@ -1,0 +1,77 @@
+id: ecc/mcp-server-patterns
+version: 71c706a1de9b
+source:
+  url: https://github.com/affaan-m/ECC
+  path: mcp-server-patterns\SKILL.md
+  sha256: 71c706a1de9b99fcbf6e219107d599edbca4307d28e6dd837dc06be2eec8b5a8
+license: MIT
+kind: reference
+stacks:
+- node
+- typescript
+document_kinds:
+- spec
+- plan
+summary: Provides current-oriented patterns for designing, implementing, transporting, validating,
+  and maintaining MCP servers.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: mcp-core-concepts
+  title: MCP Core Concepts
+  applies_to: Use when identifying or registering MCP tools, resources, prompts, and transports.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 20
+    - 27
+  sha256: 9c108774069bdcd2e31659442ee88331fb8103faa9f91a83010743df90647d94
+- id: mcp-transport-selection
+  title: Transport Selection and Separation
+  applies_to: Use when choosing local versus remote MCP connectivity or structuring server
+    logic around interchangeable transports.
+  kind: lens
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 29
+    - 37
+  sha256: 276f29c334ce5109f7f020ce3c16e8e3d552ce931ab5f613469ae93cb7740f08
+- id: mcp-server-setup
+  title: Server Installation and Setup
+  applies_to: Use when installing the Node/TypeScript MCP SDK, creating a server, registering
+    capabilities, or adding input validation.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 41
+    - 56
+  sha256: ec4e02b6f9dd0da91ef17958755b6fb83e279d871ccff91640da1f1b0d335e01
+- id: mcp-server-best-practices
+  title: MCP Server Best Practices
+  applies_to: Use when reviewing MCP tool schemas, errors, retry behavior, external API costs,
+    or SDK version management.
+  kind: lens
+  preamble_spans:
+  - - 20
+    - 25
+  spans:
+  - - 58
+    - 64
+  sha256: 4850595c45f2ae5230390e3fa72ea34cdba562e544e2aa07c516c814e03f41f2
+- id: mcp-sdk-documentation
+  title: SDKs and Documentation
+  applies_to: Use when selecting an MCP SDK or checking authoritative documentation for current
+    SDK APIs.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 66
+    - 70
+  sha256: 97434e674a6c7ebca720df2e9f4d8401bda579f8c2abb2f47607e22258609838

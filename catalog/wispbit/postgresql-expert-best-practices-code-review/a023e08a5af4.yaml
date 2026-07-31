@@ -1,0 +1,181 @@
+id: wispbit/postgresql-expert-best-practices-code-review
+version: a023e08a5af4
+source:
+  url: https://github.com/wispbit/ai-skills
+  path: postgresql-expert-best-practices-code-review/SKILL.md
+  sha256: a023e08a5af4562b6816ecec8162b175bc167df6369fa6b27ca49029b1e0143b
+license: MIT
+kind: reference
+stacks: []
+document_kinds: []
+summary: PostgreSQL database design, migration, and performance optimization best practices.
+  This skill should be used when writing, reviewing, or refactoring database schemas, migrations,
+  or query patterns. Triggers on tasks involving PostgreSQL databases, schema design, migration
+  optimization, or data modeling.
+decomposed_by: author
+parts:
+- id: add-index-for-foreign-key
+  title: Add indexes for foreign keys in PostgreSQL
+  applies_to: Add indexes for foreign keys in PostgreSQL — Improves query performance and
+    prevents slow lookups on foreign keys.
+  file: rules/add-index-for-foreign-key.md
+  spans:
+  - - 1
+    - 25
+  tags:
+  - postgresql
+  - prisma
+  - supabase
+  - drizzle
+  - migrations
+  - indexes
+  - foreign-keys
+  sha256: 3984265b4dff55622e19b82f08dd084be3aebde37d2f15275bf72542cb75d874
+- id: always-include-columns
+  title: Always have id, created_at, updated_at columns in PostgreSQL
+  applies_to: Always have id, created_at, updated_at columns in PostgreSQL — Ensures trackability
+    and auditability of all records.
+  file: rules/always-include-columns.md
+  spans:
+  - - 1
+    - 29
+  tags:
+  - postgresql
+  - prisma
+  - supabase
+  - drizzle
+  - migrations
+  - schema
+  - best-practices
+  sha256: cf5d5e21d8762d8069958f54dfd9b3d85563a73eed300f77a0ec1ae35486a2c2
+- id: column-naming-standards
+  title: Column naming standards in PostgreSQL
+  applies_to: Column naming standards in PostgreSQL — Maintains consistency across the database
+    schema.
+  file: rules/column-naming-standards.md
+  spans:
+  - - 1
+    - 34
+  tags:
+  - postgresql
+  - prisma
+  - supabase
+  - drizzle
+  - migrations
+  - naming
+  - schema
+  sha256: be9dd8eb0919ea7752353300c4afd0c39773367c5b8fdffc1ecdd88a6ca3f853
+- id: index-naming-standards
+  title: Index naming standards in PostgreSQL
+  applies_to: Index naming standards in PostgreSQL — Improves code maintainability and reduces
+    naming conflicts.
+  file: rules/index-naming-standards.md
+  spans:
+  - - 1
+    - 29
+  tags:
+  - postgresql
+  - prisma
+  - supabase
+  - drizzle
+  - migrations
+  - indexes
+  - naming
+  sha256: 6aa26a7772a826bf489a0ffb49deb829d7739d6d785a0bda45cefec46c3d3258
+- id: limit-non-unique-index
+  title: Limit non unique indexes in PostgreSQL
+  applies_to: Limit non unique indexes in PostgreSQL — Improves index efficiency and reduces
+    storage overhead.
+  file: rules/limit-non-unique-index.md
+  spans:
+  - - 1
+    - 20
+  tags:
+  - postgresql
+  - prisma
+  - supabase
+  - drizzle
+  - migrations
+  - indexes
+  - performance
+  sha256: 29d362714fdbaa2ada6342da5e0237939e0793aed789b3dd2a75c4781ef3b2ec
+- id: only-concurrent-indexes
+  title: Only concurrent indexes in PostgreSQL
+  applies_to: Only concurrent indexes in PostgreSQL — Prevents blocking writes during index
+    creation on production tables.
+  file: rules/only-concurrent-indexes.md
+  spans:
+  - - 1
+    - 20
+  tags:
+  - postgresql
+  - prisma
+  - supabase
+  - drizzle
+  - migrations
+  - indexes
+  sha256: b2e9cfb49361f10b1ad152f775355d99b62d2ddcbf08f1ad1659362db8f40455
+- id: only-jsonb
+  title: Always use JSONB in PostgreSQL
+  applies_to: Always use JSONB in PostgreSQL — Enables indexing and efficient querying of
+    JSON data.
+  file: rules/only-jsonb.md
+  spans:
+  - - 1
+    - 22
+  tags:
+  - postgresql
+  - prisma
+  - supabase
+  - drizzle
+  - migrations
+  - data-types
+  sha256: f03583717e952cb5f49a22f39d1ab8f5dd2c627dd84215a9811e1355c192d46e
+- id: set-column-not-null
+  title: Use check constraints for setting NOT NULL columns in PostgreSQL
+  applies_to: Use check constraints for setting NOT NULL columns in PostgreSQL — Avoids blocking
+    reads and writes while validating existing rows.
+  file: rules/set-column-not-null.md
+  spans:
+  - - 1
+    - 35
+  tags:
+  - postgresql
+  - prisma
+  - supabase
+  - drizzle
+  - migrations
+  - constraints
+  sha256: ccb635deda8815defe55e01b28a5ad00c6d60d5ef468980be62fbd70c9485d10
+- id: split-foreign-key
+  title: Split foreign keys in PostgreSQL
+  applies_to: Split foreign keys in PostgreSQL — Avoids blocking writes on both tables during
+    foreign key validation.
+  file: rules/split-foreign-key.md
+  spans:
+  - - 1
+    - 31
+  tags:
+  - postgresql
+  - prisma
+  - supabase
+  - drizzle
+  - migrations
+  - foreign-keys
+  sha256: a6d8557279e5d3cc6a022fb3bbf433e7ab53445b6fbae5102cc31723a13793b0
+- id: unique-constraint
+  title: Split unique constraints in PostgreSQL
+  applies_to: Split unique constraints in PostgreSQL — Prevents blocking reads and writes
+    during constraint creation.
+  file: rules/unique-constraint.md
+  spans:
+  - - 1
+    - 25
+  tags:
+  - postgresql
+  - prisma
+  - supabase
+  - drizzle
+  - migrations
+  - constraints
+  sha256: 0ead661be867d374717d786c950bdaf76202dfea0ccd8c7138d38947e149f42a

@@ -1,0 +1,135 @@
+id: wispbit/python-expert-best-practices-code-review
+version: cbd0addc7382
+source:
+  url: https://github.com/wispbit/ai-skills
+  path: python-expert-best-practices-code-review/SKILL.md
+  sha256: cbd0addc7382afbff5730f4f47378cfed7db013a013921607b98b7967b8feaea
+license: MIT
+kind: reference
+stacks: []
+document_kinds: []
+summary: Python best practices for writing production-grade code. This skill should be used
+  when writing, reviewing, or refactoring Python code. Triggers on tasks involving Python
+  development, error handling patterns, dictionary operations, and code quality improvements.
+decomposed_by: author
+parts:
+- id: avoid-explanatory-comments
+  title: Self documenting code in Python
+  applies_to: Self documenting code in Python — Improves code readability by reducing noise
+    from obvious comments.
+  file: rules/avoid-explanatory-comments.md
+  spans:
+  - - 1
+    - 21
+  tags:
+  - python
+  - code-clarity
+  - readability
+  - comments
+  - self-documenting
+  sha256: 18260ea301df76d160eaa2219faf72a8d63c1a72000fee731db8d69d37232039
+- id: dict-required-keys
+  title: Use Direct Indexing for Required Dictionary Keys
+  applies_to: Use Direct Indexing for Required Dictionary Keys — Ensures missing keys fail
+    fast with KeyError instead of masking bugs.
+  file: rules/dict-required-keys.md
+  spans:
+  - - 1
+    - 96
+  tags:
+  - error-handling
+  - dictionaries
+  - debugging
+  - fail-fast
+  - api-validation
+  sha256: da69989f2dc6052fafb3e13ffe65601fe8fa35c3db6d887872a4b351b1a2216f
+- id: listcomp-no-side-effects
+  title: List Comprehensions Must Produce Values You Use
+  applies_to: List Comprehensions Must Produce Values You Use — Prevents side-effect list
+    comprehensions that waste memory and reduce code clarity.
+  file: rules/listcomp-no-side-effects.md
+  spans:
+  - - 1
+    - 59
+  tags:
+  - list-comprehensions
+  - code-clarity
+  - side-effects
+  - readability
+  - generators
+  sha256: 584459a62d7ebd70b2135195354a73cbc1bf6052f8ffc6e8de882cf64d731fc5
+- id: no-generic-except
+  title: No generic except in Python
+  applies_to: No generic except in Python — Prevents catching and hiding unexpected errors,
+    improves debugging.
+  file: rules/no-generic-except.md
+  spans:
+  - - 1
+    - 29
+  tags:
+  - python
+  - error-handling
+  - exceptions
+  - debugging
+  - fail-fast
+  sha256: 121b95b68399f25075cfbebfe11eea825f8794083f97c98d8a4eec6d86b8120b
+- id: no-inline-imports
+  title: No inline imports in Python
+  applies_to: No inline imports in Python — Improves code organization and makes dependencies
+    explicit.
+  file: rules/no-inline-imports.md
+  spans:
+  - - 1
+    - 42
+  tags:
+  - python
+  - imports
+  - code-organization
+  - best-practices
+  - maintainability
+  sha256: d0cc3ca7584672928403cd79bc657fd802edb70b9e4f7c7ef11a569ddd0fcc29
+- id: no-mutable-defaults
+  title: No Mutable Defaults in Function Parameters
+  applies_to: No Mutable Defaults in Function Parameters — Prevents shared mutable state bugs
+    where defaults are reused across function calls.
+  file: rules/no-mutable-defaults.md
+  spans:
+  - - 1
+    - 57
+  tags:
+  - mutable-defaults
+  - function-parameters
+  - shared-state
+  - bugs
+  - __init__
+  sha256: 09363b15b20f8b637922e500351c713c36823354c9a0eb884c7035553f54db0f
+- id: operators-return-notimplemented
+  title: Return NotImplemented for Unsupported Operand Types
+  applies_to: Return NotImplemented for Unsupported Operand Types — Enables proper operator
+    protocol and prevents breaking Python's reverse operation fallback.
+  file: rules/operators-return-notimplemented.md
+  spans:
+  - - 1
+    - 62
+  tags:
+  - operators
+  - __add__
+  - __iadd__
+  - notimplemented
+  - dunder-methods
+  - operator-overloading
+  sha256: cf5615fd8a94a86107752601d6b19d140ed7008ef9092b51b098490d8af5a782
+- id: unnecessary-else-blocks
+  title: Unnecessary else blocks in Python
+  applies_to: Unnecessary else blocks in Python — Reduces nesting and improves code readability.
+  file: rules/unnecessary-else-blocks.md
+  spans:
+  - - 1
+    - 46
+  tags:
+  - python
+  - code-clarity
+  - readability
+  - control-flow
+  - simplicity
+  sha256: 695ef0745f0dfba110ac32689bc6299d194c3b5b0423c90420d1950d95fe70d3

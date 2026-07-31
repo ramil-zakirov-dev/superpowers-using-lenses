@@ -1,0 +1,141 @@
+id: ecc/vite-patterns
+version: 7e604cbef7cd
+source:
+  url: https://github.com/affaan-m/ECC
+  path: vite-patterns/SKILL.md
+  sha256: 7e604cbef7cd335384032c6e885bb233a6d457554ebbbe3d6b4391f3a559a1be
+license: MIT
+kind: reference
+stacks:
+- vite
+document_kinds:
+- milestone
+- spec
+- plan
+summary: Provides practical Vite configuration, plugin, development-server, environment, build,
+  library, SSR, and troubleshooting patterns for Vite-based projects.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: config-structure
+  title: Configuration Structure
+  applies_to: Use when creating or modifying vite.config.ts, vite.config.js, or core Vite
+    build and server settings.
+  kind: reference
+  spans:
+  - - 33
+    - 80
+  sha256: 73404a4a3a011e1a29a821a67ba20ab64988006882afa4ba1da1db9a59e90c72
+- id: plugins
+  title: Vite Plugins
+  applies_to: Use when selecting, ordering, configuring, debugging, or authoring Vite plugins.
+  kind: reference
+  preamble_spans:
+  - - 23
+    - 29
+  spans:
+  - - 81
+    - 124
+  sha256: ed2acceed71c0fb9d6574fba824e336f64703638420ae8dc1e6bb1e34e8ae810
+- id: hmr
+  title: Hot Module Replacement
+  applies_to: Use when implementing custom HMR behavior or diagnosing state and side-effect
+    handling during module updates.
+  kind: reference
+  spans:
+  - - 126
+    - 144
+  sha256: 29bfe5078aad343377de2f2b80b13b10a2800b15af53dc7a7abd24d31202703a
+- id: environment-and-security
+  title: Environment Variables and Security
+  applies_to: Use when defining, loading, exposing, or securing environment variables and
+    source maps in a Vite project.
+  kind: lens
+  preamble_spans:
+  - - 23
+    - 29
+  spans:
+  - - 146
+    - 213
+  sha256: 6a224a53cb04bddb14b8d2c41b6bf43f1d6cfeda3696c1ee632568dd9c8bff33
+- id: server-proxy
+  title: Development Server Proxy
+  applies_to: Use when routing browser API or WebSocket requests from the Vite development
+    server to a backend.
+  kind: reference
+  spans:
+  - - 214
+    - 231
+  sha256: 35dfefb4e8b0e2d0361f5678ff200a938e9f81bef4e075140eeb3c5fd100635d
+- id: build-optimization
+  title: Build Chunk Optimization
+  applies_to: Use when controlling production bundle chunking and grouping vendor dependencies.
+  kind: reference
+  preamble_spans:
+  - - 23
+    - 29
+  spans:
+  - - 233
+    - 257
+  sha256: 67841fa65571e216dacabbc3e3bf7476fab3c63976e67aaf19dd7530fb504bf1
+- id: development-performance
+  title: Development Performance
+  applies_to: Use when improving Vite dev-server startup, module loading, route warm-up, or
+    plugin performance.
+  kind: lens
+  spans:
+  - - 262
+    - 304
+  sha256: 3985d9f0087543df82765cc7c76bfdf61db1f3c1684a1576e6fe248330fba07e
+- id: library-mode
+  title: Library Mode
+  applies_to: Use when publishing a package through Vite's build.lib configuration.
+  kind: reference
+  preamble_spans:
+  - - 23
+    - 29
+  spans:
+  - - 305
+    - 324
+  sha256: c5c1cc063faad03af3e0d13ec8773ec7f4b5b7ae15607839cc3972d7d25314b6
+- id: ssr-externals
+  title: SSR Dependency Externals
+  applies_to: Use when configuring dependency externalization or bundling for Vite-based server-side
+    rendering.
+  kind: reference
+  preamble_spans:
+  - - 23
+    - 29
+  spans:
+  - - 326
+    - 337
+  sha256: c44f04e501e7674fe84b804d1d921d715b45e65aca3d747c66883f89339b1953
+- id: dependency-prebundling
+  title: Dependency Pre-Bundling
+  applies_to: Use when configuring optimizeDeps or troubleshooting dependency conversion,
+    interop, and pre-bundle cache behavior.
+  kind: reference
+  preamble_spans:
+  - - 23
+    - 29
+  spans:
+  - - 339
+    - 353
+  sha256: 4d2c8d7f1c14530c8860c3ef7b7b67a54c43e0e8254521a5d00690c830ae8163
+- id: common-pitfalls
+  title: Common Vite Pitfalls
+  applies_to: Use when validating deployments or diagnosing differences between development,
+    preview, production, container, and monorepo behavior.
+  kind: lens
+  spans:
+  - - 356
+    - 393
+  sha256: ff04180d23ea00266e71f3bb669fde7dbdb9fe4e8da6e3d5269647fd9cc23f4a
+- id: anti-patterns
+  title: Vite Anti-Patterns
+  applies_to: Use when reviewing Vite configuration, dependency handling, deployment processes,
+    or development practices for unsafe or inefficient choices.
+  kind: lens
+  spans:
+  - - 394
+    - 427
+  sha256: eb179af4b1a6d9af1b9ec6311edb7d28bfaea6c8ba4e7c436b13745705bdd95c

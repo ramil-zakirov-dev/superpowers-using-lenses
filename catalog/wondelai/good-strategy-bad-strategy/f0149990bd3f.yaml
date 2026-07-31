@@ -1,0 +1,90 @@
+id: wondelai/good-strategy-bad-strategy
+version: f0149990bd3f
+source:
+  url: https://github.com/wondelai/skills
+  path: good-strategy-bad-strategy\SKILL.md
+  sha256: f0149990bd3f4b088ee7b2c77ffbe23645fe99a928814e40116c1ad328a947f1
+license: MIT
+kind: lens
+stacks:
+- any
+document_kinds:
+- spec
+summary: A framework for formulating and auditing strategy using Rumelt's kernel (diagnosis,
+  guiding policy, coherent action), detecting bad strategy hallmarks, identifying sources
+  of power, and applying hypothesis-driven strategic thinking.
+decomposed_by: xiaomi/mimo-v2.5
+parts:
+- id: scoring-and-diagnostic
+  title: Scoring System and Quick Diagnostic
+  applies_to: Use when scoring or auditing a strategy document, plan, or pitch deck against
+    a structured checklist to produce a reproducible rating.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 18
+    - 26
+  - - 171
+    - 183
+  requires:
+  - strategy-kernel
+  sha256: 785828d1dea614d15a710272e9960cfcf001f9c2c4877a2ed4f5f6dd2ff1b2f6
+- id: strategy-kernel
+  title: The Kernel of Good Strategy
+  applies_to: 'Use when formulating a strategy from scratch or evaluating whether a plan has
+    the three required elements: diagnosis, guiding policy, and coherent actions.'
+  kind: lens
+  spans:
+  - - 30
+    - 54
+  sha256: 3ac51ef8d2e40b0d33b5891596fec5225905561f1a2f1199a657d356dedef6f7
+- id: bad-strategy-detection
+  title: Detecting Bad Strategy
+  applies_to: 'Use when auditing a deck, plan, or OKR set for the four hallmarks of bad strategy:
+    fluff, failure to face the challenge, mistaking goals for strategy, and bad strategic
+    objectives.'
+  kind: lens
+  spans:
+  - - 56
+    - 78
+  sha256: 62bd4163bf59cb3aae2bdea37bf8728f78a83fd6a8c72d8d1a906471d03e827b
+- id: sources-of-power
+  title: Sources of Power
+  applies_to: Use when choosing where to concentrate effort, identifying leverage points,
+    setting proximate objectives, diagnosing chain-link bottlenecks, or building advantage
+    with isolating mechanisms.
+  kind: lens
+  spans:
+  - - 80
+    - 104
+  sha256: f9f768c92c18c5f05a05ab30f58e60b6660e52c260a3afe05bea76da3f84514d
+- id: dynamics-and-inertia
+  title: Riding Dynamics and Fighting Inertia
+  applies_to: Use when a market is undergoing a technology shift, regulatory change, or demographic
+    wave, or when an incumbent is stuck due to routine, culture, or proxy inertia.
+  kind: lens
+  spans:
+  - - 106
+    - 129
+  sha256: 16a0700da66ded920d8339154dfb7c9996e4d90aabbf4baf75c713517090ceeb
+- id: thinking-like-a-strategist
+  title: Thinking Like a Strategist
+  applies_to: Use when stress-testing a strategy hypothesis before commitment, defending judgment
+    against first conclusions or herd opinion, or building a discipline of create-destroy
+    review.
+  kind: lens
+  spans:
+  - - 131
+    - 155
+  sha256: 5947df44892d19973cfd3f6109885a8c32f656921d22fc050d08c5fa01de0e53
+- id: common-mistakes
+  title: Common Strategy Mistakes
+  applies_to: Use when diagnosing why a particular strategy document or planning process has
+    gone wrong and needs a targeted fix.
+  kind: reference
+  spans:
+  - - 157
+    - 169
+  sha256: 367232f24d017d6aeb1c20fac9ac0ee3bb1a3ab97fafccee3b13f450750583a3

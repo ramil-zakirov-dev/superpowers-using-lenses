@@ -1,0 +1,140 @@
+id: wispbit/sqlalchemy-alembic-expert-best-practices-code-review
+version: da46298ff07b
+source:
+  url: https://github.com/wispbit/ai-skills
+  path: sqlalchemy-alembic-expert-best-practices-code-review/SKILL.md
+  sha256: da46298ff07b83f952bb4d7059ab2c940530991ba8485404a8b6960b87cd3235
+license: MIT
+kind: reference
+stacks: []
+document_kinds: []
+summary: SQLAlchemy ORM and Alembic migration best practices for building safe, performant
+  database schemas. This skill should be used when writing, reviewing, or refactoring SQLAlchemy
+  models, Alembic migrations, or database query patterns. Triggers on tasks involving SQLAlchemy
+  ORM, Alembic migrations, database schema changes, or query optimization.
+decomposed_by: author
+parts:
+- id: change-column-type
+  title: Change column types safely in SQLAlchemy
+  applies_to: Change column types safely in SQLAlchemy — Prevents table locks and downtime
+    during column type changes.
+  file: rules/change-column-type.md
+  spans:
+  - - 1
+    - 58
+  tags:
+  - postgresql
+  - mysql
+  - sqlalchemy
+  - alembic
+  - migrations
+  - schema-changes
+  sha256: 45f8133da98023ba5a8674f255102f3dc98724c5d5eaa62d25fa1f13901c7055
+- id: ensure-index-not-covered
+  title: Ensure index is not already covered in SQLAlchemy
+  applies_to: Ensure index is not already covered in SQLAlchemy — Prevents redundant indexes
+    and reduces storage costs.
+  file: rules/ensure-index-not-covered.md
+  spans:
+  - - 1
+    - 41
+  tags:
+  - postgresql
+  - sqlalchemy
+  - alembic
+  - migrations
+  - indexes
+  - optimization
+  sha256: d45d4bdd61fabfc1009ce66a29018b0c5c5952bdf257a38b25527e8cf06fe5a7
+- id: limit-non-unique-index
+  title: Limit non unique indexes in SQLAlchemy
+  applies_to: Limit non unique indexes in SQLAlchemy — Improves index efficiency and reduces
+    storage overhead.
+  file: rules/limit-non-unique-index.md
+  spans:
+  - - 1
+    - 35
+  tags:
+  - postgresql
+  - sqlalchemy
+  - alembic
+  - migrations
+  - indexes
+  - performance
+  sha256: d06f10f39d178acd2a982b76dddba5f21b68614ee109fe03b3446ed8857d7bf9
+- id: only-concurrent-indexes
+  title: Only concurrent indexes in SQLAlchemy
+  applies_to: Only concurrent indexes in SQLAlchemy — Prevents blocking writes during index
+    creation and deletion.
+  file: rules/only-concurrent-indexes.md
+  spans:
+  - - 1
+    - 42
+  tags:
+  - postgresql
+  - sqlalchemy
+  - alembic
+  - migrations
+  - indexes
+  sha256: db6092074b66a6864244c2dfffbc73a2ec4e94c31a75e420562832e72d117c35
+- id: split-check-constraint
+  title: Add check constraints safely in SQLAlchemy
+  applies_to: Add check constraints safely in SQLAlchemy — Prevents blocking writes during
+    constraint validation.
+  file: rules/split-check-constraint.md
+  spans:
+  - - 1
+    - 42
+  tags:
+  - postgresql
+  - sqlalchemy
+  - alembic
+  - migrations
+  - constraints
+  sha256: ef23c5cb23ee84ce97384aa62e8dc1b0d5496ec89dd28d22e527481370173e3f
+- id: split-foreign-key
+  title: Add foreign keys safely in SQLAlchemy
+  applies_to: Add foreign keys safely in SQLAlchemy — Avoids blocking writes on both tables
+    during foreign key validation.
+  file: rules/split-foreign-key.md
+  spans:
+  - - 1
+    - 49
+  tags:
+  - postgresql
+  - sqlalchemy
+  - alembic
+  - migrations
+  - foreign-keys
+  sha256: 068815ab535c04064733455b60ac60ea5b1f9480b5149852a0d1f60229a3426a
+- id: unique-constraint
+  title: Add unique constraints safely in SQLAlchemy
+  applies_to: Add unique constraints safely in SQLAlchemy — Prevents blocking reads and writes
+    during constraint creation.
+  file: rules/unique-constraint.md
+  spans:
+  - - 1
+    - 45
+  tags:
+  - postgresql
+  - sqlalchemy
+  - alembic
+  - migrations
+  - constraints
+  sha256: 631b51b02eb05eecbcbd86b7212f71e89066a648581b7db16cf069884149f738
+- id: verify-query-patterns-are-indexed
+  title: Verify query patterns are covered by an index in SQLAlchemy
+  applies_to: Verify query patterns are covered by an index in SQLAlchemy — Prevents full
+    table scans and improves query performance.
+  file: rules/verify-query-patterns-are-indexed.md
+  spans:
+  - - 1
+    - 44
+  tags:
+  - postgresql
+  - sqlalchemy
+  - alembic
+  - migrations
+  - indexes
+  - performance
+  sha256: d2f53e2f88069f0e17749b714b8d18272d72c85aac0edff07758b8e7b7b6188c

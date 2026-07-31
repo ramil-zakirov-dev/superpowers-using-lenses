@@ -1,0 +1,121 @@
+id: wondelai/release-it
+version: 34ac73394a51
+source:
+  url: https://github.com/wondelai/skills
+  path: SKILL.md
+  sha256: 34ac73394a516665581d4e29d89ee2225931065be058d8002cde33e2618e52cb
+license: MIT
+kind: lens
+stacks:
+- any
+document_kinds:
+- spec
+- milestone
+summary: Framework for designing, deploying, and operating resilient production-ready software,
+  covering stability patterns, capacity planning, deployment strategies, observability, and
+  chaos engineering.
+decomposed_by: xiaomi/mimo-v2.5
+parts:
+- id: quick-diagnostic
+  title: Quick Diagnostic Scoring and Audit Checklist
+  applies_to: Use when auditing or scoring a production system's resilience posture across
+    the eight critical checks (timeouts, circuit breakers, bulkheads, zero-downtime deploy,
+    deep health checks, correlated telemetry, load testing, failure injection)
+  kind: reference
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 18
+    - 20
+  - - 187
+    - 200
+  sha256: 8415a35049e46f6684090a0475386c135381290b84ae655d61c4da9ab0859552
+- id: stability-anti-patterns
+  title: Stability Anti-Patterns
+  applies_to: Use when triaging an outage or auditing integration points for failure propagation
+    modes such as cascading failures, slow responses, unbounded result sets, and thread contention
+  kind: lens
+  preamble_spans:
+  - - 10
+    - 12
+  spans:
+  - - 26
+    - 48
+  sha256: 574089caf9873ef3c15ba96a283d5ad550db45c82d221072bf3649e77dabb955
+- id: stability-patterns
+  title: Stability Patterns
+  applies_to: Use when implementing resilience mechanisms such as circuit breakers, bulkheads,
+    timeouts, retry backoff, fail-fast rejection, or automatic cleanup
+  kind: lens
+  preamble_spans:
+  - - 10
+    - 12
+  spans:
+  - - 50
+    - 74
+  sha256: 11bfbaf89905c8814274b4f5242265c3d545e2445055826f7daa6b57e41fd3ac
+- id: capacity-and-availability
+  title: Capacity and Availability
+  applies_to: Use when planning load, stress, soak, or spike tests, sizing connection pools
+    from measured concurrency, or building a capacity model that identifies per-service bottlenecks
+  kind: lens
+  preamble_spans:
+  - - 10
+    - 12
+  spans:
+  - - 76
+    - 97
+  sha256: 55fa68b547fb845a8683bdeb8468e0a94664421e42b44d0971844854c12b7f03
+- id: deployment-and-release
+  title: Deployment and Release Decoupling
+  applies_to: Use when planning zero-downtime deployments, progressive rollouts with canary
+    or blue-green strategies, feature flag launches, or backward-compatible database schema
+    migrations
+  kind: lens
+  preamble_spans:
+  - - 10
+    - 12
+  spans:
+  - - 99
+    - 121
+  sha256: 01ae29920539af8c4e80691f06b02609b019940b5c84be679db1b9d420bc1d35
+- id: health-checks-and-observability
+  title: Health Checks and Observability
+  applies_to: Use when designing shallow or deep health endpoints, instrumenting services
+    with RED or USE metrics, setting up distributed tracing, or defining SLIs, SLOs, and burn-rate
+    alerting
+  kind: lens
+  preamble_spans:
+  - - 10
+    - 12
+  spans:
+  - - 123
+    - 145
+  sha256: f907b1ba5a6f6e18d3d1bacc11de0bb9f4e5197452a36aa2e05ccdc001eff0bd
+- id: chaos-engineering
+  title: Adaptation and Chaos Engineering
+  applies_to: Use when designing controlled failure injection experiments or GameDay exercises
+    to validate resilience hypotheses, define steady states, and grow a chaos practice from
+    non-production outward
+  kind: lens
+  preamble_spans:
+  - - 10
+    - 12
+  spans:
+  - - 147
+    - 172
+  sha256: 9696e55275987d22e850ae1f4f4f157bc051819e05c58ec8d70ee3bc34d3dc5e
+- id: common-mistakes
+  title: Common Production Resilience Mistakes
+  applies_to: Use when reviewing a system for well-known pitfalls such as missing timeouts,
+    unbounded retries, shared pools, shallow health checks, happy-path-only testing, coupled
+    deploy and release, symptom-less alerting, or absent capacity models
+  kind: reference
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 174
+    - 185
+  sha256: dd1dc00b780aac032136622e604adae161f824e5a914bb9793ac6ee0ddba8a23

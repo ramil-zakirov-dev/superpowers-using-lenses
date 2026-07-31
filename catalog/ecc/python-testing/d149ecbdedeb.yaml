@@ -1,0 +1,168 @@
+id: ecc/python-testing
+version: d149ecbdedeb
+source:
+  url: https://github.com/affaan-m/ECC
+  path: python-testing/SKILL.md
+  sha256: d149ecbdedeb3102f45d107310d62efb742bb570cd32c392d14089052c04a420
+license: MIT
+kind: reference
+stacks:
+- python
+- pytest
+document_kinds:
+- milestone
+- spec
+- plan
+summary: A practical reference for designing, implementing, organizing, and running Python
+  test suites with pytest.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: tdd-cycle
+  title: Test-Driven Development Cycle
+  applies_to: Use when writing or changing Python code with a test-first workflow.
+  kind: pipeline
+  preamble_spans:
+  - - 19
+    - 19
+  spans:
+  - - 21
+    - 40
+  sha256: 64a50e507e4fd0b58893aa61da00db7c2d23eaf9d7a19ec7b73caac0b3510ab0
+- id: coverage-requirements
+  title: Coverage Requirements
+  applies_to: Use when evaluating whether Python test coverage is sufficient or configuring
+    coverage measurement.
+  kind: lens
+  preamble_spans:
+  - - 19
+    - 19
+  spans:
+  - - 42
+    - 50
+  sha256: cc2743e1094c6f3513fb76eb82e6b26a22e10e6737be919da5a9eb1bb2fee62c
+- id: pytest-fundamentals
+  title: pytest Fundamentals and Assertions
+  applies_to: Use when creating basic pytest tests or selecting assertion patterns for Python
+    behavior and exceptions.
+  kind: reference
+  spans:
+  - - 52
+    - 115
+  sha256: d3ad79df0c7f0b46f1f5947b0cf2e3b0ab558a259997381c6195ca2d0a82abbd
+- id: pytest-fixtures
+  title: pytest Fixtures
+  applies_to: Use when tests need reusable setup, teardown, scoped resources, shared fixtures,
+    or automatic fixture execution.
+  kind: reference
+  spans:
+  - - 117
+    - 249
+  sha256: 887a60351e28bde1dd4ba8e47e832dc2f9728daa4e6f02b85d7df71047cff9b7
+- id: test-parametrization
+  title: Test Parametrization
+  applies_to: Use when the same Python test behavior must be exercised across multiple inputs,
+    IDs, or environments.
+  kind: reference
+  spans:
+  - - 251
+    - 310
+  sha256: 18b14159786508815d899bda8acf2aeba721d76b8fec55d08af8cb449030825f
+- id: markers-and-selection
+  title: Markers and Test Selection
+  applies_to: Use when categorizing pytest tests or selecting subsets such as unit, integration,
+    or slow tests.
+  kind: reference
+  spans:
+  - - 312
+    - 359
+  sha256: 6411506b5d8a14905f5519aa9080401a565f30d38a722d8fd3a6162d3331d257
+- id: mocking-and-patching
+  title: Mocking and Patching
+  applies_to: Use when isolating Python code from external functions, classes, connections,
+    files, properties, or other dependencies during tests.
+  kind: reference
+  spans:
+  - - 361
+    - 465
+  sha256: 8cef5ef8bdf1a9688890736e69da34205837b7060219ef41e6f159b01f054fbc
+- id: async-testing
+  title: Testing Async Code
+  applies_to: Use when testing Python coroutines, asynchronous clients, async fixtures, or
+    awaited dependencies with pytest.
+  kind: reference
+  spans:
+  - - 467
+    - 517
+  sha256: 4acd1e50ae7718f7de7500adcfa9b6a72c00079d84892c3f39b4ccfbf369bf7c
+- id: exception-testing
+  title: Testing Exceptions
+  applies_to: Use when verifying expected Python exceptions, messages, or custom exception
+    attributes.
+  kind: reference
+  spans:
+  - - 519
+    - 545
+  sha256: 316b0640cdb9f1f29e319f36da1e18c46761307e3b0a2ff1f6afa9eab5b4bdcf
+- id: side-effect-testing
+  title: Testing File and Temporary-Resource Side Effects
+  applies_to: Use when testing Python code that reads, writes, or processes files and requires
+    isolated temporary resources.
+  kind: reference
+  spans:
+  - - 547
+    - 591
+  sha256: c6434090e4549af6314f99e512ffb96ce85308f313c988c96424396e9f3f83bc
+- id: test-organization
+  title: Test Organization
+  applies_to: Use when structuring Python test directories, grouping tests into classes, or
+    defining class-level setup behavior.
+  kind: reference
+  spans:
+  - - 593
+    - 636
+  sha256: 22c25fd75531191f739fb4e9e06583f103e9fe2d8d7dff8fe466605c69a8679b
+- id: testing-best-practices
+  title: Testing Best Practices
+  applies_to: Use when reviewing the quality, maintainability, independence, and scope of
+    Python tests.
+  kind: lens
+  spans:
+  - - 638
+    - 660
+  sha256: 98719cb645a7a1549c72201baa5c8d0f073efdde77d9fb8bbdb53e73318c0715
+- id: common-python-test-patterns
+  title: Common Python Test Patterns
+  applies_to: Use when testing API endpoints, database operations, or class methods in Python
+    applications.
+  kind: reference
+  spans:
+  - - 662
+    - 721
+  sha256: 5498932ca787299fe750402d2ba6b97ca945d5525d6f6f6aac1e458cfc3f5ca6
+- id: pytest-configuration
+  title: pytest Configuration
+  applies_to: Use when configuring pytest discovery, default options, coverage reporting,
+    and custom markers.
+  kind: reference
+  spans:
+  - - 723
+    - 764
+  sha256: fb04e7576c346c1999c9d8c1e2cc7189eb6814c31f235a71f9b4cfdfe22961d2
+- id: running-pytest
+  title: Running Tests
+  applies_to: Use when running pytest tests, selecting test targets, collecting coverage,
+    debugging failures, or limiting execution.
+  kind: reference
+  spans:
+  - - 766
+    - 801
+  sha256: 0bf920accd0a9a72ff834c5b9a2f3b5873d9fe77039459d1463cb0d793b38f71
+- id: pytest-quick-reference
+  title: pytest Quick Reference
+  applies_to: Use when choosing a concise pytest construct or command for a common testing
+    task.
+  kind: reference
+  spans:
+  - - 803
+    - 817
+  sha256: f50ad37c8204059068679df713ca1088a39b0f037534f5cd216b23ea203331d9

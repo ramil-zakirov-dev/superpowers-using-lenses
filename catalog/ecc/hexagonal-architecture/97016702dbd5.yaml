@@ -1,0 +1,129 @@
+id: ecc/hexagonal-architecture
+version: 97016702dbd5
+source:
+  url: https://github.com/affaan-m/ECC
+  path: hexagonal-architecture\SKILL.md
+  sha256: 97016702dbd553f45ab6accc0784474daea2aab7ae0c3d8eb37b96b3c52b522a
+license: MIT
+kind: lens
+stacks:
+- typescript
+- java
+- kotlin
+- go
+document_kinds:
+- milestone
+- spec
+- plan
+summary: A guide to designing, implementing, testing, and incrementally migrating services
+  using hexagonal architecture and explicit ports and adapters.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: architecture-boundaries
+  title: Architecture Boundaries and Dependency Direction
+  applies_to: Use when deciding where domain rules, use cases, ports, adapters, and dependency
+    wiring belong.
+  kind: lens
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 21
+    - 37
+  sha256: aa7e63c27868b9ae82754e0372c4d4ebe0ef2d54814a478c7a850af01628b13a
+- id: use-case-implementation-workflow
+  title: Use-Case Implementation Workflow
+  applies_to: Use when designing and implementing a new feature or use case with ports and
+    adapters.
+  kind: pipeline
+  preamble_spans:
+  - - 21
+    - 30
+  spans:
+  - - 39
+    - 73
+  sha256: 22d671447450a171b2bf80b258b8aa0d612f4b04914eb85271a3f0d3edb12dad
+- id: feature-module-layout
+  title: Feature-First Module Layout
+  applies_to: Use when organizing a feature's domain, application, adapter, and composition
+    modules.
+  kind: reference
+  preamble_spans:
+  - - 21
+    - 30
+  spans:
+  - - 87
+    - 118
+  sha256: ad6005d7aa7d01a40e0575ef4088a01f369e0b6750bde07e625eb8c7d835f41c
+- id: typescript-port-adapter-example
+  title: TypeScript Ports, Use Case, Adapter, and Wiring Example
+  applies_to: Use when implementing a TypeScript hexagonal feature with repository and external-service
+    ports.
+  kind: reference
+  preamble_spans:
+  - - 21
+    - 30
+  spans:
+  - - 120
+    - 203
+  sha256: b9879f8485f3fc8b88ee1758195ba94e1ff2ec59fe2362766f7c8f91284f7556
+- id: multilanguage-mapping
+  title: Cross-Language Boundary Mapping
+  applies_to: Use when applying the same hexagonal architecture boundaries in TypeScript,
+    Java, Kotlin, or Go.
+  kind: reference
+  preamble_spans:
+  - - 21
+    - 37
+  spans:
+  - - 205
+    - 228
+  sha256: 6c901220363fdaac6eba9e1be38154685b5f08335c801559af1a77aab777be39
+- id: hexagonal-antipatterns
+  title: Hexagonal Architecture Anti-Patterns
+  applies_to: Use when reviewing an implementation for framework leakage, misplaced mapping,
+    direct adapter coupling, or hidden dependency wiring.
+  kind: lens
+  preamble_spans:
+  - - 21
+    - 37
+  spans:
+  - - 230
+    - 236
+  sha256: 1e04fdbf0f68932e31145d0059f7fbd184ba3f209df0f3c1ca1dd8fc85281a92
+- id: incremental-migration
+  title: Incremental Migration Playbook
+  applies_to: Use when refactoring an existing layered or framework-heavy service toward ports
+    and adapters without a full rewrite.
+  kind: pipeline
+  preamble_spans:
+  - - 21
+    - 37
+  spans:
+  - - 238
+    - 255
+  sha256: cf61b919405da780cd7950b60922c185bf5ed131d2deca0e2ea59b9cee40fd92
+- id: boundary-testing
+  title: Testing by Boundary
+  applies_to: Use when defining unit, contract, integration, inbound-adapter, and end-to-end
+    tests for a hexagonal system.
+  kind: reference
+  preamble_spans:
+  - - 21
+    - 30
+  spans:
+  - - 257
+    - 265
+  sha256: 8d771fed48ddbd6b56f6b4aff93040f5e36e2470d25b385eac4f06ddfb29e81d
+- id: architecture-checklist
+  title: Hexagonal Architecture Checklist
+  applies_to: Use when reviewing whether a design or implementation preserves explicit boundaries,
+    dependency inversion, testability, and migration safety.
+  kind: reference
+  preamble_spans:
+  - - 21
+    - 37
+  spans:
+  - - 267
+    - 277
+  sha256: fe7803ecdabb13c851d07250448a5296a733f185812d7e4990e6d7468b4fbd84

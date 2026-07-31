@@ -1,0 +1,158 @@
+id: ecc/fastapi-patterns
+version: 328010fb5180
+source:
+  url: https://github.com/affaan-m/ECC
+  path: fastapi-patterns/SKILL.md
+  sha256: 328010fb518046ed81826a88b86f0b19b94d8c4a5a648c753cea53acbb229b02
+license: MIT
+kind: reference
+stacks:
+- fastapi
+- python
+document_kinds:
+- spec
+- plan
+- milestone
+summary: Provides production-oriented FastAPI project patterns for application structure,
+  validation, dependency injection, authentication, service transactions, and asynchronous
+  testing.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: project-structure
+  title: Project Structure
+  applies_to: Use when defining or reviewing the layout of a FastAPI application.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 12
+    - 34
+  sha256: 529f32b0b88f5223a072b0345f139dd38a5498e8e5928070421750ee8d1bdf82
+- id: app-factory-lifespan
+  title: App Factory and Lifespan
+  applies_to: Use when creating the FastAPI application instance and managing startup, shutdown,
+    middleware, and router registration.
+  kind: pipeline
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 38
+    - 83
+  requires:
+  - configuration
+  - router-endpoint-design
+  sha256: 0ccd3188e4d881dbf34279e50c19089f007f93f3d46c1ca06eed8f8a2a48dbf2
+- id: configuration
+  title: Pydantic Settings Configuration
+  applies_to: Use when defining environment-backed application settings for a FastAPI service.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 87
+    - 114
+  sha256: 3dc3abe3eb286ed8cd8fffe6a096922a146a30daaa15f8dfecc6228c8c39b3cd
+- id: pydantic-schemas
+  title: Pydantic v2 Schemas
+  applies_to: Use when designing validated request, update, and response models for FastAPI
+    endpoints.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 118
+    - 158
+  sha256: b91633af77faddd19c373c5e099eb50423705ae7e352ffc0d914d66ea3471313
+- id: dependency-injection-authentication
+  title: Dependency Injection and Authentication
+  applies_to: Use when providing database sessions, bearer-token authentication, and active-user
+    authorization dependencies to FastAPI handlers.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 162
+    - 223
+  requires:
+  - configuration
+  sha256: 2145dd87ac498174a4c5f792be64ad1f75a2450f5ab7ac9fb1af33604be18fa5
+- id: router-endpoint-design
+  title: Router and Endpoint Design
+  applies_to: Use when implementing FastAPI routes for user creation, retrieval, listing,
+    updates, and login.
+  kind: reference
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 227
+    - 301
+  requires:
+  - pydantic-schemas
+  - dependency-injection-authentication
+  - transactional-service-layer
+  sha256: 975e3f6549c91458af2b0b23df34420b164f95e4d867f0552c6e78d429bb81eb
+- id: transactional-service-layer
+  title: Transactional Service Layer
+  applies_to: Use when implementing asynchronous business operations that hash credentials,
+    persist users, handle database conflicts, paginate results, or issue JWTs.
+  kind: pipeline
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 305
+    - 390
+  requires:
+  - configuration
+  - pydantic-schemas
+  sha256: df7700ca6a93c56656a2df7526afd574d09b787ac93c40f715be202bfae51614
+- id: async-httpx-pytest
+  title: Testing with httpx and pytest
+  applies_to: Use when building asynchronous integration-test fixtures and authenticated HTTP
+    clients for a FastAPI application.
+  kind: pipeline
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 393
+    - 468
+  requires:
+  - app-factory-lifespan
+  - dependency-injection-authentication
+  - router-endpoint-design
+  sha256: 40162a78c0f6939adbac642278e3939c040a353054746ca492e2114c0d9f640b
+- id: fastapi-anti-patterns
+  title: FastAPI Anti-Patterns
+  applies_to: Use when reviewing FastAPI routes for misplaced business logic or blocking synchronous
+    database access.
+  kind: lens
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 472
+    - 503
+  requires:
+  - dependency-injection-authentication
+  - transactional-service-layer
+  sha256: a94008d77379167c5e94283c0bc1b33ae38c627224c2dadf54dbc86ce1ed567a
+- id: fastapi-best-practices
+  title: FastAPI Best Practices
+  applies_to: Use when evaluating FastAPI implementations for response safety, dependency
+    reuse, transaction handling, defensive authentication parsing, stable pagination, and
+    authorization semantics.
+  kind: lens
+  preamble_spans:
+  - - 10
+    - 10
+  spans:
+  - - 507
+    - 514
+  sha256: 1462e230b565ccce5a095f5e176c2bb828fb4483e7ae627b4a98139f359ece9b
