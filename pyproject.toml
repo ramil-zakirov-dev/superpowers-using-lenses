@@ -1,0 +1,34 @@
+[project]
+name = "superpowers-using-lenses"
+version = "0.1.0"
+description = "Decompose agent skills into independently usable parts, and index them"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "httpx>=0.27",
+    "PyYAML>=6.0",
+    "python-dotenv>=1.0",
+    "mcp>=1.2",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+lenses = "lenses.ingest:main"
+lenses-mcp = "lenses.mcp_server:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# The default basetemp lives under the user's Temp directory, which on some
+# Windows setups denies scandir (WinError 5) and fails every tmp_path test
+# before it runs. Keeping scratch inside the repo makes the suite depend on
+# nothing but the checkout.
+addopts = "--basetemp=.pytest-tmp"

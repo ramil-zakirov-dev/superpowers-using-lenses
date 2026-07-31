@@ -1,0 +1,14 @@
+# Secrets — never committed. See .env.example for the shape.
+.env
+
+# Derived artifacts. The catalog YAML is source; the index is rebuilt from it.
+index/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.pytest-tmp/

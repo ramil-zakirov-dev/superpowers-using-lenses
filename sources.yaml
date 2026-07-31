@@ -1,0 +1,57 @@
+# Upstream catalogues to ingest.
+#
+# `path` resolves under `sources_root` from .env unless it is absolute or
+# starts with `~`, so this file stays identical on every machine.
+#
+# `include` is a whitelist of skill directory names (fnmatch patterns). When
+# present, nothing else from that source is taken. `exclude` is applied after.
+# Both match the directory name, not the path.
+
+sources:
+  # Book-distilled lenses. Small, uniform, pure Markdown — the shape this
+  # catalogue is built around. Taken whole.
+  - label: wondelai
+    path: ~/.claude/skills
+    url: https://github.com/wondelai/skills
+    license: MIT
+    exclude:
+      # Installed alongside the lenses but not part of this upstream.
+      - agent-reach
+      - impeccable
+      - searxng-search
+
+  # ECC is an agent harness — 281 skills, 67 agents, 94 commands, with its own
+  # plan/test/implement/review loop. It is mined, not adopted: a whitelist here
+  # is the difference between borrowing a vocabulary and installing a second
+  # orchestrator. Add names deliberately, after reading them.
+  - label: ecc
+    path: affan-m-ecc/skills
+    url: https://github.com/affaan-m/ECC
+    license: MIT
+    include:
+      - api-design
+      - architecture-decision-records
+      - accessibility
+      # Second batch, chosen against the lens/pipeline rule and this project's
+      # stack. Everything named for a workflow (orch-*, *-tdd, *-verification,
+      # tdd-workflow, verification-loop) is a pipeline by its own title and is
+      # deliberately absent.
+      - hexagonal-architecture
+      - error-handling
+      - postgres-patterns
+      - regex-vs-llm-structured-text
+      - mcp-server-patterns
+      # Third batch: this project's actual stack — FastAPI and Postgres on the
+      # back, Vite and React in DevTools. django-* is a different stack, and
+      # django-tdd / django-verification are pipelines by their own titles.
+      - fastapi-patterns
+      - python-patterns
+      - python-testing
+      - react-patterns
+      - react-performance
+      - vite-patterns
+
+  - label: wispbit
+    path: wispbit-ai-skills/skills
+    url: https://github.com/wispbit/ai-skills
+    license: MIT
