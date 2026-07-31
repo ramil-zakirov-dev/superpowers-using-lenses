@@ -1,0 +1,18 @@
+name: sqlalchemy-alembic-expert-best-practices-code-review
+label: wispbit
+version: da46298ff07b
+sha256: da46298ff07b83f952bb4d7059ab2c940530991ba8485404a8b6960b87cd3235
+upstream:
+  url: https://github.com/wispbit/ai-skills
+  path: sqlalchemy-alembic-expert-best-practices-code-review/SKILL.md
+license: MIT
+files:
+  SKILL.md: 9f23bc2d6d666cab46c35660454cd3443742dad662ef80a4c95d147f3a19a648
+  rules/change-column-type.md: 45f8133da98023ba5a8674f255102f3dc98724c5d5eaa62d25fa1f13901c7055
+  rules/ensure-index-not-covered.md: 0098bcc76047c0f23b4348405d6ada8b00d32ec2bf27881ac8ec1cd16a5ccfae
+  rules/limit-non-unique-index.md: 31c3a2568597bccaf952d8202f61bc80324bd7d89548a0039633a293ee13557b
+  rules/only-concurrent-indexes.md: c7e44ab0ba49fa10ba95c415e7189095e47eab6a9fd2c34bff1b99baeaa422c4
+  rules/split-check-constraint.md: 3f12117847fd70939c164ca7973c797f49c3bd07d708fb878bfed5c09c7ea781
+  rules/split-foreign-key.md: da77dc79f2d3402744e4b97c6e6cd5fbdd64efd092aa93e1e75df5021ff70dfd
+  rules/unique-constraint.md: 4fd702c074fb7d7a29793377f57cae99a897fef024b3546424c88963278bc45a
+  rules/verify-query-patterns-are-indexed.md: 956ccf91ea3ba012277f3b90cb8c1847685a2839802ad38f3b8e35c97a8b0397

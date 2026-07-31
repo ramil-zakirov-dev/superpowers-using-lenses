@@ -1,0 +1,31 @@
+name: graphql-expert-best-practices
+label: wispbit
+version: 9e9801c6095e
+sha256: 9e9801c6095ea09cd0047fa19a8bcd6b87539633326060e4431a3bc10358fb00
+upstream:
+  url: https://github.com/wispbit/ai-skills
+  path: graphql-expert-best-practices/SKILL.md
+license: MIT
+files:
+  SKILL.md: 9e9801c6095ea09cd0047fa19a8bcd6b87539633326060e4431a3bc10358fb00
+  rules/dataloader-n-plus-one.md: b9de630f13e6d5e7bb9483eef14a3628d8acaf771cff153ca25fe16141aae35d
+  rules/mutation-avoid-validation-scalars.md: 12a40ea453821a883fdce63969e7878b567cfc5b4cb7fc0ff28b082ff6a48c42
+  rules/mutation-explicit-actions.md: 3882571bbe95dbe9bfde4219f0d435f3095d380d89b6d03352ea2f225657c965
+  rules/mutation-no-file-uploads.md: dcb9131c4971c3f6f2fde834500d1f48d0aad30362affcf2a011aa2badf04cc7
+  rules/mutation-separate-input-types.md: 0621c84fb2187f533b26f2ce75844714d7409ff0b6ff0413bedc839e8d7b1c6a
+  rules/mutation-single-input-object.md: 383c490d448fed6760ae615e4425818057b7d4d10f2bb24f61ef103eb6d150f9
+  rules/mutation-union-result-types.md: 1decb7262ac28b085364bcb8fde48c49662b61c2bb7827d21278739ca3aa82e0
+  rules/operations-require-client-headers.md: 83a6834b33d16b5704bf423d332cc46ddfe8c96a95b3b0b2d38404796207fd08
+  rules/pagination-no-default-totalcount.md: 748239e16f3c12b8fdf232a915edaf439f1ed12dc968c5d6846f4b56b88d392c
+  rules/query-unique-identifiers.md: 3ca8dca41299feb32c884564f0b8d85bc9b6ff25bbb16c2ba22f68dd24c4cc45
+  rules/schema-field-overload.md: b07a44f6dbd3a5874d3594b1dce7ab70c75ab145c2f3cc100cbf24ffd848cb4c
+  rules/schema-minimize-nullable-args.md: f07a3682e0fa301f7dac7a2a66d43cbb0b4c88b2e051a173bbf5d8a41b455f0b
+  rules/schema-no-binary-data.md: 0b92ff725e34e7f3b5c71afd26bbbe7cb4ca22bd98328e6414180919d464d25f
+  rules/schema-no-duplicate-fields.md: dca9dc9565272446f1ab4fb6c15523cc68f8f23bb903bd9a1b443f298b08eecb
+  rules/schema-no-json-filters.md: 8a71148786af99fb13819d5e8a7985850cf6633cec7ae93ea515a10aa8faacec
+  rules/schema-prefer-deprecation.md: a79758e9e3ef64196e8acc225c62380fd2b3b0ef597ff88317df405211e0f7ff
+  rules/schema-split-types-by-role.md: 5291831fdbc49fbfbf228eb0b1cb7f7e578227eccee2f6c7f2e8c77c58f48111
+  rules/schema-stable-identifiers.md: 2cfc30253cfd982082f21a2187d6ea3c7b705bed093d65c4a54692b217033916
+  rules/schema-structured-types.md: 37295537bb60311869d38035bcf495ef4a3f224c63c63448daff875abdd60a3f
+  rules/security-complexity-limits.md: 391ae60d7a8bc88b8d50d748f0cfe0d3de2843cecb0f848a5ff50c3afb6610d9
+  rules/security-disable-introspection.md: 130b357f0a0271551ea86aafac7a165e936b2806a6347ebcbd2721c6efe4d1b9

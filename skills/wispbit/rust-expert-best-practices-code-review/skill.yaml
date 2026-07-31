@@ -1,0 +1,26 @@
+name: rust-expert-best-practices-code-review
+label: wispbit
+version: 1b957c87a605
+sha256: 1b957c87a60570c5b4c176b7359547f95d39470c76e06530cc66361ee1b6249b
+upstream:
+  url: https://github.com/wispbit/ai-skills
+  path: rust-expert-best-practices-code-review/SKILL.md
+license: MIT
+files:
+  SKILL.md: 19820ec921eb373fc19744594c2432515db07c6f13ce6c30c06482053ebe2458
+  rules/avoid-boolean-params.md: d67a9e36d5f0fdc6c3f70442c6170e669ad064593b5604b46a9bddd7e31f45be
+  rules/avoid-box.md: 4dd47cb5815c4b347e7ead71858b750e36eddadde44ceeede780734bf9f670b0
+  rules/avoid-panic.md: 4b5f2e09defe71ffd86d02a04e878b5190e8c4432570b4cfa5e4e1632cc72f5f
+  rules/avoid-rc.md: f9f3d390e18cfddb2feababe70d7a2c8584da8926c4403fed9e1375792e7f358
+  rules/calculated-field-as-method.md: 4ec0d28dc77ff4b7d3a6434490b5c07d986d05152ab193b2130f227361946272
+  rules/decimal-comparison.md: 5b3b1bfc92601fadf1f23989f9e80daec72d32dc01ccdd47967d28de21e4a941
+  rules/match-statements-handle-all-cases.md: 1a4083fa35fb66b87b0cee2278dd9bb6581251caede2ca7fbeb5c9a596fed1ee
+  rules/prefer-builder-pattern-for-complex.md: 91033373a4dbe40b2065be7b6b0881e09f45477e2cfa9ab6212d14d103b42af0
+  rules/prefer-format.md: 3e4799d6a430b1677fa7ac793f0ec17a211cba3e79b9beb66405f772bda68601
+  rules/result-error-returns.md: 09588b62ecda6d48029c86b859c2c5e9e5b61ffa66fc0d9abe16abb8577e8be5
+  rules/use-borrowed-argument-types.md: ae1bc8f09a531199af0bfc16924fd03a9033cd4111847ae707c63ecf37bec10d
+  rules/use-copied.md: 6ea7d4cf2c4a3660a112e2bb89cbd2c9470d5dbf30b1cc8481ea00db3ee47aa5
+  rules/use-enum-deserialization.md: f2d7662822a7dd794dc12dc9db74a67fa90e9e3686d5f8e712a15dbc7a1c2ea5
+  rules/use-iterator-transforms.md: a2ea47fbdbb05a614f2047badcd137546bb88dce20b085441e2cce233776c567
+  rules/use-named-placeholders.md: 75bd689cfdf46200acc383fff818b8fcf3de1c875844c822fe78f365c603bd65
+  rules/use-typesafe-index-wrappers.md: 8fe9ed2fbb531eb414d06848cca7a3c9f3b4ffe018d82c43d7cc3226b55cf26e

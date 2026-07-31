@@ -1,0 +1,10 @@
+name: react-patterns
+label: ecc
+version: 32fa0cf77ebb
+sha256: 32fa0cf77ebb072f290e5057a65cd4bc68cf4b8d607ac30c29483cf4e2e423e4
+upstream:
+  url: https://github.com/affaan-m/ECC
+  path: react-patterns/SKILL.md
+license: MIT
+files:
+  SKILL.md: f3208d44a5d553038c42e046cec4dc16e4a3d90a9dbf931f883a2e21919a64a9

@@ -1,0 +1,10 @@
+name: react-performance
+label: ecc
+version: a6f5e07943f4
+sha256: a6f5e07943f4c7e8e1989f8b24d938a479ee8073ded43d823cc2a5299fe58f82
+upstream:
+  url: https://github.com/affaan-m/ECC
+  path: react-performance/SKILL.md
+license: MIT
+files:
+  SKILL.md: ac76e8694d4f802a7bccc3c07a73ac68ace6d82a65ea10f10d8b7384dda61a8f

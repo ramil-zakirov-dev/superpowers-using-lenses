@@ -1,0 +1,10 @@
+name: python-testing
+label: ecc
+version: d149ecbdedeb
+sha256: d149ecbdedeb3102f45d107310d62efb742bb570cd32c392d14089052c04a420
+upstream:
+  url: https://github.com/affaan-m/ECC
+  path: python-testing/SKILL.md
+license: MIT
+files:
+  SKILL.md: 76549eacc2215542b89745383fc47bebcbacd89e51352cc1b8b1b489b728db40

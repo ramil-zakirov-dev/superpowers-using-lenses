@@ -1,0 +1,10 @@
+name: accessibility
+label: ecc
+version: f817cb68304c
+sha256: f817cb68304c6c2a6a206622d8d21178051b937feb6c1c86138aa8a123f8ee56
+upstream:
+  url: https://github.com/affaan-m/ECC
+  path: accessibility/SKILL.md
+license: MIT
+files:
+  SKILL.md: 98a64f7ea191284e6d12322328b0576bb4b002a049872cda319e9a39e9e1f961

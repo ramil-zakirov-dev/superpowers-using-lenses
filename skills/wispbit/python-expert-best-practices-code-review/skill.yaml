@@ -1,0 +1,18 @@
+name: python-expert-best-practices-code-review
+label: wispbit
+version: cbd0addc7382
+sha256: cbd0addc7382afbff5730f4f47378cfed7db013a013921607b98b7967b8feaea
+upstream:
+  url: https://github.com/wispbit/ai-skills
+  path: python-expert-best-practices-code-review/SKILL.md
+license: MIT
+files:
+  SKILL.md: cbd0addc7382afbff5730f4f47378cfed7db013a013921607b98b7967b8feaea
+  rules/avoid-explanatory-comments.md: 4007bc69c3e018f34c476cadb7407da76dbea7fef8eb62ad6795c51ad20128e0
+  rules/dict-required-keys.md: 9dd144e1632311e6d66aa42735ead80b26b9612ad611c3a3e851714c19350496
+  rules/listcomp-no-side-effects.md: a998ca9e1e32385b972bac50b77489d9b221e7bdf9f868de46dbe9ad6b776275
+  rules/no-generic-except.md: 49d076153e338af4b3b19e60f971ebb6cb7a5148b9eb35db0daa96384a213c81
+  rules/no-inline-imports.md: 568df42446bc56cfbb508dba1281629b428d4b0fea4e746105cc2fdc5a2206fa
+  rules/no-mutable-defaults.md: d09849d626c99723bd1453be49c5b95ee61b183625cc68f278c49c8ec509d204
+  rules/operators-return-notimplemented.md: e722199718eed5fb46171b067227db8624c3d8a2e4dfa78ac44357bb5eeb3fc1
+  rules/unnecessary-else-blocks.md: 6e063d45758cc443a3f1862662ec073c0ff5fdb707c9f51144a468f98c9f9fa7

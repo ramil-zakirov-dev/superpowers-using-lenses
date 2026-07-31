@@ -1,0 +1,16 @@
+name: clean-code
+label: wondelai
+version: f9efbdff87b0
+sha256: f9efbdff87b038b6e70f74a62a334af6f28945a511019d24c258b4831342bc9b
+upstream:
+  url: https://github.com/wondelai/skills
+  path: clean-code/SKILL.md
+license: MIT
+files:
+  SKILL.md: 072b309df4ea3e271232f281d8a98d759f6f27a310a74b1fd6e8f70ec3a9b04f
+  references/code-smells.md: e260cc3f5890ba3078d4cabb895b728f4261b727555016a49a2dee19a4edb1d1
+  references/comments-formatting.md: 5251598986f088707236b041a8fd9c8c6df10f1bab087b2ab357ed5e4ed1bc36
+  references/error-handling.md: 567e8f6df07486eb49d2bc825c85990e8b2bbeebc7c10cf9eb6e7f220b23c383
+  references/functions-and-methods.md: 888357a4c5608fbf078dd132551c60d0f0c51efcca0d5efaaaeaafec43590e77
+  references/naming-conventions.md: f0d8120424acf6ac87bf6ad764c88fed7da323e441d5c36e767e28ce3feabc93
+  references/testing-principles.md: af7824113e2338fae75dac83bd2a3afdad8dcb4ba379c734f2ee7ad8566a4663

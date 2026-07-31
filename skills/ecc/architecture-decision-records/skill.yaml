@@ -1,0 +1,10 @@
+name: architecture-decision-records
+label: ecc
+version: dd441c15f147
+sha256: dd441c15f147345d59de8945676b5a595e1335d5a88289ccefce43d388a4fdeb
+upstream:
+  url: https://github.com/affaan-m/ECC
+  path: architecture-decision-records/SKILL.md
+license: MIT
+files:
+  SKILL.md: 525e51b4ed98222cd49ea7d2e42b51a010ecab391b25022a86164258c14b8bb0

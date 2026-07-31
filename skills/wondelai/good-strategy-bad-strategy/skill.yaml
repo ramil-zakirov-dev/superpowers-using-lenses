@@ -1,0 +1,15 @@
+name: good-strategy-bad-strategy
+label: wondelai
+version: f0149990bd3f
+sha256: f0149990bd3f4b088ee7b2c77ffbe23645fe99a928814e40116c1ad328a947f1
+upstream:
+  url: https://github.com/wondelai/skills
+  path: good-strategy-bad-strategy/SKILL.md
+license: MIT
+files:
+  SKILL.md: 7adebf248a5aa40ef6bc34d3f379a9cd22663b8ca8086fc350c95cee6d4d2035
+  references/bad-strategy.md: 28897e0d1973d483362feec44f228299b6ce18521c63b056e7f194495d1200a6
+  references/case-studies.md: 5e3315ea362aec07ff9af6eff593d7223c13e49bb37806633198da50a358ada6
+  references/dynamics-inertia.md: 87679e5f393b04b64a2b415b77fbc0f18bdc1ef8bd7a5c4045bce886da73984e
+  references/kernel.md: 491141f94e43657b87fce8c1a8579243245daedb9a5432ca47720f0eb2c76a81
+  references/sources-of-power.md: 80fb2c0ff37d95aea62b9471315528ba9eef67316fecc2c333165e5e2f3e2401

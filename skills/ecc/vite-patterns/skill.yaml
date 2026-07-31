@@ -1,0 +1,10 @@
+name: vite-patterns
+label: ecc
+version: 7e604cbef7cd
+sha256: 7e604cbef7cd335384032c6e885bb233a6d457554ebbbe3d6b4391f3a559a1be
+upstream:
+  url: https://github.com/affaan-m/ECC
+  path: vite-patterns/SKILL.md
+license: MIT
+files:
+  SKILL.md: 2238d353196b6732ba897e32f1872078fde7a9d11f5aca43b53da8bfc7e3917d

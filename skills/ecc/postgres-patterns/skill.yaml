@@ -1,0 +1,10 @@
+name: postgres-patterns
+label: ecc
+version: 799884064b41
+sha256: 799884064b41773a3777f10dfd49abcfacefb64d8fa1756d2ee10aa0384d28d1
+upstream:
+  url: https://github.com/affaan-m/ECC
+  path: postgres-patterns/SKILL.md
+license: MIT
+files:
+  SKILL.md: 54ee9b00e9423d1c788647063122937e2625292d0b1fae032fd43185127beba9

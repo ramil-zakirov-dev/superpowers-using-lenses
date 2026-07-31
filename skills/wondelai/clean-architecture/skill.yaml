@@ -1,0 +1,16 @@
+name: clean-architecture
+label: wondelai
+version: a96f8d010306
+sha256: a96f8d0103068bd9e1cbedc980d86c3c9af48b127acd96b4beac555658284a2e
+upstream:
+  url: https://github.com/wondelai/skills
+  path: clean-architecture/SKILL.md
+license: MIT
+files:
+  SKILL.md: fc9fe201ae040df80164bc7a407507882783e2c8cdbc0379a1fbdcf3719e4446
+  references/adapters-frameworks.md: 548cf58a878f29b3f6cd2b74f0e355a213c23cc757a0ad858f086ba77d9ec8e1
+  references/boundaries.md: a5eb0efa34d4e42cc8b6f6ab0f23b08acfb3ad2efa94094a6548f2e129066805
+  references/component-principles.md: fcf09d8d24a5eaa45050d328252d18357f7eaa137737f867860a421bbe3bfa5c
+  references/dependency-rule.md: 6f95edd35d9934d7151e30ce1676e52d0a45d41daa97c4ebeb4e085b62ce2be9
+  references/entities-use-cases.md: 8304bd7c89284b711e8756d210580cae095df6e702abcdd35ae066ddde981ff0
+  references/solid-principles.md: d39b63f6dbe89698ab18e1acf765cd8333db4beeb1e0afac01e9b945db57a2d2

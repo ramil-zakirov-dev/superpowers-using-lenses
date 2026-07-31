@@ -1,0 +1,10 @@
+name: fastapi-patterns
+label: ecc
+version: 328010fb5180
+sha256: 328010fb518046ed81826a88b86f0b19b94d8c4a5a648c753cea53acbb229b02
+upstream:
+  url: https://github.com/affaan-m/ECC
+  path: fastapi-patterns/SKILL.md
+license: MIT
+files:
+  SKILL.md: 135114c01b9b348be89de2d17f0fc1ac14f2183d47f96bd08020bebf00196309

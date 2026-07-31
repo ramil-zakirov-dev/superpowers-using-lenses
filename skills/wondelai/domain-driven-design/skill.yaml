@@ -1,0 +1,16 @@
+name: domain-driven-design
+label: wondelai
+version: 6ff14c385294
+sha256: 6ff14c38529422dc7e47dd815062ff550d2b2e95082753dc7974e783b7a3b4f0
+upstream:
+  url: https://github.com/wondelai/skills
+  path: domain-driven-design/SKILL.md
+license: MIT
+files:
+  SKILL.md: 14f80bc0c209e8500f52813158afb8b6b819b47a54b92576f0c0586acac38668
+  references/bounded-contexts.md: 5b87502afdef850c0262fc31f6c671519140298ceca50f5a5173a2e5419264fc
+  references/building-blocks.md: b78f51c8ec8c5537420597df6e7e85899e36abf6ac91dc44699a3f5505c003d4
+  references/domain-events.md: 6f924b9bb9eea2fbde210a55645d825d8d8a177adf64d2cb590523eb99482be8
+  references/repositories-factories.md: 674e197968fb60eec232188895787291fba68e657f33e1417143990629c5c645
+  references/strategic-design.md: a1d5c69fdfbf809a2410d9a438d814aefe33187d01093940c2385f7daef1a2d1
+  references/ubiquitous-language.md: 152bbfd4f7467371d9399dc0e9b27624da3b82b356bbe96ee111f000ca3993e8

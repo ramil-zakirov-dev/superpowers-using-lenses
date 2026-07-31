@@ -1,0 +1,16 @@
+name: release-it
+label: wondelai
+version: 34ac73394a51
+sha256: 34ac73394a516665581d4e29d89ee2225931065be058d8002cde33e2618e52cb
+upstream:
+  url: https://github.com/wondelai/skills
+  path: release-it/SKILL.md
+license: MIT
+files:
+  SKILL.md: 747c1130a348ede99b6533de5ec75bb77fb5dd05efc8cef35f0524f7a9f87e7e
+  references/anti-patterns.md: 0149f8f55778846b6b172aa6909d0e00332c8c9ffbb235e002d27ad6fe827d39
+  references/capacity-planning.md: 1a09ea3f72476e7be73caa4466b5874a091c3793547ca6e12f6e05745b1ec978
+  references/chaos-engineering.md: 64168185d644cbc28b7064b80002ef15693ad753c9525f12d1924b9d07ba5590
+  references/deployment-strategies.md: a5006a6bd1bab33c440fddec463d5b68e7bde811d5a2b85bf2a7d655241f5e38
+  references/observability.md: 204da0b8e3db91e2a3605bc07e483ed755169815a766ff62d555ae28fb3cca76
+  references/stability-patterns.md: 11f7093204a04f905a1dfc17e9edd94b82641b325987e6f7b79282bdf6ffec98

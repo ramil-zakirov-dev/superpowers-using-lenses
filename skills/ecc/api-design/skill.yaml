@@ -1,0 +1,10 @@
+name: api-design
+label: ecc
+version: 42345c22191b
+sha256: 42345c22191b4cc4801874878049d3efdbd41e3870a82cde5cd27d6e8cfe941e
+upstream:
+  url: https://github.com/affaan-m/ECC
+  path: api-design/SKILL.md
+license: MIT
+files:
+  SKILL.md: ad7230f931b6d81a22e13c3bd41d97529fd15be8de2d91de19868a58f1b300b2

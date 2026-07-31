@@ -1,0 +1,20 @@
+name: postgresql-expert-best-practices-code-review
+label: wispbit
+version: a023e08a5af4
+sha256: a023e08a5af4562b6816ecec8162b175bc167df6369fa6b27ca49029b1e0143b
+upstream:
+  url: https://github.com/wispbit/ai-skills
+  path: postgresql-expert-best-practices-code-review/SKILL.md
+license: MIT
+files:
+  SKILL.md: 39f83b1f00ce217252d10868ea9932f99544cb0fbcad003518f51ec33db3d3ce
+  rules/add-index-for-foreign-key.md: b9db55edfa9ddb96728070550be358218fdee6c186b846778c8aeaef935a5a71
+  rules/always-include-columns.md: e9c8e6af4a392f82f8b1b32ff06e4f5f20628fcfb5275fea4c87d314f164dc5b
+  rules/column-naming-standards.md: f783958ceadce6f0faa15a839f6dd58a1d46b1dcc12513f748a945d76d773ec7
+  rules/index-naming-standards.md: 023e728512cdddf01b25c08cc4a8ca1571269b2cc2198ef8c712c61d8a34719e
+  rules/limit-non-unique-index.md: 3743fa3b196c2b4ee326708dd5e9c6adbde75f450c9241691fd27435230d60b5
+  rules/only-concurrent-indexes.md: 9972ec6514da5a31aba72162f2ce943976164f967321cdb3357329268982076a
+  rules/only-jsonb.md: f275d37d4dcec02462772f6d33d3875db56c4ad749f4b3276c617a5bd310a501
+  rules/set-column-not-null.md: a6d95168b8303cf4cb80e590341fb1d2a9b242ac08fc4ee441b78a10abcd8654
+  rules/split-foreign-key.md: 53a54b3049c316da5d3536ca03c8a3a9a01ebb29b5142a1a558d20513719de8e
+  rules/unique-constraint.md: 349c51c0eb33d57b797ec7fb127887b50b4d2544ab19170e8ab57ce7b3e46982

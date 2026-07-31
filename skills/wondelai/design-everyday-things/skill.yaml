@@ -1,0 +1,20 @@
+name: design-everyday-things
+label: wondelai
+version: 82db4899450a
+sha256: 82db4899450a68c0cb7cd799814745bc0f4318709dd4165e408cdfcd5347b33d
+upstream:
+  url: https://github.com/wondelai/skills
+  path: design-everyday-things/SKILL.md
+license: MIT
+files:
+  SKILL.md: cd14143973b32c84583e8d94175410188c255f24169e78826f5b4dbf11fa4fa6
+  references/affordances.md: b6947e8977a32e323eba9c766a1420ac997a6e31e5cc917f9e24e300af7f639b
+  references/case-studies.md: 2b9237ec41756a7439ade737b219539d55b1efec7538c7367112a376b773b964
+  references/conceptual-models.md: b0ce2316e8660f5d2cd7008ba6b23ff86b24cc1567128ebdf71ec34c419d6b0e
+  references/constraints.md: 71d43a2352f50341193fa907667aeb7c0083c5e5a24330737ef4b3be80e9dcae
+  references/feedback.md: 26deb108c8d31a426a2867968233e6a7bef006eae9f139fb3d41bacf2b806ada
+  references/human-error.md: 140962b646da3ce8a823202693e90f47717e2806e22dd397eaa5cf18d2452fda
+  references/mappings.md: 797258033fe3806b82e0178889158e2652e68417c222c06fca594c8272877fb8
+  references/seven-stages.md: 87398e0a7c56469fed49a1610abbb28bd8b1c3aec4f597d7122a38efe0b7ed78
+  references/signifiers.md: 0ef65efd21d94bb6a61d731a3284667115edb5052ad6f59076d2d99355530e9a
+  references/two-gulfs.md: bfe213515cbc3119d1ff7257ce01443b9d33245e7fdff3f4eeba67c6dce1846a

@@ -1,0 +1,16 @@
+name: refactoring-patterns
+label: wondelai
+version: 386566c2e92f
+sha256: 386566c2e92f1dc399c2043abe9cdaa29d6f76d20b8f705eec539ed19eafeaaf
+upstream:
+  url: https://github.com/wondelai/skills
+  path: refactoring-patterns/SKILL.md
+license: MIT
+files:
+  SKILL.md: e09d21bcca98b575df0014b3288df75afb556f2dd1d05135e6714d4c413d55d4
+  references/composing-methods.md: 2c34688d34b759016d1a6bb9366c42213558d6ef0523191eeac39b360fa11369
+  references/moving-features.md: 42eb3c8d3cdc1a8b94009fb06490973dfd217e45d19c4d95097415bf45e6cd77
+  references/organizing-data.md: 56679857a095cce1026d9d684bf1c9ed33769d758935b583b2e65fc45762217f
+  references/refactoring-workflow.md: e5e9060808dea4e29b551609b230c29adc7286ab6c1fff008d542029de306be8
+  references/simplifying-conditionals.md: 67168e1a6327180c6f1c0becebc372ac6a4d3398c9434bdf74f17208e998f677
+  references/smell-catalog.md: 2a0136cb2e8b263d1fc2dbba912688e415e32809c7140b51cf6f1f10f3fe8ff4

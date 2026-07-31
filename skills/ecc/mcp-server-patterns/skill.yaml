@@ -1,0 +1,10 @@
+name: mcp-server-patterns
+label: ecc
+version: 71c706a1de9b
+sha256: 71c706a1de9b99fcbf6e219107d599edbca4307d28e6dd837dc06be2eec8b5a8
+upstream:
+  url: https://github.com/affaan-m/ECC
+  path: mcp-server-patterns/SKILL.md
+license: MIT
+files:
+  SKILL.md: 0d2d77ff4cffabd26a8db9a54fd16ae29063519fc2d7d2da3539c5e391a3973a

@@ -1,0 +1,10 @@
+name: error-handling
+label: ecc
+version: bca77baf7611
+sha256: bca77baf7611044cf8dea30309b9f2733244499b238d0a15b19dc832594fd37c
+upstream:
+  url: https://github.com/affaan-m/ECC
+  path: error-handling/SKILL.md
+license: MIT
+files:
+  SKILL.md: 1a51e35867707709b51c2ab93fe225b721f2da49aea8cb54248bc791aab1419a

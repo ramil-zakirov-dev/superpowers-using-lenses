@@ -1,0 +1,17 @@
+name: ux-heuristics
+label: wondelai
+version: 92cddfb89e9a
+sha256: 92cddfb89e9a46590cd4dbb77b63bce0f1b2f0f675e3bbac32cfa55b34f48c30
+upstream:
+  url: https://github.com/wondelai/skills
+  path: ux-heuristics/SKILL.md
+license: MIT
+files:
+  SKILL.md: cb1ea3de8b6e605614cc59b21d41830d2d82af22e51069bb4c5bb53790cd622b
+  references/audit-template.md: d28d35ea15d8e70d5537d719e1ba3888e3cbcb5306d50451e65f56dc21d4ff8e
+  references/cultural-ux.md: c00f0a8c77e0982988a2d012d5a2f31a0221d3c5ea5f8214ed1b2ea8ac3b3c17
+  references/dark-patterns.md: 3af4522a25b03b1ce86467f8781b5f076bba72f60211d00a18673ef1cdcdb48c
+  references/heuristic-conflicts.md: fba04433ef077de2f027d9b69a378e85fc80b06c678e01aacbfc9e8c79fb12bd
+  references/krug-principles.md: 4acd8802a606750bc8d91893d1d55611197a8084c2229782d49f56b546bb273b
+  references/nielsen-heuristics.md: 09b2141efb6a2e232772a3cd8f30b9be966004dff9d2e80c9137413d7ebe7c71
+  references/wcag-checklist.md: b1d4ae49d7bf14b2921bb980e442d3c9ac4578ac44b3b5577b9ffacd53249435
