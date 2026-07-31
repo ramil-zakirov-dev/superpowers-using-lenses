@@ -15,10 +15,13 @@ Currently **27 skills · 260 parts** from three upstreams.
 
 ## The pipeline
 
-```
-upstream checkout ──> scripts/vendor.py ──> skills/ ──> lenses.ingest ──> catalog/ ──> index/
-                                              │                                          │
-                                              └────────────── lenses.mcp_server ─────────┘
+```mermaid
+flowchart LR
+    Upstream["Upstream Checkout"] -->|scripts/vendor.py| Skills["skills/"]
+    Skills -->|lenses.ingest| Catalog["catalog/"]
+    Catalog --> Index["index/"]
+    Skills --> MCPServer["lenses.mcp_server"]
+    Index --> MCPServer
 ```
 
 Each stage writes what the next one reads, and each artefact says where it came
