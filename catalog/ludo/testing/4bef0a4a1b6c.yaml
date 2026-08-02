@@ -6,7 +6,8 @@ source:
   sha256: 4bef0a4a1b6c23f3f702336b5697d6d6a62be0bd17ceae92b62b8a4695be8104
 license: MIT
 kind: reference
-stacks: []
+stacks:
+- python
 document_kinds: []
 summary: Python test-writing best practices covering test structure, fixtures, parametrization,
   and mocking with pytest. Use when writing, reviewing, or refactoring tests, adding test

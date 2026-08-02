@@ -41,9 +41,10 @@ server = MCPServer(
     "using-lenses",
     instructions=(
         "A catalogue of vendored agent skills, cut into independently usable "
-        "parts. Search it with find_lenses before designing a milestone, a "
-        "slice spec or a plan; cite the returned references in the document's "
-        "`lenses:` frontmatter; read them with get_lenses."
+        "parts. Before designing a milestone, a slice spec or a plan, search "
+        "it: find_lenses for one need, find_lenses_batch for everything the "
+        "document needs at once. Cite the returned references in the "
+        "document's `lenses:` frontmatter; read them with get_lenses."
     ),
 )
 
@@ -60,47 +61,23 @@ def startup() -> tuple[Config, Corpus]:
     return _config, _corpus
 
 
-@server.tool()
-def find_lenses(
+def _find_one(
     intent: str,
-    limit: int = 6,
-    kind: str | None = None,
-    stack: str | None = None,
+    config: Config,
+    corpus: Corpus,
+    limit: int,
+    kind: str | None,
+    stack: str | None,
 ) -> dict[str, Any]:
-    """Find the parts of vendored skills that bear on a piece of work.
-
-    State the need, not the solution: "an external call can hang and must not
-    take the system down" retrieves better than "circuit breaker", because
-    parts are indexed by when they apply.
-
-    Returns references of the form `label/name#part@version`. Cite those in a
-    document's `lenses:` frontmatter — the version pins the text, so the
-    citation cannot come to mean something else when upstream is rewritten.
-    Pass a reference to `get_lenses` to read the part itself.
-
-    `kind` filters to `lens` (vocabulary and criteria for judgement),
-    `reference` (APIs, checklists, rules) or `pipeline` (a prescribed
-    sequence). `stack` narrows to a technology; parts that are not
-    stack-specific always match.
-    """
-    try:
-        config, corpus = startup()
-        vector = embed_query(config.embedder, intent, config.embedder_dim)
-    except (ConfigError, SearchError) as exc:
-        return {"error": str(exc)}
-    except EmbedError as exc:
-        return {"error": f"the embedding endpoint is unreachable or misconfigured: {exc}"}
-
+    """One need, searched and reranked. Raises EmbedError or RerankError."""
+    vector = embed_query(config.embedder, intent, config.embedder_dim)
     dense_hits = rank(vector, corpus.parts, limit=limit, kind=kind, stack=stack)
     candidates = rank(
         vector, corpus.parts,
         limit=max(CANDIDATE_POOL, limit), per_skill=CANDIDATE_PER_SKILL,
         kind=kind, stack=stack,
     )
-    try:
-        reranked_hits = rerank(intent, candidates, top_n=limit)
-    except RerankError as exc:
-        return {"error": f"the reranker is unavailable: {exc}"}
+    reranked_hits = rerank(intent, candidates, top_n=limit)
     # A query the reranker has no opinion about scores its whole pool in a
     # narrow, uniformly bad band — trusting that ordering anyway is how a
     # correct dense answer gets silently dropped. See scripts/eval_retrieval.py.
@@ -121,6 +98,86 @@ def find_lenses(
             for hit in hits
         ],
     }
+
+
+@server.tool()
+def find_lenses(
+    intent: str,
+    limit: int = 6,
+    kind: str | None = None,
+    stack: str | None = None,
+) -> dict[str, Any]:
+    """Find the parts of vendored skills that bear on one design need.
+
+    Before writing a milestone brief, a slice spec or a plan, state the need
+    itself, not the project it belongs to: "I need guidance on keeping a
+    call to an external payment API from taking the whole service down"
+    retrieves better than "circuit breaker" — and better than the same need
+    with "because I'm designing the checkout slice" appended, which
+    measurably drags the match toward whatever nouns that clause happens to
+    contain rather than the need (verified: it can bury a part that ranked
+    first without it). Know why the need matters — you want that for the
+    record you leave in `lenses:` — but keep the why out of the query.
+
+    One call is one need. To gather everything a milestone or a slice needs
+    at once, call find_lenses_batch instead — same phrasing, one need per
+    entry, same order back.
+
+    Returns references of the form `label/name#part@version`. Cite those in
+    the document's `lenses:` frontmatter — the version pins the text, so the
+    citation cannot come to mean something else when upstream is rewritten.
+    Pass a reference to `get_lenses` to read the part itself.
+
+    `kind` filters to `lens` (vocabulary and criteria for judgement),
+    `reference` (APIs, checklists, rules) or `pipeline` (a prescribed
+    sequence). `stack` narrows to a technology; parts that are not
+    stack-specific always match.
+    """
+    try:
+        config, corpus = startup()
+    except (ConfigError, SearchError) as exc:
+        return {"error": str(exc)}
+    try:
+        return _find_one(intent, config, corpus, limit, kind, stack)
+    except EmbedError as exc:
+        return {"error": f"the embedding endpoint is unreachable or misconfigured: {exc}"}
+    except RerankError as exc:
+        return {"error": f"the reranker is unavailable: {exc}"}
+
+
+@server.tool()
+def find_lenses_batch(
+    intents: list[str],
+    limit: int = 6,
+    kind: str | None = None,
+    stack: str | None = None,
+) -> dict[str, Any]:
+    """Run find_lenses once per need, in one call — for a whole milestone or slice.
+
+    Designing a milestone brief or a slice spec usually surfaces several
+    distinct needs at once, not one. State each separately and need-only:
+    "I need guidance on retry behaviour for a flaky upstream" and "I need
+    guidance on where business rules should live relative to the HTTP
+    layer" are two needs, not one, and neither should carry the project or
+    framework it's being asked for — see find_lenses for why that costs
+    more than it seems to.
+
+    `results` is a list in the same order as `intents`, each shaped exactly
+    like a single find_lenses response (`intent`, `reranked`, `results`).
+    `limit`, `kind` and `stack` apply to every entry.
+    """
+    try:
+        config, corpus = startup()
+    except (ConfigError, SearchError) as exc:
+        return {"error": str(exc)}
+    if not intents:
+        return {"results": []}
+    try:
+        return {"results": [_find_one(i, config, corpus, limit, kind, stack) for i in intents]}
+    except EmbedError as exc:
+        return {"error": f"the embedding endpoint is unreachable or misconfigured: {exc}"}
+    except RerankError as exc:
+        return {"error": f"the reranker is unavailable: {exc}"}
 
 
 @server.tool()

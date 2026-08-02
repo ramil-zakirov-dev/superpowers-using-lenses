@@ -93,7 +93,8 @@ def test_ties_break_deterministically():
 @pytest.mark.parametrize(
     "stacks,stack,expected",
     [
-        ((), "react", True),            # unknown: fails open
+        ((), "react", False),           # unclassified: does not masquerade as "any"
+        ((), None, True),               # unclassified still shows up unfiltered
         (("any",), "react", True),      # explicitly not stack-specific
         (("react",), "react", True),
         (("react",), "React", True),    # case-insensitive

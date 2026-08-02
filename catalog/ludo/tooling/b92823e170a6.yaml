@@ -6,7 +6,8 @@ source:
   sha256: b92823e170a69deae21f301ced7b5d4d26f58468ea7965995ca7edadd97f1c9d
 license: MIT
 kind: reference
-stacks: []
+stacks:
+- python
 document_kinds: []
 summary: Python development tooling configuration and best practices for ruff, mypy, pytest,
   pyscn, and uv. Use when setting up a Python project, configuring linters, formatters, type

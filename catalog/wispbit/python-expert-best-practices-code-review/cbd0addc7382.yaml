@@ -6,7 +6,8 @@ source:
   sha256: cbd0addc7382afbff5730f4f47378cfed7db013a013921607b98b7967b8feaea
 license: MIT
 kind: reference
-stacks: []
+stacks:
+- python
 document_kinds: []
 summary: Python best practices for writing production-grade code. This skill should be used
   when writing, reviewing, or refactoring Python code. Triggers on tasks involving Python

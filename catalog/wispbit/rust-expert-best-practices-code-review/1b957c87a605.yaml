@@ -6,7 +6,8 @@ source:
   sha256: 1b957c87a60570c5b4c176b7359547f95d39470c76e06530cc66361ee1b6249b
 license: MIT
 kind: reference
-stacks: []
+stacks:
+- rust
 document_kinds: []
 summary: Rust best practices and code quality guidelines for writing idiomatic, safe, and
   performant Rust code. This skill should be used when writing, reviewing, or refactoring

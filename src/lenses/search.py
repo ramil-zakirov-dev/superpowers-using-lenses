@@ -96,15 +96,19 @@ def similarity(query: tuple[float, ...], part: IndexedPart) -> float:
 
 
 def matches_stack(part: IndexedPart, stack: str | None) -> bool:
-    """A stack filter that fails open.
+    """A stack filter that fails open only for a real claim of "any".
 
-    `any` and an empty list both mean "not stack-specific", and both must
-    match every query: most of this corpus is deliberately language-agnostic,
-    and a filter that hid it would remove exactly the lenses worth finding.
+    `any` is an author's positive statement that a part is language-agnostic,
+    and must match every query — a filter that hid it would remove exactly
+    the lenses worth finding. An *empty* `stacks` is a different thing: it
+    means nobody has classified this part yet, and letting that masquerade
+    as "any" is how a part written for one stack quietly shows up under every
+    other one. Unclassified content still matches when nothing was asked for
+    (`stack=None`) — it only stops matching a specific, wrong guess.
     """
     if not stack:
         return True
-    if not part.stacks or "any" in part.stacks:
+    if "any" in part.stacks:
         return True
     wanted = stack.strip().lower()
     return any(wanted == item.strip().lower() for item in part.stacks)

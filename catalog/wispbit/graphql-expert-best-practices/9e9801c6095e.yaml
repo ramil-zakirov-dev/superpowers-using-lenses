@@ -6,7 +6,8 @@ source:
   sha256: 9e9801c6095ea09cd0047fa19a8bcd6b87539633326060e4431a3bc10358fb00
 license: MIT
 kind: reference
-stacks: []
+stacks:
+- graphql
 document_kinds: []
 summary: GraphQL performance optimization and best practices for building scalable APIs. This
   skill should be used when writing, reviewing, or refactoring GraphQL schemas, resolvers,

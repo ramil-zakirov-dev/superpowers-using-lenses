@@ -6,7 +6,8 @@ source:
   sha256: 9339f36a5395705ea1c3e14a62f680153fe1b81f55ac89ce704161651bfdab4b
 license: MIT
 kind: reference
-stacks: []
+stacks:
+- python
 document_kinds: []
 summary: Python coding standards and best practices covering error handling, performance optimization,
   async patterns, SOLID design principles, documentation, data validation, and object-oriented

@@ -6,7 +6,8 @@ source:
   sha256: da46298ff07b83f952bb4d7059ab2c940530991ba8485404a8b6960b87cd3235
 license: MIT
 kind: reference
-stacks: []
+stacks:
+- sqlalchemy-alembic
 document_kinds: []
 summary: SQLAlchemy ORM and Alembic migration best practices for building safe, performant
   database schemas. This skill should be used when writing, reviewing, or refactoring SQLAlchemy

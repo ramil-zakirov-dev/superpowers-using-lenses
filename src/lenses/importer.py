@@ -29,6 +29,26 @@ PART_DIRECTORIES = ("rules",)
 _FRONTMATTER = re.compile(r"\A---\s*\n(.*?)\n---\s*\n", re.DOTALL)
 _SLUG = re.compile(r"[^a-z0-9]+")
 
+#: File patterns that unambiguously mean Python. An author's own `paths:`
+#: frontmatter is a real signal, not a guess from the skill's name.
+_PYTHON_PATH_MARKERS = (
+    ".py", "pyproject.toml", "setup.py", "setup.cfg", "conftest.py",
+    "mypy.ini", "ruff.toml", "requirements",
+)
+#: Any of these alongside a Python marker makes the signal ambiguous — better
+#: to say nothing than to tag a mixed-stack skill as just Python.
+_OTHER_STACK_PATH_MARKERS = (
+    ".ts", ".tsx", ".js", ".jsx", ".go", ".java", ".kt", ".rs", ".rb", ".php", ".cs",
+)
+
+#: wispbit's own naming convention: one skill per stack, named
+#: `{stack}-expert-best-practices[-code-review]`. Reading a stack out of a
+#: structured name the author chose is not a guess — the same distinction
+#: `stack_from_paths` draws for frontmatter, applied to a name instead.
+_STACK_FROM_NAME = re.compile(
+    r"^(?P<stack>[a-z0-9]+(?:-[a-z0-9]+)*)-expert-best-practices(?:-code-review)?$"
+)
+
 
 class ImportError_(ValueError):
     """A skill claims file-shaped parts but does not have them."""
@@ -107,6 +127,37 @@ def as_tags(raw) -> list[str]:
     return []
 
 
+def stack_from_paths(paths) -> list[str]:
+    """A stack read from the author's own `paths:` frontmatter.
+
+    Fires only when every marker present is Python and none point elsewhere.
+    """
+    if not isinstance(paths, list) or not paths:
+        return []
+    text = " ".join(str(p) for p in paths).lower()
+    if any(marker in text for marker in _OTHER_STACK_PATH_MARKERS):
+        return []
+    if any(marker in text for marker in _PYTHON_PATH_MARKERS):
+        return ["python"]
+    return []
+
+
+def stack_from_name(name: str) -> list[str]:
+    """A stack read from a known `{stack}-expert-best-practices` naming convention."""
+    match = _STACK_FROM_NAME.match(name)
+    return [match.group("stack")] if match else []
+
+
+def infer_stacks(main_frontmatter: dict, skill_name: str) -> list[str]:
+    """A stack read from a structural signal the author already provided.
+
+    Tries `paths:` frontmatter first — a literal glob outweighs a naming
+    convention — then a known naming pattern. Neither is a classifier: both
+    return nothing rather than a guess when their specific signal is absent.
+    """
+    return stack_from_paths(main_frontmatter.get("paths")) or stack_from_name(skill_name)
+
+
 def import_skill(skill: VendoredSkill) -> tuple[SkillDoc, list[str]]:
     """Build a catalogue document from a skill's part-files. Never calls a model."""
     directory = skill.path.parent
@@ -153,12 +204,14 @@ def import_skill(skill: VendoredSkill) -> tuple[SkillDoc, list[str]]:
             version=full_hash[:12],
             source={"url": skill.url, "path": skill.relative_path, "sha256": full_hash},
             license=skill.license,
-            # These upstreams ship rule catalogues. `stacks` and
-            # `document_kinds` stay empty rather than being guessed from the
-            # skill's name: an invented classifier is worse than a missing one.
+            # `document_kinds` stays empty rather than being guessed: an
+            # invented classifier is worse than a missing one. `stacks` gets
+            # one chance to read a real signal the author already wrote —
+            # see infer_stacks — and stays empty for the same reason when
+            # neither signal fires.
             kind="reference",
             summary=str(main_frontmatter.get("description") or "").strip(),
-            stacks=[],
+            stacks=infer_stacks(main_frontmatter, skill.name),
             document_kinds=[],
             decomposed_by="author",
             parts=parts,

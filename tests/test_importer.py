@@ -14,9 +14,12 @@ from lenses.importer import (
     check_imported,
     has_parts_on_disk,
     import_skill,
+    infer_stacks,
     parse_frontmatter,
     read_rules,
     slugify,
+    stack_from_name,
+    stack_from_paths,
 )
 from lenses.spans import content_hash
 from lenses.vendored import VendoredSkill
@@ -47,15 +50,15 @@ Read individual rule files.
 """
 
 
-def build(tmp_path, rules: dict[str, str] | None = None, main: str = MAIN):
-    directory = tmp_path / "wispbit" / "python-expert"
+def build(tmp_path, rules: dict[str, str] | None = None, main: str = MAIN, name: str = "python-expert"):
+    directory = tmp_path / "wispbit" / name
     (directory / "rules").mkdir(parents=True)
     (directory / "SKILL.md").write_text(main, encoding="utf-8")
-    for name, text in (rules if rules is not None else {"no-mutable-defaults.md": RULE}).items():
-        (directory / "rules" / name).write_text(text, encoding="utf-8")
+    for filename, text in (rules if rules is not None else {"no-mutable-defaults.md": RULE}).items():
+        (directory / "rules" / filename).write_text(text, encoding="utf-8")
     return VendoredSkill(
         label="wispbit",
-        name="python-expert",
+        name=name,
         path=directory / "SKILL.md",
         version=content_hash(main)[:12],
         url="https://example.invalid",
@@ -184,6 +187,68 @@ def test_classifiers_are_left_empty_rather_than_guessed(tmp_path):
     """A stack inferred from a directory name is an invented classifier."""
     document, _ = import_skill(build(tmp_path))
     assert document.stacks == [] and document.document_kinds == []
+
+
+@pytest.mark.parametrize(
+    "paths,expected",
+    [
+        (["**/*.py", "pyproject.toml", "requirements*.txt"], ["python"]),
+        (["tests/**", "**/test_*.py", "**/conftest.py"], ["python"]),
+        (["**/*.py", "mypy.ini", "ruff.toml"], ["python"]),
+        (["**/*.py", "**/*.ts"], []),          # mixed stack: say nothing
+        (["**/*.go"], []),                     # a real stack, just not python
+        ([], []),
+        (None, []),
+        ("not-a-list", []),
+    ],
+)
+def test_stack_from_paths_is_conservative(paths, expected):
+    """The author's own `paths:` frontmatter, not a guess — fires only when
+    every marker present is unambiguously Python."""
+    assert stack_from_paths(paths) == expected
+
+
+@pytest.mark.parametrize(
+    "name,expected",
+    [
+        ("python-expert-best-practices-code-review", ["python"]),
+        ("graphql-expert-best-practices", ["graphql"]),
+        ("sqlalchemy-alembic-expert-best-practices-code-review", ["sqlalchemy-alembic"]),
+        ("python-expert", []),                 # this upstream's other convention
+        ("coding-standards", []),               # ludo-style names never match
+        ("expert-best-practices", []),          # no stack token to capture
+    ],
+)
+def test_stack_from_name_reads_a_known_naming_convention(name, expected):
+    assert stack_from_name(name) == expected
+
+
+def test_infer_stacks_prefers_paths_over_name():
+    """A literal glob is stronger evidence than a naming convention."""
+    frontmatter = {"paths": ["**/*.py"]}
+    assert infer_stacks(frontmatter, "graphql-expert-best-practices") == ["python"]
+
+
+def test_infer_stacks_falls_back_to_name():
+    assert infer_stacks({}, "rust-expert-best-practices-code-review") == ["rust"]
+
+
+def test_infer_stacks_is_empty_when_neither_signal_fires():
+    assert infer_stacks({}, "coding-standards") == []
+
+
+def test_import_skill_uses_paths_frontmatter_for_stacks(tmp_path):
+    main = MAIN.replace(
+        "license: MIT\n",
+        'license: MIT\npaths:\n  - "**/*.py"\n  - "pyproject.toml"\n',
+    )
+    document, _ = import_skill(build(tmp_path, main=main))
+    assert document.stacks == ["python"]
+
+
+def test_import_skill_uses_naming_convention_for_stacks(tmp_path):
+    document, _ = import_skill(build(tmp_path, name="rust-expert-best-practices-code-review"))
+    assert document.stacks == ["rust"]
 
 
 def test_an_empty_rule_is_reported_and_skipped(tmp_path):

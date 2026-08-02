@@ -6,7 +6,8 @@ source:
   sha256: a023e08a5af4562b6816ecec8162b175bc167df6369fa6b27ca49029b1e0143b
 license: MIT
 kind: reference
-stacks: []
+stacks:
+- postgresql
 document_kinds: []
 summary: PostgreSQL database design, migration, and performance optimization best practices.
   This skill should be used when writing, reviewing, or refactoring database schemas, migrations,
