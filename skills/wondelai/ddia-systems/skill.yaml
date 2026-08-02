@@ -1,0 +1,17 @@
+name: ddia-systems
+label: wondelai
+version: cc3c64ea2d60
+sha256: cc3c64ea2d6017a54599437b68d6e1a2e44fbc80f82078d0a9635a2cf4436e0a
+upstream:
+  url: https://github.com/wondelai/skills
+  path: ddia-systems/SKILL.md
+license: MIT
+files:
+  SKILL.md: cdcd71bc1ce854f04921c5ff1a63b06872f96b09ef2f0576c91a33ffc8297012
+  references/batch-stream.md: eec19df1648b655296cde793c582947192784e56cc2c3d1b00da68df6a5e8e81
+  references/data-models.md: 191e9f8b569dde181cb1c5850d42c437d983e174bad24eafcdc489a71282881c
+  references/fault-tolerance.md: 5916232f805d9aabe257bfde637fc425d061162b0888b773a8f325d06eaa1604
+  references/partitioning.md: bf29b93ad3b6edaa2b5784d8f9c752bfc83a5ca6c764360b383947f265b515d2
+  references/replication.md: b727d226c3885064707ac5bc17d9c33f584f10009d5a217b2418f018480171c7
+  references/storage-engines.md: 2adb7de5d78328122091eebe78e3e0a1a862425694d060a85160e62844b45a9d
+  references/transactions.md: 9d1b4aa956d5b41c911c75e6320dba5a2ae3266b229fdbb001b89811c03775f8

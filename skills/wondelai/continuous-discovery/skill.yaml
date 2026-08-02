@@ -1,0 +1,16 @@
+name: continuous-discovery
+label: wondelai
+version: 03afc327b3cf
+sha256: 03afc327b3cfd4cf7a65016ece1fdb248568823454c6feb839f39d0ab6146c7c
+upstream:
+  url: https://github.com/wondelai/skills
+  path: continuous-discovery/SKILL.md
+license: MIT
+files:
+  SKILL.md: 44260b572a050417ba3733021eaa1694318fda80794c3e07800c66b4bc4a0c9e
+  references/assumption-mapping.md: d7af13b9c027d96a716562a92c4f4d5272d2a77a465a0f0abaa8cde253ff9340
+  references/case-studies.md: fe16d19696145d00a7df863a2d52264da7286083de1b1a4db59e5267dad082e6
+  references/experience-mapping.md: 3e9ae975233adc7f8478b199518aa81c620c129872a95de543c3871314f6e597
+  references/interview-snapshots.md: 3806b3cb32cab0b2d47254f19d67f8cde9371569d883e0161eed09089260848d
+  references/opportunity-trees.md: ee7f3e4b5c15689e0a6389a6585a7878e1ed45252fc1132a62005091d03c1c5d
+  references/prioritization-methods.md: 71b7322f7899e1b63b860843c7da9661fdab5aec3f4f8c19aff9bb53a034e156

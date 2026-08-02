@@ -1,0 +1,16 @@
+name: system-design
+label: wondelai
+version: b70d2de5ba51
+sha256: b70d2de5ba51194d2f166fb812c37c4fe69ccb0eb18642a32dbc66dedf130188
+upstream:
+  url: https://github.com/wondelai/skills
+  path: system-design/SKILL.md
+license: MIT
+files:
+  SKILL.md: 57548bbec281e73fed47ed8f2e16394ece68129342d04047f44c8c5b9ef64c38
+  references/building-blocks.md: 3cd43ba2763d1cdeb11c689b2a210f9d929d97fe215660ad283061c4d843c130
+  references/common-designs.md: a6a8ce0d4f7a8e5e511f7f8e70c6f53104357437df1442f4b27ade5aefac14e1
+  references/database-scaling.md: ebbfc992ba16746c7abd558f77533ceb82fa28292fef99269eb3f4f94d72809f
+  references/estimation-numbers.md: ac8b16c67e6d52082a44ebc6ea64e0bce84769619a223f1c59cd967ad2c4ebe4
+  references/four-step-process.md: 9674d371459a4ab47306c0ccc96fc1e1d16743a31bfce0c17b9bb7a4180e0ec3
+  references/reliability-operations.md: 157e6b215d72e5e487f326f98ba6742cc447507fad59d99b10a829d01f9c837f

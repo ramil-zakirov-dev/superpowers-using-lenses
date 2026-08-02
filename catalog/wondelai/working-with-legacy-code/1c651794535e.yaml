@@ -1,0 +1,130 @@
+id: wondelai/working-with-legacy-code
+version: 1c651794535e
+source:
+  url: https://github.com/wondelai/skills
+  path: working-with-legacy-code/SKILL.md
+  sha256: 1c651794535ebe562b95282849e10bf38d511d9e087c7d75329cf44ff20c9bba
+license: MIT
+kind: lens
+stacks:
+- any
+document_kinds:
+- milestone
+- spec
+- plan
+summary: A field guide for safely changing untested legacy code by establishing observable
+  behavior, creating seams, and separating structural improvements from behavior changes.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: change-scoring-rubric
+  title: Legacy Change Scoring Rubric
+  applies_to: Use when evaluating the safety and completeness of a change to untested code.
+  kind: reference
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 18
+    - 26
+  sha256: e8270b1d861d5401e291be7640c4584b146a5c9af23715f12146bc4a032194b2
+- id: legacy-change-algorithm
+  title: Legacy Change Algorithm
+  applies_to: Use when changing behavior or refactoring code that lacks tests.
+  kind: pipeline
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 28
+    - 51
+  sha256: 81560760268743f49c3dfb45dec0cdc9aefa3b25f488fa7fb039a3cb7a2144b9
+- id: seam-selection
+  title: Finding and Using Seams
+  applies_to: Use when dependencies, globals, constructors, statics, imports, or hard-wired
+    I/O prevent code from being tested.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 53
+    - 75
+  sha256: 4bfaff88b94bfd9877a62a3bf83f399b1e45a59380d9f349f229d23ea836249e
+- id: characterization-tests
+  title: Characterization Tests
+  applies_to: Use when establishing the current behavior of untested code before modifying
+    it.
+  kind: pipeline
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 77
+    - 99
+  sha256: 5023d6f0b7871c1c9017f9937bc3cdb468167b3efa4e6781ed7a856575f1ccd2
+- id: sprout-and-wrap
+  title: Sprout and Wrap Techniques
+  applies_to: Use when new behavior must be added but the surrounding legacy code cannot yet
+    be brought under test.
+  kind: reference
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 101
+    - 122
+  sha256: 3303e2f6d18c0cf78b76a2573bd18c155cfdc46389b07cd39ddda2cf5c709fe2
+- id: dependency-breaking-techniques
+  title: Dependency-Breaking Techniques
+  applies_to: Use when a constructor, singleton, static call, framework parameter, or oversized
+    method blocks instantiation or sensing in tests.
+  kind: reference
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 123
+    - 145
+  sha256: 338d0fe11bd9c7f7f1b8fbd81343f40c91ba9858a3de8677052b2af07d2a95c4
+- id: untangling-legacy-code
+  title: Untangling and Understanding Legacy Code
+  applies_to: Use when the code's blast radius, method clusters, or natural extraction boundaries
+    are unclear before a change.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 147
+    - 169
+  sha256: 8941954eefa1548b09db5a4e97ad3a837bdb6e7b971c506b398bfc800e148124
+- id: legacy-code-mistakes
+  title: Common Legacy-Code Mistakes
+  applies_to: Use when reviewing a proposed approach to modifying, testing, refactoring, or
+    rewriting untested code.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 171
+    - 183
+  sha256: c1ec3e1af6a15975232bb48ac39d19903a0a40a7131c2b5cdfb70df71b632680
+- id: legacy-change-diagnostic
+  title: Legacy Change Diagnostic
+  applies_to: Use when triaging whether an untested change has adequate coverage, seams, sensing
+    points, scope awareness, and separation of concerns.
+  kind: reference
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 184
+    - 195
+  requires:
+  - legacy-change-algorithm
+  - seam-selection
+  - characterization-tests
+  - dependency-breaking-techniques
+  - untangling-legacy-code
+  sha256: a2d88d05b0c1dcd4e3783b6e7cc58f4582a7a94ef4b9982af8cbd67b71ea98a3

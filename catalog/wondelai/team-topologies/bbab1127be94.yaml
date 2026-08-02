@@ -1,0 +1,138 @@
+id: wondelai/team-topologies
+version: bbab1127be94
+source:
+  url: https://github.com/wondelai/skills
+  path: team-topologies/SKILL.md
+  sha256: bbab1127be948bfcd6f8c18ec2d82562c10deea4a28fb21155bdb8f77011236e
+license: MIT
+kind: lens
+stacks:
+- any
+document_kinds:
+- plan
+- spec
+summary: Use this skill to design and assess team structures, interactions, ownership boundaries,
+  and internal platforms for fast flow of change.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: topology-scoring
+  title: Topology Scoring Rubric
+  applies_to: Use when rating an organization or team design and identifying changes needed
+    to improve its fast-flow alignment.
+  kind: reference
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 18
+    - 26
+  sha256: a3eec96b4fffe9a11549b3302ae6773167dad397b99de8a5d7ec2392a50a36c9
+- id: conways-law
+  title: Conway's Law and the Inverse Conway Maneuver
+  applies_to: Use when changing team structures, communication paths, reporting lines, or
+    system architecture.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 30
+    - 51
+  sha256: f6e466d6c6d8612b72180bce306e3e493b187fb7b7f7cc84a203cc479baa81e3
+- id: team-types
+  title: Four Fundamental Team Types
+  applies_to: Use when defining, reviewing, or restructuring team charters and ownership responsibilities.
+  kind: reference
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 52
+    - 73
+  sha256: 8f9c0461f77fea53753b9f8d514acfcdd7f342c60f30cbf30eecec857e500db5
+- id: interaction-modes
+  title: Three Interaction Modes
+  applies_to: Use when two or more teams depend on one another or when cross-team coordination
+    is creating friction.
+  kind: reference
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 75
+    - 96
+  sha256: 40531d992bfde79b437dd886b339029477b68839fd8a03b90586ba12f7a426fd
+- id: cognitive-load
+  title: Team Cognitive Load and Team-Sized Software
+  applies_to: Use when assigning domains to teams, diagnosing thrash or overload, or deciding
+    whether software ownership should be split.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 98
+    - 120
+  sha256: 327d0303042bce90d853013301c3f95a8ceea84dd77d7f0759410cb370056f05
+- id: fracture-planes
+  title: Fracture Planes for Team Ownership
+  applies_to: Use when decomposing a monolith or choosing service, repository, and ownership
+    boundaries.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 122
+    - 144
+  sha256: 37f6af098a95eec5c0fd5411fcc00e3c238ec27adeb8c529bd76a1773d1e68de
+- id: platform-product
+  title: Platform as a Product and Sensing Topology Evolution
+  applies_to: Use when creating, evaluating, or evolving an internal platform or when organizational
+    friction signals that team boundaries need to change.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 146
+    - 168
+  sha256: 4b222970e3cecedaca41de8c18e7299871a07116b8f0cd91528e895025f1baee
+- id: common-mistakes
+  title: Common Team Topology Mistakes
+  applies_to: Use when reviewing a proposed team organization for recurring anti-patterns
+    and corrective actions.
+  kind: reference
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 170
+    - 181
+  requires:
+  - conways-law
+  - team-types
+  - interaction-modes
+  - cognitive-load
+  - fracture-planes
+  - platform-product
+  sha256: c394dfa840092d954ac7387fac0ec5853223dd3c8cc298d7999d27894917cc82
+- id: quick-diagnostic
+  title: Quick Topology Diagnostic
+  applies_to: Use when performing a rapid health check of team ownership, dependencies, cognitive
+    load, platform adoption, or topology evolution.
+  kind: reference
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 183
+    - 194
+  requires:
+  - conways-law
+  - team-types
+  - interaction-modes
+  - cognitive-load
+  - fracture-planes
+  - platform-product
+  sha256: 6824149808dd14cd633876e2602cb25ebc27bab4079c9e356f7bee058fd37f91

@@ -1,0 +1,113 @@
+id: wondelai/system-design
+version: b70d2de5ba51
+source:
+  url: https://github.com/wondelai/skills
+  path: system-design/SKILL.md
+  sha256: b70d2de5ba51194d2f166fb812c37c4fe69ccb0eb18642a32dbc66dedf130188
+license: MIT
+kind: lens
+stacks:
+- any
+document_kinds:
+- spec
+- plan
+summary: A structured framework for scoping, estimating, architecting, scaling, and operating
+  reliable distributed systems.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: four-step-process
+  title: Four-Step Design Process
+  applies_to: Use when planning, reviewing, or presenting a distributed-system design from
+    requirements through tradeoffs.
+  kind: pipeline
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 26
+    - 47
+  sha256: fa85c84f34176fe5743df66823903eb3f55b53cc678efcd3172191ba28c16058
+- id: back-of-the-envelope-estimation
+  title: Back-of-the-Envelope Estimation
+  applies_to: Use when estimating capacity, availability, storage, bandwidth, or server requirements
+    before choosing an architecture.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 49
+    - 71
+  sha256: 66e589a30c0929d42f58c4ab5e2a14bb72ac9cffa1d49f9302daae86eb5f7a5b
+- id: building-blocks
+  title: Distributed-System Building Blocks
+  applies_to: Use when selecting or evaluating DNS, CDNs, load balancers, caches, queues,
+    proxies, and hashing strategies for a system.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 73
+    - 95
+  sha256: 510f957eefdd002903be7b21a19832ff147eef2cdc8068e8923fd9490de160b2
+- id: database-design-and-scaling
+  title: Database Design and Scaling
+  applies_to: Use when choosing a database model or addressing database bottlenecks involving
+    replication, sharding, denormalization, or growth.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 97
+    - 119
+  sha256: 03bdc1d3ecafbf1b8e81f61b52963d623bb2e0fad854f17bb71191c236bf14b5
+- id: common-system-designs
+  title: Common System Designs
+  applies_to: Use when designing a service that resembles a URL shortener, rate limiter, notification
+    system, feed, chat system, autocomplete service, crawler, or ID generator.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 121
+    - 144
+  sha256: ae2685e38280ce01e8eccb3522832b08d125d22302730401d6a1c232a107f259
+- id: reliability-and-operations
+  title: Reliability and Operations
+  applies_to: Use when preparing a distributed system for production availability, observability,
+    deployment, disaster recovery, or autoscaling.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 146
+    - 168
+  sha256: 32c70d83175234c57783b7424bcfa7afe0bb1bc169adb72fc3320d1bb28d911d
+- id: common-mistakes
+  title: Common System-Design Mistakes
+  applies_to: Use when reviewing a system design for architectural risks, missing capacity
+    analysis, premature complexity, or operational blind spots.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 170
+    - 181
+  sha256: 44c55e2ddf74a50e9e2e2b950ea09ffc5459f460e8057d5013bb325363fa4c14
+- id: quick-diagnostic
+  title: Quick Design Diagnostic
+  applies_to: Use when scoring a system design for requirements coverage, capacity, redundancy,
+    scaling, asynchronous processing, observability, and deployment readiness.
+  kind: reference
+  preamble_spans:
+  - - 18
+    - 20
+  spans:
+  - - 183
+    - 194
+  sha256: 7244f5854b5e093f3dda3920a567bbea50cdf3252767f0c76f1e9f35f54a8dc0

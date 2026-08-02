@@ -1,0 +1,15 @@
+name: working-with-legacy-code
+label: wondelai
+version: 1c651794535e
+sha256: 1c651794535ebe562b95282849e10bf38d511d9e087c7d75329cf44ff20c9bba
+upstream:
+  url: https://github.com/wondelai/skills
+  path: working-with-legacy-code/SKILL.md
+license: MIT
+files:
+  SKILL.md: 4a621798f9a51ad1438f5b25b168615b7caeb540378c8f4d70ab733523135e21
+  references/case-studies.md: 28985d94ec1876cbd7600408ac7a9416a9af58b6e956301bcbf203f617b7135e
+  references/change-algorithm.md: 8bf7a8490fcf2029ff340a4bfdd838f1550247f5eb4fd9fab7b865b7f8bffb3e
+  references/characterization-tests.md: 7be76db2629625d5073c189f90ff116a4cb733f901097338dce3239710e46fc0
+  references/dependency-breaking.md: e4c8a93cfc509ceb62c29141bc7004d2625d3f29e42ba2daa0807370061e396b
+  references/seams.md: cf9c39a2ffc8c63307b63693b9caa54f02ca45b77ed0cb24ccb16b4c8f0db77a

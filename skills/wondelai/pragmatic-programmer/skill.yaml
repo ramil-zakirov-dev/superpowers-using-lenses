@@ -1,0 +1,16 @@
+name: pragmatic-programmer
+label: wondelai
+version: 6800c2f4dceb
+sha256: 6800c2f4dcebe9f730f2df9babd03c370516054db79305ad5071dd0974877c2f
+upstream:
+  url: https://github.com/wondelai/skills
+  path: pragmatic-programmer/SKILL.md
+license: MIT
+files:
+  SKILL.md: 7bd0a042aa2dd559f0327916f8d4f2dcf7d21e5f2343a193eaafee932f0f85a3
+  references/broken-windows.md: 8d55146aa8bd3450e89ef4259f127ccc289ba85b009a3c49e3f030880ff9589d
+  references/contracts-assertions.md: 0a9f090d52228dffdd9cd418bdf5b10808cdea13293a670994ec9642d4c856b3
+  references/dry-orthogonality.md: affdb09c1af5049fce6603ad9bc7788c28aa5515ee8eb9d4e14e1011339cb314
+  references/estimation-portfolio.md: dd847f1325dd0cd02fde151d2966d08d7a0279122e2b8d9baa88232760a0980c
+  references/reversibility.md: dfc6b4b94547fa962a30139f794eeda651c81d17d982d0d7ae328afd6a2ed8bd
+  references/tracer-bullets.md: 1ecc782fa53ba364a8d4766a38d551ce696d29583bebfc0710d680270e587fa2

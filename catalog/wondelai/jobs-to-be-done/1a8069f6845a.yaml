@@ -1,0 +1,143 @@
+id: wondelai/jobs-to-be-done
+version: 1a8069f6845a
+source:
+  url: https://github.com/wondelai/skills
+  path: jobs-to-be-done/SKILL.md
+  sha256: 1a8069f6845af4f2e5330fdb9c9b8cab37550d05c5ef7fb18163f8fc4fd760b0
+license: MIT
+kind: lens
+stacks:
+- any
+document_kinds:
+- milestone
+- spec
+- plan
+summary: A Jobs to Be Done framework for identifying the progress customers seek, understanding
+  their choices, and aligning product decisions with that job.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: job-vocabulary-and-dimensions
+  title: Job Vocabulary and Dimensions
+  applies_to: Use when establishing what a customer job is or checking whether a job accounts
+    for functional, emotional, and social progress.
+  kind: lens
+  spans:
+  - - 14
+    - 21
+  - - 27
+    - 35
+  sha256: 40d77d5d23d1dd9d570411dfb0fe29a0323a9710c4ed75f61102f7454483ed76
+- id: job-statement
+  title: Writing the Job Statement
+  applies_to: Use when defining a customer need for ideation, feature prioritization, positioning,
+    or messaging.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 21
+  - - 27
+    - 35
+  spans:
+  - - 39
+    - 64
+  sha256: 6c2d74a6e89dd943018de52323ae948b73531649be53538312329e630aea6489
+- id: forces-of-progress
+  title: Forces of Progress
+  applies_to: Use when analyzing adoption, switching behavior, onboarding friction, or resistance
+    to a new solution.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 21
+  spans:
+  - - 66
+    - 90
+  sha256: 1c303909ee23dccc22be0f73928f69bffd20ff765b4092d323bf38990fbc8d2a
+- id: big-and-little-hire
+  title: Big Hire and Little Hire
+  applies_to: Use when distinguishing purchase or signup problems from repeated-use and retention
+    problems.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 21
+  spans:
+  - - 92
+    - 116
+  sha256: 1b0303f2c321522846d0449e97e5b0817514ee2f02abbc34c84c6bef4c0869f7
+- id: non-obvious-competition
+  title: Non-Obvious Competition
+  applies_to: Use when mapping alternatives, workarounds, non-consumption, or positioning
+    for a customer job.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 21
+  spans:
+  - - 118
+    - 141
+  sha256: a01ab7fc42ca21e8e82a92cc5408a4740fd1f98a47c115b288451e3bbc8ccf1e
+- id: customer-discovery-interviews
+  title: Customer Discovery Interviews
+  applies_to: Use when conducting customer discovery to understand why people sought, selected,
+    used, or abandoned a solution.
+  kind: pipeline
+  preamble_spans:
+  - - 14
+    - 21
+  - - 27
+    - 35
+  spans:
+  - - 143
+    - 168
+  sha256: 6e97f633112b9c317400543a7070e50a4431f0481334d47c251d57b74186a1c7
+- id: designing-for-the-job
+  title: Designing Around the Job
+  applies_to: Use when shaping product metrics, roadmaps, features, or organizational ownership
+    around customer progress rather than internal capabilities.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 21
+  - - 27
+    - 35
+  spans:
+  - - 170
+    - 194
+  sha256: 42c08ace1618e15abc4254b4b163c281e9b1faf15db2fc48aa5f000108025663
+- id: common-mistakes
+  title: Common JTBD Mistakes
+  applies_to: Use when reviewing a Jobs to Be Done analysis for product-first framing, incomplete
+    dimensions, missing switching forces, or weak competitive discovery.
+  kind: reference
+  preamble_spans:
+  - - 14
+    - 21
+  - - 27
+    - 35
+  spans:
+  - - 196
+    - 206
+  requires:
+  - job-statement
+  - forces-of-progress
+  - big-and-little-hire
+  - non-obvious-competition
+  - customer-discovery-interviews
+  sha256: 8f0f9aa2d19f9379ffb0e80714c3ca687369c42fceb16baa5b26598436459902
+- id: quick-diagnostic-and-scoring
+  title: Quick Diagnostic and Scoring
+  applies_to: Use when scoring the completeness of a Jobs to Be Done analysis or identifying
+    the next diagnostic gaps to fix.
+  kind: reference
+  preamble_spans:
+  - - 14
+    - 21
+  - - 27
+    - 35
+  spans:
+  - - 23
+    - 25
+  - - 208
+    - 220
+  sha256: 8f3729d32e928ec39352cc4e3aaeb6177dde1f33b9daee1b3b982bb956b03157

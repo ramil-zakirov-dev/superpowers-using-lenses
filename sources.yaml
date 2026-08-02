@@ -9,16 +9,49 @@
 
 sources:
   # Book-distilled lenses. Small, uniform, pure Markdown — the shape this
-  # catalogue is built around. Taken whole.
+  # catalogue is built around. 62 skills upstream, whitelisted here: the
+  # catalogue serves an architect writing milestones, specs and plans, so the
+  # marketing, sales, persuasion and visual-craft halves of the upstream are
+  # deliberately absent, and so are all 12 metaskills (create-*, improve-*,
+  # grow-*, design-code-architecture, remove-technical-debt) — each is a
+  # phase-by-phase journey keeping state in docs/, i.e. a second orchestrator
+  # by its own description, under the same rule the ecc source states below.
+  #
+  # `path` is the upstream checkout, not ~/.claude/skills: the installed set is
+  # whatever this machine happens to have, and a manifest that whitelists what
+  # is not there fails silently.
   - label: wondelai
-    path: ~/.claude/skills
+    path: wondelai-skills
     url: https://github.com/wondelai/skills
     license: MIT
-    exclude:
-      # Installed alongside the lenses but not part of this upstream.
-      - agent-reach
-      - impeccable
-      - searxng-search
+    include:
+      # Design and code craft. refactoring-patterns assumes tests already
+      # exist; working-with-legacy-code is what a plan needs when they do not.
+      - clean-architecture
+      - clean-code
+      - domain-driven-design
+      - refactoring-patterns
+      - working-with-legacy-code
+      # Architecture core: scale, data, complexity, craft meta-principles, and
+      # the team boundaries Conway's law makes an architectural concern.
+      - system-design
+      - ddia-systems
+      - software-design-philosophy
+      - pragmatic-programmer
+      - team-topologies
+      # Operability and interaction.
+      - release-it
+      - design-everyday-things
+      - ux-heuristics
+      # Strategy and product: what a milestone brief is made of — the honest
+      # diagnosis, the job the product is hired for, the discovery that turns a
+      # vague objective into opportunities, and the appetite that bounds it.
+      - good-strategy-bad-strategy
+      - inspired-product
+      - jobs-to-be-done
+      - continuous-discovery
+      - lean-startup
+      - 37signals-way
 
   # ECC is an agent harness — 281 skills, 67 agents, 94 commands, with its own
   # plan/test/implement/review loop. It is mined, not adopted: a whitelist here

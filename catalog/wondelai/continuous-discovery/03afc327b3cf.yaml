@@ -1,0 +1,137 @@
+id: wondelai/continuous-discovery
+version: 03afc327b3cf
+source:
+  url: https://github.com/wondelai/skills
+  path: continuous-discovery/SKILL.md
+  sha256: 03afc327b3cfd4cf7a65016ece1fdb248568823454c6feb839f39d0ab6146c7c
+license: MIT
+kind: lens
+stacks:
+- any
+document_kinds:
+- milestone
+- spec
+- plan
+summary: A framework for embedding weekly customer discovery, evidence-based prioritization,
+  and assumption testing into ongoing product work.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: opportunity-solution-trees
+  title: Opportunity Solution Trees
+  applies_to: Use when connecting product outcomes to customer needs, solution options, and
+    experiments.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 24
+    - 47
+  sha256: 8adb54831e003ceb0e9b33ddedb3157efc75a8864f40d0bf5992370a8f80232d
+- id: experience-mapping
+  title: Experience Mapping
+  applies_to: Use when investigating how customers currently accomplish a goal, especially
+    in a new problem space or churn flow.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 49
+    - 70
+  requires:
+  - opportunity-solution-trees
+  sha256: 716a3b6e90993dd59e875ca7b09880be9f5c58ea0e855916cd968ed34a9937fa
+- id: interview-snapshots
+  title: Interview Snapshots
+  applies_to: Use when conducting recurring customer interviews and turning observed behavior
+    into shared evidence.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 72
+    - 95
+  requires:
+  - opportunity-solution-trees
+  sha256: 5c45085a7c4dcc770614ac2bb33685f5f79768fc59f862e15e77d9ea6fa5bd70
+- id: assumption-testing
+  title: Assumption Testing
+  applies_to: Use when evaluating a proposed solution before committing significant build
+    effort.
+  kind: pipeline
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 97
+    - 120
+  sha256: c33d5cf26bfbd34d10d5f9ba4c16dddf9582933d9c7b7c3d18009efbd176b602
+- id: prioritizing-opportunities
+  title: Prioritizing Opportunities
+  applies_to: Use when choosing among customer opportunities for planning, sprint work, or
+    portfolio investment.
+  kind: lens
+  preamble_spans:
+  - - 24
+    - 35
+  spans:
+  - - 122
+    - 143
+  requires:
+  - opportunity-solution-trees
+  sha256: dbf8d1111290fe80f311af3b442e487333995c3ad5be97cb0c5eaf6cea95e2ea
+- id: building-the-discovery-habit
+  title: Building the Discovery Habit
+  applies_to: Use when establishing or scaling a sustainable weekly customer-discovery cadence
+    for a product trio.
+  kind: pipeline
+  preamble_spans:
+  - - 12
+    - 16
+  - - 72
+    - 83
+  spans:
+  - - 145
+    - 168
+  requires:
+  - opportunity-solution-trees
+  - interview-snapshots
+  sha256: 5c9c49830ec5b0f90145d5bb88501c1e27f1faf28511c88d217fee0b00d5c168
+- id: common-mistakes
+  title: Common Mistakes
+  applies_to: Use when diagnosing recurring failures in a customer-discovery practice and
+    selecting corrective actions.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 170
+    - 180
+  requires:
+  - opportunity-solution-trees
+  - interview-snapshots
+  - assumption-testing
+  - prioritizing-opportunities
+  - building-the-discovery-habit
+  sha256: 2d4d612e7439321b0fa55eb728b67c2ca7bf1c895bd00b08767f44be1ccf10e1
+- id: quick-diagnostic
+  title: Quick Diagnostic
+  applies_to: Use when scoring the current maturity of a continuous-discovery practice and
+    identifying its next fixes.
+  kind: reference
+  preamble_spans:
+  - - 18
+    - 20
+  spans:
+  - - 182
+    - 192
+  requires:
+  - opportunity-solution-trees
+  - interview-snapshots
+  - assumption-testing
+  - prioritizing-opportunities
+  - building-the-discovery-habit
+  sha256: d0da801b297b82fe1bcaef36bbb43a2ffa7808734f62d9fba71c93c4297f1c6d

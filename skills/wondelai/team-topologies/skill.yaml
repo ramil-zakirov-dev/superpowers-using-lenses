@@ -1,0 +1,15 @@
+name: team-topologies
+label: wondelai
+version: bbab1127be94
+sha256: bbab1127be948bfcd6f8c18ec2d82562c10deea4a28fb21155bdb8f77011236e
+upstream:
+  url: https://github.com/wondelai/skills
+  path: team-topologies/SKILL.md
+license: MIT
+files:
+  SKILL.md: b62a65eee8f0fc170f4223540a0ba6f2bf9248db9de028bccce32cdce41060e4
+  references/case-studies.md: f9ea62c7b2f82c5048f8a62d90622795e227994dc3e58b2796335e6defc426d6
+  references/cognitive-load.md: b83675fd4beca00288df2d2f12dfdcdcde2776517401018e78eeba6562e582bd
+  references/fracture-planes.md: 52644043a28f2fa7e735c5d29a41f90034abac790b06feabd2f65927ffcd5d75
+  references/interaction-modes.md: f1f0f10a81d160c83886550e18b33af56535518689a9fd95904aaa25c7f60eed
+  references/team-types.md: 9152fbf7d2e85cc3b83c00e2c3441fe6cad274cf5ac2cf7fbfc067eb6b301be6

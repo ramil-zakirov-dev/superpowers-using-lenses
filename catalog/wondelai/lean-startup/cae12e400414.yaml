@@ -1,0 +1,172 @@
+id: wondelai/lean-startup
+version: cae12e400414
+source:
+  url: https://github.com/wondelai/skills
+  path: lean-startup/SKILL.md
+  sha256: cae12e400414e3ec28934ec9066bb6bb82c55d942971a0a17daf554a306e46d7
+license: MIT
+kind: lens
+stacks:
+- any
+document_kinds:
+- milestone
+- spec
+- plan
+summary: A framework for testing startup assumptions, measuring validated learning, and deciding
+  whether to iterate, pivot, or scale.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: scoring
+  title: Lean Startup Scoring
+  applies_to: Use when scoring a product plan, experiment, or metric set for Lean Startup
+    readiness.
+  kind: reference
+  spans:
+  - - 18
+    - 26
+  requires:
+  - quick-diagnostic
+  sha256: 830128d631db02efa1f99d4c33dc4a99263854c5d52840f4b5cebbdfbc43489b
+- id: build-measure-learn
+  title: Build-Measure-Learn Loop
+  applies_to: Use when planning a product experiment or deciding what to build first.
+  kind: pipeline
+  preamble_spans:
+  - - 41
+    - 59
+  spans:
+  - - 28
+    - 39
+  sha256: a30e4c84b215b4f0ae1e1d8fb3a4a51bdc0b6d1db16b5fbc520d473c6556b68e
+- id: validated-learning
+  title: Validated Learning
+  applies_to: Use when determining whether customer evidence supports or falsifies a product
+    assumption.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 41
+    - 55
+  sha256: e512eff035aad8043726dd880421edbd18e5e129abd0f897d4621c22f0106dbe
+- id: mvp-design
+  title: Minimum Viable Product
+  applies_to: Use when choosing the smallest product or experiment that can test a risky assumption.
+  kind: reference
+  preamble_spans:
+  - - 41
+    - 55
+  spans:
+  - - 57
+    - 73
+  sha256: 73f45dfb7c9fc0684e62ec968a4c45e952f289ef7845c36b89f5ef411fd00ee2
+- id: leap-of-faith-assumptions
+  title: Leap-of-Faith Assumptions
+  applies_to: Use when identifying, ranking, and testing assumptions that could make a business
+    fail.
+  kind: pipeline
+  preamble_spans:
+  - - 41
+    - 55
+  spans:
+  - - 75
+    - 88
+  sha256: 3aa80946f6bb5ea098147a1674dca6b060f035b0022d2d8287e265b97cc36df8
+- id: innovation-accounting
+  title: Innovation Accounting
+  applies_to: Use when measuring startup progress before conventional revenue or customer
+    metrics are reliable.
+  kind: pipeline
+  preamble_spans:
+  - - 108
+    - 126
+  spans:
+  - - 90
+    - 106
+  requires:
+  - pivot-or-persevere
+  sha256: 1564d1b8c2ad49e477061d79d6e1c9cff7d8239bd54f8017fa62cbe97fd721ea
+- id: actionable-metrics
+  title: Actionable Metrics
+  applies_to: Use when selecting metrics that can guide product decisions and distinguish
+    real progress from vanity activity.
+  kind: reference
+  spans:
+  - - 108
+    - 126
+  sha256: 4d2ea6043f1eec466b6a954fe74cc9a48262e70f674a8314790faddd74582dee
+- id: pivot-or-persevere
+  title: Pivot or Persevere
+  applies_to: Use when deciding whether evidence supports continuing with a product direction
+    or changing the business hypothesis.
+  kind: lens
+  preamble_spans:
+  - - 108
+    - 126
+  spans:
+  - - 128
+    - 151
+  sha256: 04c955ceba996148251798348d65dad5e9ad32561903b8f1efaf3e23d98f4b3a
+- id: growth-engines
+  title: Three Engines of Growth
+  applies_to: Use when selecting and optimizing a sustainable customer acquisition and retention
+    model.
+  kind: reference
+  spans:
+  - - 153
+    - 169
+  sha256: 6df32eaf78c6817fc6512e0580705179e269881d1f0279f875241a39fc2b7e37
+- id: five-whys
+  title: Five Whys
+  applies_to: Use when investigating the root cause of an operational, product, or launch
+    problem.
+  kind: pipeline
+  spans:
+  - - 171
+    - 184
+  sha256: 6728e648268edd1b53f088d945f3b77a9c9307efe64d76d38d0b9a0eebb3a68b
+- id: small-batches
+  title: Small Batches
+  applies_to: Use when reducing feedback time, release risk, and waste during product development.
+  kind: lens
+  preamble_spans:
+  - - 28
+    - 37
+  spans:
+  - - 186
+    - 199
+  sha256: 40b5e922f72a32e0475a43d765f268a6c2e4130327440a3c8f2f16939cd07f7a
+- id: lean-startup-application
+  title: From Idea to Scale
+  applies_to: Use when mapping a product bet from problem validation through product-market
+    fit and sustainable growth.
+  kind: pipeline
+  preamble_spans:
+  - - 28
+    - 37
+  spans:
+  - - 201
+    - 214
+  sha256: 76fd2244f116383db90bb8f91f77f6fdb372c9463231385e09991007de73e07b
+- id: common-mistakes
+  title: Common Lean Startup Mistakes
+  applies_to: Use when reviewing a product development approach for wasteful or non-learning
+    behavior.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 216
+    - 226
+  sha256: b51c10bb24cd5912280052ec0a0f4225eb7e763a85c726dae0956edaac4afe43
+- id: quick-diagnostic
+  title: Quick Diagnostic
+  applies_to: Use when auditing whether a product development plan has a testable assumption,
+    measurable outcome, small enough MVP, and predefined response to failure.
+  kind: reference
+  spans:
+  - - 228
+    - 239
+  sha256: 6c71c194ca1befe0224bc0c0b7329789ea1547289b8ed1df77babf5802b9ccac

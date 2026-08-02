@@ -1,0 +1,109 @@
+id: wondelai/pragmatic-programmer
+version: 6800c2f4dceb
+source:
+  url: https://github.com/wondelai/skills
+  path: pragmatic-programmer/SKILL.md
+  sha256: 6800c2f4dcebe9f730f2df9babd03c370516054db79305ad5071dd0974877c2f
+license: MIT
+kind: lens
+stacks:
+- any
+document_kinds:
+- milestone
+- spec
+- plan
+summary: A systems-level framework for evaluating and improving software craftsmanship through
+  durable design principles, estimation practices, and engineering habits.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: dry-knowledge
+  title: DRY Knowledge
+  applies_to: Use when deciding whether logic, rules, configuration, schemas, or documentation
+    duplicate the same knowledge.
+  kind: lens
+  spans:
+  - - 31
+    - 52
+  sha256: bf5c30f22b0823bda0c52932f235f1ee1ab5d481705d50711ee6a8ce9344164b
+- id: orthogonal-design
+  title: Orthogonal Design
+  applies_to: Use when assessing coupling, change impact, module boundaries, dependency choices,
+    or test isolation.
+  kind: lens
+  spans:
+  - - 54
+    - 75
+  sha256: 24b7da2c91d62e7048d84c0c9b7612a7b900d91e65f51dac9d1ecf1183e308c1
+- id: tracer-bullets-and-prototypes
+  title: Tracer Bullets and Prototypes
+  applies_to: Use when requirements or architecture are uncertain and you need early end-to-end
+    feedback or focused technical exploration.
+  kind: lens
+  spans:
+  - - 77
+    - 98
+  sha256: 970b95ebb8f6fcb690d4244f668b7d26fcb1f6b7e2023e7e693c1e08cd0c4893
+- id: design-by-contract
+  title: Design by Contract
+  applies_to: Use when defining module boundaries, validating inputs and state, or deciding
+    whether a failure should be asserted or handled.
+  kind: lens
+  spans:
+  - - 100
+    - 122
+  sha256: 5df66a2643b981d0d8c344afe1bf5690351f6fb24e651776a4bfcc531017e062
+- id: broken-window-prevention
+  title: Broken Window Prevention
+  applies_to: Use when managing technical debt, reviewing quality degradation, or changing
+    team norms around neglected code and decisions.
+  kind: lens
+  spans:
+  - - 124
+    - 145
+  sha256: 38806d42de171a31e59f99ca4c84e157cf64b406c3d3709a9689d1ffccce849d
+- id: reversible-decisions
+  title: Reversibility and Flexibility
+  applies_to: Use when choosing databases, vendors, frameworks, deployment approaches, or
+    abstractions whose future replacement cost matters.
+  kind: lens
+  spans:
+  - - 147
+    - 168
+  sha256: d92e76cda1dfc4466e1cdb7495a48f5931766a52a996b0767bc0fecdc2b79538
+- id: estimation-and-knowledge-portfolio
+  title: Estimation and Knowledge Portfolio
+  applies_to: Use when producing or calibrating estimates, evaluating unfamiliar technology,
+    or planning ongoing technical learning.
+  kind: lens
+  spans:
+  - - 170
+    - 191
+  sha256: c921f27492e7d5339a15cff508da59e4a0c5bd10ec5754d60e96a78539b9e253
+- id: common-pragmatic-mistakes
+  title: Common Pragmatic Mistakes
+  applies_to: Use when reviewing a design or codebase for recurring violations of pragmatic
+    engineering principles.
+  kind: reference
+  spans:
+  - - 193
+    - 203
+  requires:
+  - dry-knowledge
+  - orthogonal-design
+  - tracer-bullets-and-prototypes
+  - design-by-contract
+  - broken-window-prevention
+  - reversible-decisions
+  - estimation-and-knowledge-portfolio
+  sha256: e88a7fd06ce835ffded9f69d22943682438f87f0d085fb68ecf0499e5eaddf5e
+- id: scoring-and-quick-diagnostic
+  title: Scoring and Quick Diagnostic
+  applies_to: Use when evaluating a system against the framework and reporting a score with
+    specific failing areas and corrective actions.
+  kind: reference
+  spans:
+  - - 18
+    - 25
+  - - 205
+    - 215
+  sha256: 9fdf55bf49c6307f5d7fefcbac2817519263a4c1a0901654bf79a9ede2ae0b7f

@@ -1,0 +1,117 @@
+id: wondelai/software-design-philosophy
+version: 7fd97d295832
+source:
+  url: https://github.com/wondelai/skills
+  path: software-design-philosophy/SKILL.md
+  sha256: 7fd97d2958320d36510794be353cb0a2a9245e76df64b2cb3caab4407ef29e8a
+license: MIT
+kind: lens
+stacks:
+- any
+document_kinds:
+- milestone
+- spec
+- plan
+summary: A framework for evaluating and improving software designs by reducing unnecessary
+  complexity through deep modules, information hiding, deliberate generality, useful comments,
+  and strategic investment.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: complexity-and-its-causes
+  title: Complexity and Its Causes
+  applies_to: Use when identifying why a design or codebase is difficult to understand or
+    modify.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 33
+    - 52
+  sha256: c98a6b091c7c5c03c4d3b0ebc872a5bee8eec0cdcd82b369b563f67740d072be
+- id: deep-vs-shallow-modules
+  title: Deep vs. Shallow Modules
+  applies_to: Use when evaluating whether a module, class, or API provides enough functionality
+    to justify its interface.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 54
+    - 74
+  sha256: b704024abcd9e33aa49b55e835a14bd5e3605b6a7862e61b88d63e416776c9db
+- id: information-hiding-and-leakage
+  title: Information Hiding and Leakage
+  applies_to: Use when implementation knowledge, formats, protocols, or assumptions appear
+    across module boundaries.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 76
+    - 96
+  sha256: 4bac1543fbb9902019ff77f73e60bd15c95a8c8a831cfbda24d0b53ba9b79914
+- id: general-purpose-vs-special-purpose
+  title: General-Purpose vs. Special-Purpose Modules
+  applies_to: Use when deciding how general an interface should be or whether configuration
+    and special cases belong in an API.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 98
+    - 118
+  sha256: 14033b18a4574437f3f906020ca8dfa0e7499f5714922bd7dc88862376eb4cb2
+- id: comments-as-design-documentation
+  title: Comments as Design Documentation
+  applies_to: Use when deciding whether a comment is needed or reviewing whether documentation
+    captures design intent and assumptions.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 120
+    - 141
+  sha256: 2e58481f973ba39140f80b7723ebeb3330746f2fe42f404655f1b3411aec92d7
+- id: strategic-vs-tactical-programming
+  title: Strategic vs. Tactical Programming
+  applies_to: Use when deciding how much design improvement and refactoring effort to invest
+    in a feature or change.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 143
+    - 163
+  sha256: eace8ead0535cc00ab8ccc1f2eaeceebdb5d8641dd035e277b5ac578416c4264
+- id: common-design-mistakes
+  title: Common Design Mistakes
+  applies_to: Use when reviewing a design for recurring complexity patterns such as classitis,
+    leakage, pass-through methods, excessive configuration, or tactical fixes.
+  kind: reference
+  preamble_spans:
+  - - 14
+    - 16
+  - - 98
+    - 108
+  spans:
+  - - 165
+    - 176
+  sha256: be0cec3b55b50bcedba25c13170b3b763456e9de17e16eae1d15551e3a82953e
+- id: quick-design-diagnostic
+  title: Quick Design Diagnostic
+  applies_to: Use when scoring a software design or review against explicit complexity and
+    maintainability criteria.
+  kind: reference
+  preamble_spans:
+  - - 14
+    - 27
+  spans:
+  - - 178
+    - 189
+  sha256: b00090036cb8615901956b70d4b1a3c565a34388ea4d4b5ae24ca593fd0374d5

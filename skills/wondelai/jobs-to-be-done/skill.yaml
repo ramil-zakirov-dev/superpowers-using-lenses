@@ -1,0 +1,15 @@
+name: jobs-to-be-done
+label: wondelai
+version: 1a8069f6845a
+sha256: 1a8069f6845af4f2e5330fdb9c9b8cab37550d05c5ef7fb18163f8fc4fd760b0
+upstream:
+  url: https://github.com/wondelai/skills
+  path: jobs-to-be-done/SKILL.md
+license: MIT
+files:
+  SKILL.md: cc227aa837bda4ae0910324e52a90d338354501d005f7ef2fbd0cff9fd73aaf1
+  references/case-studies.md: 8b84a8d21c76550b5aed97dbf3fe6014b68e4ee01aa40c4a43098cce65defd9f
+  references/competitive-strategy.md: 434e063dd6351e8e6e206e4e1279ffc0795e11e930cf722d5800fb40d64c4d9b
+  references/diagnostics.md: a5b6f1ef79d33403de0e9d37a41e93e31c900bdcd38ba70eeffd223b00072052
+  references/innovation-process.md: af7e840888aa3430218d002ecdc5f421204af34afef6e25260e40b5444f40eae
+  references/organizational-change.md: ac3723d26ca21e1be002c2d7081b319bb8d33df53373b9dba570f05e2676f9ba

@@ -1,0 +1,21 @@
+name: lean-startup
+label: wondelai
+version: cae12e400414
+sha256: cae12e400414e3ec28934ec9066bb6bb82c55d942971a0a17daf554a306e46d7
+upstream:
+  url: https://github.com/wondelai/skills
+  path: lean-startup/SKILL.md
+license: MIT
+files:
+  SKILL.md: 109bf176baf1c56f0d02f6a8a2d59d7969b64768a760bc7624516a8b42b5bf53
+  references/applications.md: 60643365f99839da6fae172cf580dff6beab554410cc492ba63668c231bbfb57
+  references/assumptions.md: 265910cd160280d88ef2803bcb0992e70cb4429a9a93ae3a6038247851d8314b
+  references/build-measure-learn.md: 517cab2d11152488ab516b02760c3de57348cba5d990183afb367f8f6f5b10da
+  references/case-studies.md: 7dc3022346010941cfe63e2d6908e1408b06095f30df0472b6a6d4655c54ceb4
+  references/five-whys.md: 054ecf5e55e7601ab752cc751a6e59b0f11e55723c42066fe1c0c439de4f26fd
+  references/growth-engines.md: c3b872eb20ba13521e2eee26e3a81f0719e9255dee507a8180530662f5218049
+  references/innovation-accounting.md: 6849e2f30cd4328677be4858bfceb2c45e116f38ae2acc3156ecd0b5d3771ddc
+  references/metrics.md: 21f9ce541f11c8b68bfb71f05f7505413cf39b1bdb11bcc40b006e8581563d49
+  references/mvp-design.md: 39fe845c74884fcf1a8b5881f5712f2c5b8ff8a5c312621c09ec3d521c2577e9
+  references/pivots.md: bd531bf4ca03c96bc565dcd87d11a8e314320cdf85eb4892bf9fd45df6f4aadc
+  references/small-batches.md: 266e29e43bc52243ffea53e681c8c67d7a757d7c629d185b4762ebca9ef7605d

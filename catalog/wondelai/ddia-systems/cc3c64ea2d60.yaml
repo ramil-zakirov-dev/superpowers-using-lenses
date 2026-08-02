@@ -1,0 +1,135 @@
+id: wondelai/ddia-systems
+version: cc3c64ea2d60
+source:
+  url: https://github.com/wondelai/skills
+  path: ddia-systems/SKILL.md
+  sha256: cc3c64ea2d6017a54599437b68d6e1a2e44fbc80f82078d0a9635a2cf4436e0a
+license: MIT
+kind: lens
+stacks:
+- any
+document_kinds:
+- milestone
+- spec
+- plan
+summary: A framework for choosing and evaluating data-system architectures across modeling,
+  storage, distribution, processing, consistency, and fault tolerance.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: architecture-scoring
+  title: Architecture Scoring
+  applies_to: Use when evaluating the completeness and production readiness of a data architecture.
+  kind: lens
+  preamble_spans:
+  - - 201
+    - 211
+  spans:
+  - - 18
+    - 26
+  sha256: 93fe1e203975bb9f93821b9b0592676d9ac20ce255534814bd0a909eaceb4045
+- id: data-models-and-query-languages
+  title: Data Models and Query Languages
+  applies_to: Use when selecting a data model, schema strategy, or query language for an application.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 32
+    - 52
+  sha256: 2189f3558d074f1f83445b455fda9599ebf8d7fa9a31898656a9498e7d02761c
+- id: storage-engines
+  title: Storage Engines
+  applies_to: Use when choosing a storage engine or index strategy for a workload with specific
+    read, write, or analytical requirements.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 54
+    - 73
+  sha256: 352677d4d7dea193d2daa3dde6e7c89962a22363e1e43f7a7f4009aec4bfd91c
+- id: replication
+  title: Replication
+  applies_to: Use when designing replication, failover, multi-region writes, read scaling,
+    or stale-read handling.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 75
+    - 97
+  sha256: dcd2c9c94183f7bd7aedf28d06ad1a6d99b0de5a1a56a4ad5e59b581fd079b88
+- id: partitioning
+  title: Partitioning
+  applies_to: Use when sharding data, selecting partition keys, planning rebalancing, or mitigating
+    hot partitions.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 99
+    - 118
+  sha256: 44be1c346ad21e24545a0402ebbd943395b71c10488fb96c5b2d075feb347f82
+- id: transactions-and-consistency
+  title: Transactions and Consistency
+  applies_to: Use when choosing isolation guarantees or diagnosing concurrency anomalies,
+    write skew, and cross-service consistency problems.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 120
+    - 141
+  sha256: 4872fa76cd93ae55b0fdb893589265b7c6a417293c95d629ce88c8812c3252f9
+- id: batch-and-stream-processing
+  title: Batch and Stream Processing
+  applies_to: Use when designing pipelines that transform bounded datasets, continuous event
+    streams, or derived data.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 143
+    - 165
+  sha256: 0da6c63cf57546871b577285629b6f0eab2d3a0005f2a0f4a066f82f1a12b689
+- id: reliability-and-fault-tolerance
+  title: Reliability and Fault Tolerance
+  applies_to: Use when designing failure handling, retries, timeouts, leader election, graceful
+    degradation, or consensus.
+  kind: lens
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 167
+    - 187
+  sha256: 20d3ce82db8df0350c50b7b5a2ce5993d58b9e570777bc41a4305fa6fb682452
+- id: common-data-system-mistakes
+  title: Common Data-System Mistakes
+  applies_to: Use when reviewing a data-system design for recurring mistakes involving database
+    choice, replication, transactions, partitioning, processing models, or fault handling.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 189
+    - 199
+  sha256: e172970475a7b686cf4066bfa21ccf63091a2d58aecd8c3037bbd00424f57e9e
+- id: quick-diagnostic
+  title: Quick Diagnostic
+  applies_to: Use when performing a rapid readiness check on a data-system design or implementation.
+  kind: reference
+  preamble_spans:
+  - - 12
+    - 16
+  spans:
+  - - 201
+    - 211
+  sha256: 1edf368736dd106a94e3cd36465e563f80c936bf11aab3d1811073096ccaeaac

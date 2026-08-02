@@ -1,0 +1,96 @@
+id: wondelai/inspired-product
+version: 71252839c14c
+source:
+  url: https://github.com/wondelai/skills
+  path: inspired-product/SKILL.md
+  sha256: 71252839c14c9ff074521dc02e879cc21fc1912a95cad83804285ec3a7f834df
+license: MIT
+kind: lens
+stacks:
+- any
+document_kinds:
+- milestone
+- spec
+- plan
+summary: A framework for organizing empowered product teams around continuous discovery, outcome
+  ownership, strategic context, and validated delivery.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: discovery-delivery
+  title: Product Discovery and Delivery
+  applies_to: Use when deciding how to validate product ideas before engineering investment
+    or connect discovery work to delivery planning.
+  kind: lens
+  spans:
+  - - 26
+    - 48
+  sha256: 3609ba5ca55b5e5693c07f4c4979bdf7c2fc97aba895de8ad40401b384248159
+- id: empowered-product-teams
+  title: Empowered Product Teams
+  applies_to: Use when structuring product teams, defining roles, assigning accountability,
+    or moving away from feature-team operating models.
+  kind: lens
+  spans:
+  - - 50
+    - 73
+  sha256: 92f74b5b7f88b3f5a953282b1c90ab29f825c83037a0973d0c97080e87baf33c
+- id: product-discovery-techniques
+  title: Product Discovery Techniques
+  applies_to: Use when testing product assumptions about customer value, usability, feasibility,
+    or business viability.
+  kind: reference
+  preamble_spans:
+  - - 28
+    - 36
+  spans:
+  - - 75
+    - 97
+  sha256: 7a050c9b8a360d23bcf51eb2e6d2e19d440269e8176fcb3bae8474f72e84608a
+- id: opportunity-assessment
+  title: Opportunity Assessment
+  applies_to: Use when evaluating a proposed opportunity before committing design, engineering,
+    or organizational resources.
+  kind: reference
+  spans:
+  - - 99
+    - 123
+  sha256: 4c0194983a0db916a96fe386dddd7ad6ec535f2b2b348493d0b8eb244463c3c0
+- id: product-vision-strategy
+  title: Product Vision and Strategy
+  applies_to: Use when aligning teams on a desired future, sequencing markets and problems,
+    or creating outcome-based planning context.
+  kind: lens
+  spans:
+  - - 124
+    - 148
+  sha256: 8b9e7665068ed12092255a5e884c5d093a29c79785ef83abcf7e17f62f0d05f2
+- id: continuous-value-delivery
+  title: Continuous Value Delivery
+  applies_to: Use when planning releases, reducing delivery risk, or establishing frequent
+    measurement and learning loops.
+  kind: pipeline
+  spans:
+  - - 149
+    - 172
+  sha256: ae00fecda3ad50a5272c1e1f73ffae291a9045a2f6cd5d8ff7984a0d85176f17
+- id: common-product-mistakes
+  title: Common Product Mistakes
+  applies_to: Use when diagnosing output-driven product practices or identifying why a product
+    organization is failing to create customer value.
+  kind: lens
+  spans:
+  - - 174
+    - 183
+  sha256: b79623f5fe543e6036e29e6dcb43df064e0586001c31de8d332627599d39b67a
+- id: empowered-team-diagnostic
+  title: Empowered Team Diagnostic
+  applies_to: Use when scoring product team structures, discovery practices, or delivery processes
+    and selecting improvements needed to reach empowered-team performance.
+  kind: reference
+  preamble_spans:
+  - - 20
+    - 22
+  spans:
+  - - 185
+    - 195
+  sha256: fd8bc681774b7b01f1b420cc4bbcc6dbb2bff6eb28471923f68184f6066d4acf

@@ -1,0 +1,16 @@
+name: software-design-philosophy
+label: wondelai
+version: 7fd97d295832
+sha256: 7fd97d2958320d36510794be353cb0a2a9245e76df64b2cb3caab4407ef29e8a
+upstream:
+  url: https://github.com/wondelai/skills
+  path: software-design-philosophy/SKILL.md
+license: MIT
+files:
+  SKILL.md: d5971fdfc51e6a6f729856a9c3874d56628bb6802fdd31eb1c97adbfa4b51a73
+  references/comments-as-design.md: da3a3d72ccd942060ba8c82a3b63a538894b53cb9f3a291356a805689987fb67
+  references/complexity-symptoms.md: 2c9ce0e98b0086177d71824900cc0a024bf9d3da6f671fc023a75022e4a05046
+  references/deep-modules.md: 2589adf2d4ccf84c35f761166e07ad0c9f945d4c042eca819ed7d94a331197ad
+  references/general-vs-special.md: 52d6dd43a24bd964d27042d6dec3baed6c04158b6f7d4a2f60f111d543459b87
+  references/information-hiding.md: 0fdc29b4980d7162104ce4e49ccf8f75a97d9fbf6a18c544c37da14c580415ea
+  references/strategic-programming.md: 31a06a605aac4f8286fc60f69722113fa0cd246d3efe6fa68bad9ba452a4883d

@@ -1,0 +1,17 @@
+name: 37signals-way
+label: wondelai
+version: 22d3d7825202
+sha256: 22d3d782520275fab8744a9d234c223e754bb57c6f744eb5a67e3cf1d29b80d3
+upstream:
+  url: https://github.com/wondelai/skills
+  path: 37signals-way/SKILL.md
+license: MIT
+files:
+  SKILL.md: 76e829be2cca397b7faea28c03239fb43674443cf9c9489701da6e2ac1bb0809
+  references/betting-cycles.md: 613d9ed557da859bafd967af8bbcc48edc01bf55d0183525f64e05d0fda3623e
+  references/build-less.md: 48500268ff95fdce54974d40eb552ae132acea24a13071b06c3adbe25aef1887
+  references/case-studies.md: 50625bc95946c218d08b3bdc1f887c2b167c372facb67c736d3c80376f89a23e
+  references/opinionated-software.md: f1eb37b97d01672b983ae9c346810b4e9f01efb2baec928227334fd9c52db951
+  references/shaping-work.md: fecc4fa39c2687325ff0c94b15071f28fca71c1858c842fb6f03b6b49699c34d
+  references/small-teams-execution.md: 5d625f4a9f59e938034546f6447631c6e3b27e194c81849717bc9af1e9584915
+  references/ux-ui-copy.md: 2508245ab77dd66b8ef3a48dcb16a78e08c0896fc1431cd61327f966991e035b

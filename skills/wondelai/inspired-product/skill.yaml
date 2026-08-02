@@ -1,0 +1,16 @@
+name: inspired-product
+label: wondelai
+version: 71252839c14c
+sha256: 71252839c14c9ff074521dc02e879cc21fc1912a95cad83804285ec3a7f834df
+upstream:
+  url: https://github.com/wondelai/skills
+  path: inspired-product/SKILL.md
+license: MIT
+files:
+  SKILL.md: 482ab6a32bb59b087a06812711959624e9afec1b73c34d5d6774c565cc2bdb14
+  references/case-studies.md: 0467e7d95be26f2f60168c855cb7ed0bfe89c58b4773328411a1df4a1b3b574d
+  references/discovery-techniques.md: 4df58eb89894c22933cafe4813b01ddbec9e5f9a5812f1ae44551b311e62c9f0
+  references/empowered-teams.md: bd09e3e91a5804a364699bbdc60817d70313b759e7b9513b094b80a0deca4d13
+  references/opportunity-assessment.md: 7b928681fd93fcb590608599c7696068410ead76c61dbd9430f995a2e89d38d2
+  references/product-vision.md: 4c7e421d9cfc7fde625111b93e08c2d7159d07669de25c431fb0aaa56808a469
+  references/stakeholder-management.md: 88a71686b51cbccdba3edafbdd47734624feafba1d84f7e6719c1b328c98d670

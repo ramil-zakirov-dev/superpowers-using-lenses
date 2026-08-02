@@ -1,0 +1,126 @@
+id: wondelai/37signals-way
+version: 22d3d7825202
+source:
+  url: https://github.com/wondelai/skills
+  path: 37signals-way/SKILL.md
+  sha256: 22d3d782520275fab8744a9d234c223e754bb57c6f744eb5a67e3cf1d29b80d3
+license: MIT
+kind: lens
+stacks:
+- any
+document_kinds:
+- milestone
+- spec
+- plan
+summary: A practical framework for shaping, prioritizing, building, and shipping focused software
+  with small autonomous teams.
+decomposed_by: openai/gpt-5.6-luna-pro
+parts:
+- id: scoring
+  title: Scoring Against the Framework
+  applies_to: Use when evaluating a product plan, feature scope, or team process against 37signals
+    principles.
+  kind: reference
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 18
+    - 26
+  sha256: bc109637f151356da4f243cc8278deff594b5625f91c50791ee098729bcf02c3
+- id: build-less
+  title: Build Less
+  applies_to: Use when deciding which product features, capabilities, or competitive responses
+    to include.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 28
+    - 50
+  sha256: 91072886017ff629e9e21b5afbe3daa485baa771e5e060726dc8ce53d793aca6
+- id: shape-the-work
+  title: Shape the Work
+  applies_to: Use when turning a raw product idea into bounded work that a small team can
+    build autonomously.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 51
+    - 75
+  sha256: 0251054dea09318f8caa6064167853c651821e53536414b4c26f9057117ab93c
+- id: betting-and-cycles
+  title: Betting and Cycles
+  applies_to: Use when selecting work for a fixed-time development cycle or replacing backlogs
+    and long-term roadmaps.
+  kind: pipeline
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 76
+    - 100
+  sha256: e9e299a667f7826c747d3f340234b93bbb136acfd4c4176d60ecc735ebb00b6c
+- id: small-team-execution
+  title: Small Teams and Execution
+  applies_to: Use when organizing or guiding a small autonomous team during a fixed-time build
+    cycle.
+  kind: pipeline
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 101
+    - 125
+  sha256: 63a61d772d6109c7d66ff3bdc1b39a534fd584da2e14ecc9bc598549665acd5d
+- id: opinionated-software
+  title: Opinionated Software and Clear Communication
+  applies_to: Use when deciding whether to add product preferences, respond to feature requests,
+    or write user-facing communication.
+  kind: lens
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 126
+    - 150
+  sha256: a8363d492b0d6fdc9ed0998333becfc3532b5468bc47c415fc4143ff1b9d34bf
+- id: common-mistakes
+  title: Common Mistakes
+  applies_to: Use when diagnosing process or product-development behaviors that conflict with
+    the 37signals approach.
+  kind: reference
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 151
+    - 163
+  requires:
+  - build-less
+  - shape-the-work
+  - betting-and-cycles
+  - small-team-execution
+  - opinionated-software
+  sha256: f703c7241dc2cd3f2fc1099ddf06a6a4b828dd44ed1b3d3315a4b8f33937ef00
+- id: quick-diagnostic
+  title: Quick Diagnostic
+  applies_to: Use when quickly assessing whether proposed work or an active cycle has the
+    constraints, shaping, team structure, and operating practices needed to ship.
+  kind: reference
+  preamble_spans:
+  - - 14
+    - 16
+  spans:
+  - - 164
+    - 178
+  requires:
+  - build-less
+  - shape-the-work
+  - betting-and-cycles
+  - small-team-execution
+  - opinionated-software
+  sha256: 4592ec1dbb4921bb5cf3261ad1ad49cd2f4643e5783e6b7ddc03dad289c2ac5b
