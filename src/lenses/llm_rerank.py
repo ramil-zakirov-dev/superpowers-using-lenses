@@ -8,16 +8,31 @@ the register of moments. Vocabulary overlap then decides the ranking, and the
 right part loses to whatever happens to share nouns with the query.
 
 An LLM can read past that: the need beneath "keeping a Stripe call from
-hanging" is the need a resilience part states. Measured on 34 paired queries,
-this pass scores 16/17 on project-flavoured phrasing where the cross-encoder
-scores 14/17, and matches it at 16/17 on need-only phrasing — it does not
-trade one register for the other.
+hanging" is the need a resilience part states. Measured on seventeen paired
+needs, this pass scored 16/17 on project-flavoured phrasing where the
+cross-encoder scored 14/17, and matched it at 16/17 on need-only phrasing —
+it did not trade one register for the other.
 
 The shape matters as much as the model. Asked to score candidates one by one
-with a digit, the same model scored 23/34; shown all twenty and asked which
-six are best, 32/34. A small model has no stable absolute scale — "is this a
-7 or an 8?" is a question it answers inconsistently — but comparison inside a
-visible set needs no scale at all.
+with a digit, the same model scored 23 of those 34 queries; shown all twenty
+and asked which six are best, 32. A small model has no stable absolute scale
+— "is this a 7 or an 8?" is a question it answers inconsistently — but
+comparison inside a visible set needs no scale at all.
+
+**What the numbers above do not say, and a wider eval does.** They come from
+seventeen pairs. At thirty-four (2026-08-03) this pass scores 31/34 on
+need-only phrasing against the dense pass's 33/34 — it is now subtracting
+from the ranking it was added to improve, and it does so reproducibly, since
+`temperature` is 0 below. The failure is positional, not a matter of taste:
+asked about tests that over-mock, it skips the entry reading "Over-mocked
+tests pass while production breaks" — dense rank 1, +0.14 clear of the next
+candidate — and replies `4,5,17,18,19,20`, which is two picks and then the
+end of the list in order. Three of thirty-four replies end in such a run.
+
+`build_prompt` never tells the model that the entries arrive already sorted
+by a relevance estimate, so nothing asks it to reorder rather than reselect.
+That is the first thing to try, and `scripts/eval_retrieval.py` is the only
+thing that can say whether it worked.
 """
 
 from __future__ import annotations

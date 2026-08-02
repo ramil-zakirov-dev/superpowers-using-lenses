@@ -16,8 +16,34 @@ find_lenses, and carries the same need in two registers:
 Both matter, and only one of them occurs in production. An eval written
 solely in the first register grades the corpus against queries drawn from
 the corpus's own vocabulary, and will report health it has not measured:
-this suite passed 17/17 on `intent` while `concrete` lost six of the same
-seventeen outright. That gap is the finding, not a footnote to it.
+at seventeen cases this suite passed 17/17 on `intent` while `concrete`
+lost six of the same seventeen outright. That gap is the finding, not a
+footnote to it.
+
+Thirty-four cases, not seventeen, and the second seventeen are why. At n=17
+every case was answerable by a part tied to no technology, and every
+targeted skill was one of eighteen — the other twenty-three of forty-one
+were unreachable by any expectation here, so the suite could report health
+for a corpus it had never queried half of. The cases added since cover
+those, and roughly a third of them are stack-specific on purpose: the
+server does not make the caller pass `stack`, so whether a stack-tagged
+part surfaces from prose alone is a question worth failing at.
+
+Growing it paid immediately, and not in the direction expected. Measured
+2026-08-03 — dense 33/34, ranked 31/34, `concrete` 32/34, 63/68 across both
+axes — the second pass is now *behind* the dense pass it is supposed to
+improve, and it is behind deterministically (`temperature` is 0). On
+`tests over-mock internal logic and stop meaning anything` it discards
+`ludo/testing#mock-boundaries` — dense rank 1, margin +0.14 over the runner
+up, `applies_to` reading "Over-mocked tests pass while production breaks" —
+and answers `4,5,17,18,19,20`, taking the last four entries of the pool in
+order. Three of thirty-four answers end in such a run. That failure mode
+existed at n=17 and n=17 could not see it.
+
+The `intent` gate is therefore red as of this writing, and is being left
+red. The reasoning below about red-on-arrival gates is about a gate nobody
+can fix; this one is red because the ranker is wrong, which is what a gate
+is for.
 
 `expect_any` is a loose, human-reviewable signal (a substring of a
 `skill_id` or `part_id` known to be in the corpus), not a pinned ref: the
@@ -127,6 +153,22 @@ CASES = [
         "events store so the team remembers it in a year",
         expect_any=("architecture-decision-records",),
     ),
+    Case(
+        scenario="Comments in a module describe the code instead of the reasoning",
+        intent="comments explain what the code does rather than why, and have "
+        "drifted from what it now does",
+        concrete="the comments in our pricing module explain what each line "
+        "does rather than why, and they no longer match the code",
+        expect_any=("clean-code",),
+    ),
+    Case(
+        scenario="A conditional that has accumulated branches over two years",
+        intent="restructuring a conditional that has grown branches, in steps "
+        "small enough that the tests stay green throughout",
+        concrete="restructuring our eight-branch discount conditional in steps "
+        "small enough that the pytest suite stays green throughout",
+        expect_any=("refactoring",),
+    ),
 
     # Design-time needs: nothing is being written yet. A milestone brief or a
     # slice spec is being argued about, and the question is what to build and
@@ -205,6 +247,135 @@ CASES = [
         "actually does before we change it, when it hard-codes its own "
         "DB session",
         expect_any=("working-with-legacy-code",),
+    ),
+    Case(
+        scenario="Two services that use the same noun to mean different things",
+        intent="one word means different things to two parts of the system and "
+        "their models keep leaking into each other",
+        concrete="'subscription' means different things to our billing service "
+        "and our provisioning service and the models keep leaking into each "
+        "other",
+        expect_any=("domain-driven-design",),
+    ),
+    Case(
+        scenario="A control whose users expect it to do something else",
+        intent="people form the wrong idea of what a control will do and "
+        "nothing about it signals otherwise",
+        concrete="people think our Sync button uploads their local changes "
+        "when it actually overwrites them, and nothing about the button says "
+        "so",
+        expect_any=("design-everyday-things",),
+    ),
+    Case(
+        scenario="A screen everyone dislikes and nobody can say why",
+        intent="grading an existing screen against known usability criteria "
+        "and ranking which problems are worth fixing first",
+        concrete="grading our account settings screen against known usability "
+        "criteria and ranking which problems to fix before the release",
+        expect_any=("ux-heuristics",),
+    ),
+
+    # Stack-specific needs. Every case above is answerable by a part that is
+    # not tied to a technology; these are not. They are here because the
+    # server does not require the caller to pass `stack` — the need arrives
+    # in prose and the technology has to be inferred from it. Whether a
+    # stack-tagged part surfaces on an untagged query is a different question
+    # from whether a lens does, and the eval could not ask it before.
+    Case(
+        scenario="A custom widget that works with a mouse and nothing else",
+        intent="a custom control can be operated with a pointer but not with a "
+        "keyboard, and is not announced to assistive technology",
+        concrete="our custom React combobox in the booking form works with a "
+        "mouse but keyboard and screen-reader users cannot operate it",
+        expect_any=("accessibility",),
+    ),
+    Case(
+        scenario="Callers string-matching on an error message to decide what to do",
+        intent="deciding what an error should carry so a caller further up can "
+        "act on it instead of re-reading its message",
+        concrete="deciding what our OrderError should carry so the FastAPI "
+        "handler can act on it instead of string-matching the message",
+        expect_any=("ecc/error-handling",),
+    ),
+    Case(
+        scenario="Request-scoped objects reached through module globals",
+        intent="giving each request its own database session and settings in "
+        "an async python web service without module-level globals",
+        concrete="giving each FastAPI request its own SQLAlchemy session and "
+        "settings without module-level globals",
+        expect_any=("fastapi",),
+    ),
+    Case(
+        scenario="Designing the tools an agent will call",
+        intent="shaping the tools a server exposes to a model so it can pick "
+        "the right one and call it correctly without guessing",
+        concrete="shaping the tools our internal MCP server exposes so Claude "
+        "picks the right one and calls it correctly without guessing",
+        expect_any=("mcp-server",),
+    ),
+    Case(
+        scenario="A listing query that degraded as the table grew",
+        intent="a query slowed down as its table grew and which index it needs "
+        "is not obvious from the query alone",
+        concrete="our orders listing query slowed down as the Postgres table "
+        "passed twenty million rows and we cannot tell which index it needs",
+        expect_any=("postgres",),
+    ),
+    Case(
+        scenario="A schema change on a table that is being written to",
+        intent="changing a column on a large table without holding a lock that "
+        "blocks writes for the length of the deploy",
+        concrete="adding a NOT NULL column to our forty-million-row Postgres "
+        "payments table without blocking writes during the deploy",
+        expect_any=("postgres", "alembic"),
+    ),
+    Case(
+        scenario="An ORM migration that behaved differently in production",
+        intent="a schema migration run by the ORM's migration tool did "
+        "something different against production than it did locally",
+        concrete="our Alembic migration did something different against "
+        "production Postgres than it did against the local SQLAlchemy setup",
+        expect_any=("sqlalchemy", "alembic"),
+    ),
+    Case(
+        scenario="A payload passed around as nested dictionaries",
+        intent="a structure passed between functions as nested dictionaries "
+        "has become impossible to reason about or type",
+        concrete="the record our ETL job passes between stages as nested dicts "
+        "has become impossible to reason about or type",
+        expect_any=("python-patterns", "python-expert"),
+    ),
+    Case(
+        scenario="A slow dev server and a bundle that ships too much",
+        intent="the development server reloads slowly and the production "
+        "bundle ships far more than the page uses",
+        concrete="our Vite dev server reloads slowly and the production bundle "
+        "ships the entire icon library for three icons",
+        expect_any=("vite",),
+    ),
+    Case(
+        scenario="Pulling fields out of text a parser handles only mostly",
+        intent="extracting fields from semi-structured text where a "
+        "deterministic parser covers most inputs and the rest are messy",
+        concrete="extracting amounts and dates from supplier invoice text "
+        "where a regex covers most files and the rest are messy",
+        expect_any=("regex",),
+    ),
+    Case(
+        scenario="A nested query issuing one database call per row",
+        intent="a nested query fans out into one database call per item in the "
+        "list above it",
+        concrete="our GraphQL orders query fans out into one Postgres call per "
+        "line item",
+        expect_any=("graphql",),
+    ),
+    Case(
+        scenario="Ownership fights with the compiler settled by copying",
+        intent="fights with the compiler over ownership are being settled by "
+        "copying data everywhere and the habit is spreading",
+        concrete="our Rust ingestion service settles every borrow-checker "
+        "fight with a .clone() and the habit is spreading",
+        expect_any=("rust",),
     ),
 ]
 

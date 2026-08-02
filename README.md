@@ -279,10 +279,30 @@ with a digit, the same gemma scored 23/34; shown all twenty at once and asked
 which six are best, 32/34. Small models have no stable absolute scale — *"is
 this a 7 or an 8?"* — but comparison inside a visible set needs no scale.
 
-What is still open: **n is 17 per axis**, so the margin that decided this is two
-cases. The remaining failure (*proving the whole path works end to end*) is not
-a ranking failure at all — the target sits at dense rank 33, outside the pool of
-20, so no second pass can reach it. Widening the pool fixes recall and costs
+**Those numbers came from 17 pairs, and 34 tell a different story.** The eval
+now runs 34, chosen to reach the 23 skills of 41 that no earlier expectation
+could reach and to ask, for a third of them, whether a stack-tagged part
+surfaces from prose that never names the stack. Measured 2026-08-03: dense
+33/34, **ranked 31/34**, concrete 32/34 — 63/68 across both axes.
+
+The second pass is now behind the dense pass it exists to improve, and behind
+deterministically: `temperature` is 0, and six runs of the same query return
+one answer. Asked about *tests that over-mock internal logic*, it discards
+`ludo/testing#mock-boundaries` — dense rank 1, +0.14 clear of the next
+candidate, `applies_to` reading *"Over-mocked tests pass while production
+breaks"* — and replies `4,5,17,18,19,20`: two picks, then the tail of the pool
+in order. Three of 34 replies end in such a run; three name fewer than six
+distinct entries.
+
+The prompt never tells the model that its twenty entries arrive sorted by a
+relevance estimate, so nothing asks it to *reorder* rather than reselect. That
+is the first thing to try. What is settled is smaller than it looked a week
+ago: the listwise shape beat the pointwise one, and the rest was measured on a
+sample too small to show this.
+
+The remaining recall failure is separate. *Proving the whole path works end to
+end* misses the dense top 6 outright — its target sits deep in the pool — so
+no second pass ordering is the reason. Widening the pool fixes recall and costs
 more than it buys, which is its own entry below.
 
 **A benchmark written in the corpus's own voice will report health it has not
