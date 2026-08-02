@@ -5,6 +5,7 @@ sha256: 386566c2e92f1dc399c2043abe9cdaa29d6f76d20b8f705eec539ed19eafeaaf
 upstream:
   url: https://github.com/wondelai/skills
   path: refactoring-patterns/SKILL.md
+  commit: dd37ee506ff558e939b3d421557987cced49b866
 license: MIT
 files:
   SKILL.md: e09d21bcca98b575df0014b3288df75afb556f2dd1d05135e6714d4c413d55d4

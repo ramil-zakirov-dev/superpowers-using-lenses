@@ -5,6 +5,7 @@ sha256: 1a8069f6845af4f2e5330fdb9c9b8cab37550d05c5ef7fb18163f8fc4fd760b0
 upstream:
   url: https://github.com/wondelai/skills
   path: jobs-to-be-done/SKILL.md
+  commit: dd37ee506ff558e939b3d421557987cced49b866
 license: MIT
 files:
   SKILL.md: cc227aa837bda4ae0910324e52a90d338354501d005f7ef2fbd0cff9fd73aaf1

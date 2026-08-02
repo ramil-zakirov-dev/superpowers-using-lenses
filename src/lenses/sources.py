@@ -13,14 +13,20 @@ file on every machine.
 from __future__ import annotations
 
 import fnmatch
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
 import yaml
 
 KNOWN_KEYS = frozenset(
-    {"label", "path", "url", "license", "include", "exclude", "enabled"}
+    {"label", "path", "commit", "url", "license", "include", "exclude", "enabled"}
 )
+
+#: A full git object name. Abbreviations are refused: seven characters are
+#: unambiguous in a repository until the day they are not, and a provenance
+#: record that needs the upstream present to be resolved is not one.
+COMMIT = re.compile(r"^[0-9a-f]{40}$")
 
 
 class SourceError(ValueError):
@@ -31,6 +37,11 @@ class SourceError(ValueError):
 class Source:
     label: str
     path: Path
+    #: The upstream commit this catalogue was built against. Declared here and
+    #: verified against the checkout at vendor time — the manifest states the
+    #: intent, the checkout is the fact, and `vendor.py` says when they differ.
+    #: Empty means unpinned: a source that is not a git checkout at all.
+    commit: str = ""
     url: str = ""
     license: str = "unknown"
     #: Skill directory names to take. Empty means all of them.
@@ -101,10 +112,17 @@ def parse_sources(data: dict, sources_root: Path) -> list[Source]:
         if not raw_path:
             raise SourceError(f"{label}: path is required")
 
+        commit = str(entry.get("commit", "")).strip().lower()
+        if commit and not COMMIT.match(commit):
+            raise SourceError(
+                f"{label}: commit must be a full 40-character git object name, got {commit!r}"
+            )
+
         sources.append(
             Source(
                 label=label,
                 path=resolve_path(raw_path, sources_root),
+                commit=commit,
                 url=str(entry.get("url", "")),
                 license=str(entry.get("license", "unknown")),
                 include=_strings(entry.get("include"), "include", label),

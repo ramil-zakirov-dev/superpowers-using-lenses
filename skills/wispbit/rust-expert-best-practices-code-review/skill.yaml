@@ -5,6 +5,7 @@ sha256: 1b957c87a60570c5b4c176b7359547f95d39470c76e06530cc66361ee1b6249b
 upstream:
   url: https://github.com/wispbit/ai-skills
   path: rust-expert-best-practices-code-review/SKILL.md
+  commit: 8b2c7d0ceca0204634dd308970629c4cd4a5a05f
 license: MIT
 files:
   SKILL.md: 19820ec921eb373fc19744594c2432515db07c6f13ce6c30c06482053ebe2458

@@ -5,6 +5,7 @@ sha256: 22d3d782520275fab8744a9d234c223e754bb57c6f744eb5a67e3cf1d29b80d3
 upstream:
   url: https://github.com/wondelai/skills
   path: 37signals-way/SKILL.md
+  commit: dd37ee506ff558e939b3d421557987cced49b866
 license: MIT
 files:
   SKILL.md: 76e829be2cca397b7faea28c03239fb43674443cf9c9489701da6e2ac1bb0809

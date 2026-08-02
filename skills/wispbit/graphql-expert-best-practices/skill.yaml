@@ -5,6 +5,7 @@ sha256: 9e9801c6095ea09cd0047fa19a8bcd6b87539633326060e4431a3bc10358fb00
 upstream:
   url: https://github.com/wispbit/ai-skills
   path: graphql-expert-best-practices/SKILL.md
+  commit: 8b2c7d0ceca0204634dd308970629c4cd4a5a05f
 license: MIT
 files:
   SKILL.md: 9e9801c6095ea09cd0047fa19a8bcd6b87539633326060e4431a3bc10358fb00

@@ -5,6 +5,7 @@ sha256: 6800c2f4dcebe9f730f2df9babd03c370516054db79305ad5071dd0974877c2f
 upstream:
   url: https://github.com/wondelai/skills
   path: pragmatic-programmer/SKILL.md
+  commit: dd37ee506ff558e939b3d421557987cced49b866
 license: MIT
 files:
   SKILL.md: 7bd0a042aa2dd559f0327916f8d4f2dcf7d21e5f2343a193eaafee932f0f85a3

@@ -5,6 +5,7 @@ sha256: 92cddfb89e9a46590cd4dbb77b63bce0f1b2f0f675e3bbac32cfa55b34f48c30
 upstream:
   url: https://github.com/wondelai/skills
   path: ux-heuristics/SKILL.md
+  commit: dd37ee506ff558e939b3d421557987cced49b866
 license: MIT
 files:
   SKILL.md: cb1ea3de8b6e605614cc59b21d41830d2d82af22e51069bb4c5bb53790cd622b

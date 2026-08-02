@@ -12,7 +12,15 @@ of the source hash. It goes into a sidecar rather than into the file's own
 frontmatter, because the version *is* that hash — writing it inside would
 change the thing being identified.
 
+Where the bytes came from is recorded twice, on purpose. `sources.yaml` names
+the upstream commit this catalogue was built against — a declaration, written
+by a human, that a reader can check out. Each sidecar records the HEAD the
+copy actually observed — derived, and so unable to drift. This refuses to run
+when the two disagree, because vendoring anyway would leave the manifest
+describing a state the corpus did not come from.
+
     python scripts/vendor.py [--only LABEL] [--skill NAME] [--check]
+                             [--accept-upstream]
 """
 
 from __future__ import annotations
@@ -20,6 +28,7 @@ from __future__ import annotations
 import argparse
 import fnmatch
 import hashlib
+import subprocess
 import sys
 from pathlib import Path
 
@@ -39,6 +48,25 @@ def file_hash(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def checkout_commit(path: Path) -> str:
+    """The upstream's HEAD, or "" when the path is not a git checkout.
+
+    A source that is a plain directory is legitimate and unpinned. What is not
+    legitimate is a manifest that names a commit while the bytes come from
+    somewhere else — see the check in `main`.
+    """
+    try:
+        done = subprocess.run(
+            ["git", "-C", str(path), "rev-parse", "HEAD"],
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return ""
+    return done.stdout.strip() if done.returncode == 0 else ""
+
+
 def skill_files(directory: Path) -> list[Path]:
     """Every file in the skill, relative to it, in a stable order."""
     return sorted(
@@ -47,14 +75,22 @@ def skill_files(directory: Path) -> list[Path]:
     )
 
 
-def sidecar_text(source: Source, name: str, digest: str, hashes: dict[str, str]) -> str:
+def sidecar_text(
+    source: Source, name: str, digest: str, hashes: dict[str, str], commit: str
+) -> str:
+    upstream = {"url": source.url, "path": f"{name}/{MAIN_FILE}"}
+    if commit:
+        # The observed HEAD, not the manifest's declaration: this records where
+        # these bytes actually came from, and cannot go stale the way a
+        # hand-written pin can.
+        upstream["commit"] = commit
     return yaml.safe_dump(
         {
             "name": name,
             "label": source.label,
             "version": digest[:12],
             "sha256": digest,
-            "upstream": {"url": source.url, "path": f"{name}/{MAIN_FILE}"},
+            "upstream": upstream,
             "license": source.license,
             "files": hashes,
         },
@@ -63,7 +99,7 @@ def sidecar_text(source: Source, name: str, digest: str, hashes: dict[str, str])
     )
 
 
-def vendor_one(source: Source, origin: Path, skills_dir: Path) -> tuple[str, int]:
+def vendor_one(source: Source, origin: Path, skills_dir: Path, commit: str = "") -> tuple[str, int]:
     """Copy one skill directory verbatim. Returns (version, file count)."""
     name = origin.name
     digest = content_hash((origin / MAIN_FILE).read_text(encoding="utf-8"))
@@ -76,7 +112,9 @@ def vendor_one(source: Source, origin: Path, skills_dir: Path) -> tuple[str, int
         destination.write_bytes((origin / relative).read_bytes())
         hashes[relative.as_posix()] = file_hash(origin / relative)
 
-    (target / SIDECAR).write_text(sidecar_text(source, name, digest, hashes), encoding="utf-8")
+    (target / SIDECAR).write_text(
+        sidecar_text(source, name, digest, hashes, commit), encoding="utf-8"
+    )
     return digest[:12], len(hashes)
 
 
@@ -110,6 +148,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--skill", action="append", metavar="NAME", help="glob; repeatable")
     parser.add_argument("--check", action="store_true",
                         help="verify the vendored corpus; copy nothing")
+    parser.add_argument("--accept-upstream", action="store_true",
+                        help="vendor even where the checkout has moved past the pinned commit")
     args = parser.parse_args(argv)
 
     if args.check:
@@ -127,24 +167,44 @@ def main(argv: list[str] | None = None) -> int:
     if args.only:
         sources = [source for source in sources if source.label in set(args.only)]
 
-    copied = missing = 0
+    copied = missing = moved = 0
     for source in sources:
         if not source.path.exists():
             print(f"  MISSING  {source.label}: {source.path} does not exist")
             missing += 1
             continue
+
+        head = checkout_commit(source.path)
+        if source.commit and head and head != source.commit and not args.accept_upstream:
+            # Copying anyway would make the manifest describe a state these
+            # bytes did not come from. Refuse: the point of the pin is that a
+            # deliberate catalogue moves upstream deliberately.
+            print(f"  MOVED    {source.label}: manifest pins {source.commit[:12]}, "
+                  f"checkout is at {head[:12]}")
+            print(f"           re-run with --accept-upstream, then set "
+                  f"commit: {head} in the manifest")
+            moved += 1
+            continue
+
         for main_file in sorted(source.path.rglob(MAIN_FILE)):
             name = main_file.parent.name
             if not selects(source, name):
                 continue
             if args.skill and not any(fnmatch.fnmatch(name, p) for p in args.skill):
                 continue
-            version, count = vendor_one(source, main_file.parent, args.skills)
+            version, count = vendor_one(source, main_file.parent, args.skills, head)
             print(f"  vendored {source.label}/{name} @ {version}  ({count} file(s))")
             copied += 1
 
-    print(f"done: {copied} vendored, {missing} source(s) missing")
-    return 1 if missing else 0
+        if source.commit and head and head != source.commit:
+            print(f"  ACCEPTED {source.label}: vendored from {head[:12]}, not the "
+                  f"pinned {source.commit[:12]} — set commit: {head} in the manifest")
+        elif source.commit and not head:
+            print(f"  UNPINNED {source.label}: {source.path} is not a git checkout, "
+                  f"but the manifest pins {source.commit[:12]}")
+
+    print(f"done: {copied} vendored, {missing} source(s) missing, {moved} moved upstream")
+    return 1 if missing or moved else 0
 
 
 if __name__ == "__main__":

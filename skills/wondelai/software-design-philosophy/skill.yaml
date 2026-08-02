@@ -5,6 +5,7 @@ sha256: 7fd97d2958320d36510794be353cb0a2a9245e76df64b2cb3caab4407ef29e8a
 upstream:
   url: https://github.com/wondelai/skills
   path: software-design-philosophy/SKILL.md
+  commit: dd37ee506ff558e939b3d421557987cced49b866
 license: MIT
 files:
   SKILL.md: d5971fdfc51e6a6f729856a9c3874d56628bb6802fdd31eb1c97adbfa4b51a73

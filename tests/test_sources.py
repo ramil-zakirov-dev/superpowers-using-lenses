@@ -65,6 +65,28 @@ def test_unknown_key_is_refused_rather_than_ignored():
         parse_sources(manifest(licence="MIT"), ROOT)
 
 
+def test_commit_defaults_to_unpinned():
+    """A source need not be a git checkout at all."""
+    assert parse_sources(manifest(), ROOT)[0].commit == ""
+
+
+def test_commit_is_kept_verbatim_and_lowercased():
+    sha = "E4E4163101F162881E628F300A9CA4E6A940BCEA"
+    assert parse_sources(manifest(commit=sha), ROOT)[0].commit == sha.lower()
+
+
+def test_abbreviated_commit_is_refused():
+    """Seven characters are unambiguous until the day they are not, and
+    resolving them needs the upstream present — which a reader may not have."""
+    with pytest.raises(SourceError, match="40-character"):
+        parse_sources(manifest(commit="e4e4163"), ROOT)
+
+
+def test_a_commit_that_is_not_an_object_name_is_refused():
+    with pytest.raises(SourceError, match="40-character"):
+        parse_sources(manifest(commit="HEAD"), ROOT)
+
+
 def test_include_must_be_a_list_of_strings():
     with pytest.raises(SourceError, match="list of strings"):
         parse_sources(manifest(include="api-design"), ROOT)

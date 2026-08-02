@@ -5,6 +5,7 @@ sha256: 4bef0a4a1b6c23f3f702336b5697d6d6a62be0bd17ceae92b62b8a4695be8104
 upstream:
   url: https://github.com/ludo-technologies/python-best-practices
   path: testing/SKILL.md
+  commit: 8f2d989c1e921ef9ed2a8284f2be8870dbca32d2
 license: MIT
 files:
   README.md: fa34cc0dffed8aa1a9e452f3bac207847ab011f6479f1eefed0ac03e10f9c597

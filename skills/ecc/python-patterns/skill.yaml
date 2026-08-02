@@ -5,6 +5,7 @@ sha256: 43d2f6e989645197a309a4d1371069cd1a72a6cae3cd8ea15ed0366fdc9b2a9a
 upstream:
   url: https://github.com/affaan-m/ECC
   path: python-patterns/SKILL.md
+  commit: e4e4163101f162881e628f300a9ca4e6a940bcea
 license: MIT
 files:
   SKILL.md: bcdc0e72c463c9714d0eb7c5cd1f8dd0d44e54400e22a2f4835f0b2f5e6c2559

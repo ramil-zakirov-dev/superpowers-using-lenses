@@ -3,6 +3,11 @@
 # `path` resolves under `sources_root` from .env unless it is absolute or
 # starts with `~`, so this file stays identical on every machine.
 #
+# `commit` is the upstream state this catalogue was built against — a full git
+# object name, so a reader can check out exactly what was vendored. `vendor.py`
+# compares it against the checkout's HEAD and refuses to copy when they differ;
+# moving a source forward is a deliberate act, not a side effect of `git pull`.
+#
 # `include` is a whitelist of skill directory names (fnmatch patterns). When
 # present, nothing else from that source is taken. `exclude` is applied after.
 # Both match the directory name, not the path.
@@ -22,6 +27,7 @@ sources:
   # is not there fails silently.
   - label: wondelai
     path: wondelai-skills
+    commit: dd37ee506ff558e939b3d421557987cced49b866
     url: https://github.com/wondelai/skills
     license: MIT
     include:
@@ -59,6 +65,7 @@ sources:
   # orchestrator. Add names deliberately, after reading them.
   - label: ecc
     path: affan-m-ecc/skills
+    commit: e4e4163101f162881e628f300a9ca4e6a940bcea
     url: https://github.com/affaan-m/ECC
     license: MIT
     include:
@@ -86,6 +93,7 @@ sources:
 
   - label: wispbit
     path: wispbit-ai-skills/skills
+    commit: 8b2c7d0ceca0204634dd308970629c4cd4a5a05f
     url: https://github.com/wispbit/ai-skills
     license: MIT
 
@@ -94,5 +102,6 @@ sources:
   # and wispbit above.
   - label: ludo
     path: ludo-technologies_python-best-practices/skills
+    commit: 8f2d989c1e921ef9ed2a8284f2be8870dbca32d2
     url: https://github.com/ludo-technologies/python-best-practices
     license: MIT

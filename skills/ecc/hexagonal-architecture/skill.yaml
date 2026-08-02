@@ -5,6 +5,7 @@ sha256: 97016702dbd553f45ab6accc0784474daea2aab7ae0c3d8eb37b96b3c52b522a
 upstream:
   url: https://github.com/affaan-m/ECC
   path: hexagonal-architecture/SKILL.md
+  commit: e4e4163101f162881e628f300a9ca4e6a940bcea
 license: MIT
 files:
   SKILL.md: 53a76ce2255051df5c538b5a690517b7987d1a1c0d3ef57f30d2ddc35258e7f8

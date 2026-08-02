@@ -5,6 +5,7 @@ sha256: 6ff14c38529422dc7e47dd815062ff550d2b2e95082753dc7974e783b7a3b4f0
 upstream:
   url: https://github.com/wondelai/skills
   path: domain-driven-design/SKILL.md
+  commit: dd37ee506ff558e939b3d421557987cced49b866
 license: MIT
 files:
   SKILL.md: 14f80bc0c209e8500f52813158afb8b6b819b47a54b92576f0c0586acac38668

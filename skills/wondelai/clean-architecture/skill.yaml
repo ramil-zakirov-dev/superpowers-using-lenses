@@ -5,6 +5,7 @@ sha256: a96f8d0103068bd9e1cbedc980d86c3c9af48b127acd96b4beac555658284a2e
 upstream:
   url: https://github.com/wondelai/skills
   path: clean-architecture/SKILL.md
+  commit: dd37ee506ff558e939b3d421557987cced49b866
 license: MIT
 files:
   SKILL.md: fc9fe201ae040df80164bc7a407507882783e2c8cdbc0379a1fbdcf3719e4446

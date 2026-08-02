@@ -5,6 +5,7 @@ sha256: bbab1127be948bfcd6f8c18ec2d82562c10deea4a28fb21155bdb8f77011236e
 upstream:
   url: https://github.com/wondelai/skills
   path: team-topologies/SKILL.md
+  commit: dd37ee506ff558e939b3d421557987cced49b866
 license: MIT
 files:
   SKILL.md: b62a65eee8f0fc170f4223540a0ba6f2bf9248db9de028bccce32cdce41060e4

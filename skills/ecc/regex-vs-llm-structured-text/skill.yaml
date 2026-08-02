@@ -5,6 +5,7 @@ sha256: cfa3a0a552aa0288062fa08bb8a799db0e4524d2ba84fa042683ddc45181dcb0
 upstream:
   url: https://github.com/affaan-m/ECC
   path: regex-vs-llm-structured-text/SKILL.md
+  commit: e4e4163101f162881e628f300a9ca4e6a940bcea
 license: MIT
 files:
   SKILL.md: 35ba82a9b1b7253fd84b6873c4350b974528c744ffd825544f2a4f8ccbef6d44

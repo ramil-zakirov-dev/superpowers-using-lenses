@@ -5,6 +5,7 @@ sha256: f0149990bd3f4b088ee7b2c77ffbe23645fe99a928814e40116c1ad328a947f1
 upstream:
   url: https://github.com/wondelai/skills
   path: good-strategy-bad-strategy/SKILL.md
+  commit: dd37ee506ff558e939b3d421557987cced49b866
 license: MIT
 files:
   SKILL.md: 7adebf248a5aa40ef6bc34d3f379a9cd22663b8ca8086fc350c95cee6d4d2035

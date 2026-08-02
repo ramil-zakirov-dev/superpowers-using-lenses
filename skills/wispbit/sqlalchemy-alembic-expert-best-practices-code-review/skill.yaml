@@ -5,6 +5,7 @@ sha256: da46298ff07b83f952bb4d7059ab2c940530991ba8485404a8b6960b87cd3235
 upstream:
   url: https://github.com/wispbit/ai-skills
   path: sqlalchemy-alembic-expert-best-practices-code-review/SKILL.md
+  commit: 8b2c7d0ceca0204634dd308970629c4cd4a5a05f
 license: MIT
 files:
   SKILL.md: 9f23bc2d6d666cab46c35660454cd3443742dad662ef80a4c95d147f3a19a648

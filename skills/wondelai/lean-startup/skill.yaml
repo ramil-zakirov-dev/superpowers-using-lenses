@@ -5,6 +5,7 @@ sha256: cae12e400414e3ec28934ec9066bb6bb82c55d942971a0a17daf554a306e46d7
 upstream:
   url: https://github.com/wondelai/skills
   path: lean-startup/SKILL.md
+  commit: dd37ee506ff558e939b3d421557987cced49b866
 license: MIT
 files:
   SKILL.md: 109bf176baf1c56f0d02f6a8a2d59d7969b64768a760bc7624516a8b42b5bf53

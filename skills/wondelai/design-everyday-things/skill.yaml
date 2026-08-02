@@ -5,6 +5,7 @@ sha256: 82db4899450a68c0cb7cd799814745bc0f4318709dd4165e408cdfcd5347b33d
 upstream:
   url: https://github.com/wondelai/skills
   path: design-everyday-things/SKILL.md
+  commit: dd37ee506ff558e939b3d421557987cced49b866
 license: MIT
 files:
   SKILL.md: cd14143973b32c84583e8d94175410188c255f24169e78826f5b4dbf11fa4fa6
