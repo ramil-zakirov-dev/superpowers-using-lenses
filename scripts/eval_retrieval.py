@@ -45,6 +45,8 @@ class Case:
 
 
 CASES = [
+    # Implementation-time needs: a slice is being built and something in the
+    # code has to be decided.
     Case(
         scenario="Calling a third-party payment API from the request path",
         intent="an external call in the request path can hang or be down "
@@ -91,6 +93,66 @@ CASES = [
         intent="capturing the reasoning behind an architecture decision so "
         "the team remembers it in a year",
         expect_any=("architecture-decision-records",),
+    ),
+
+    # Design-time needs: nothing is being written yet. A milestone brief or a
+    # slice spec is being argued about, and the question is what to build and
+    # where the expensive-to-reverse lines fall. These queries cover the half
+    # of the corpus the cases above never reach — an engineering-only eval
+    # cannot tell whether a product or architecture lens is retrievable at all.
+    Case(
+        scenario="A milestone brief that lists targets and calls them a strategy",
+        intent="a plan names where we want to end up but never says what is "
+        "actually in the way",
+        expect_any=("good-strategy-bad-strategy",),
+    ),
+    Case(
+        scenario="A slice that keeps growing past the time it was worth",
+        intent="deciding how much work one delivery cycle is worth before "
+        "committing to it, and cutting to fit rather than slipping",
+        expect_any=("37signals-way",),
+    ),
+    Case(
+        scenario="An objective everyone agrees with and nobody can test",
+        intent="turning a vague objective into something that can be proven "
+        "wrong before the team commits to building it",
+        expect_any=("continuous-discovery", "lean-startup"),
+    ),
+    Case(
+        scenario="A feature requested by name, with no stated problem behind it",
+        intent="understanding what progress a customer is trying to make, "
+        "rather than which feature they asked for",
+        expect_any=("jobs-to-be-done", "inspired-product"),
+    ),
+    Case(
+        scenario="Two teams keep blocking each other on the same subsystem",
+        intent="deciding which team owns which part of the system so changes "
+        "stop needing three teams to agree",
+        expect_any=("team-topologies",),
+    ),
+    Case(
+        scenario="A service whose data has to be readable from two regions",
+        intent="choosing how data is replicated and what consistency callers "
+        "can rely on when it is spread across regions",
+        expect_any=("ddia-systems", "system-design"),
+    ),
+    Case(
+        scenario="A module whose interface is as complicated as its insides",
+        intent="judging whether an interface hides enough complexity to be "
+        "worth its own existence",
+        expect_any=("software-design-philosophy",),
+    ),
+    Case(
+        scenario="Proving the whole path works before filling in any of it",
+        intent="reaching end to end through every layer with something thin "
+        "and real, rather than finishing one layer at a time",
+        expect_any=("pragmatic-programmer",),
+    ),
+    Case(
+        scenario="A plan that starts with tests for code that has none",
+        intent="establishing what untested code currently does before "
+        "changing it, when its dependencies resist being replaced",
+        expect_any=("working-with-legacy-code",),
     ),
 ]
 
