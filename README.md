@@ -126,15 +126,27 @@ work rather than the embedder's.
 A third model narrows the 20 dense candidates to the answer. `reranker_kind`
 picks how:
 
-| | `cross-encoder` (default) | `llm` |
-|---|---|---|
-| Sees | one candidate at a time | the whole numbered pool |
-| Needs an endpoint | no — a local model name | yes, its own three settings |
-| Need-only phrasing | 16/17 | 16/17 |
-| **Project phrasing** | 14/17 | **16/17** |
-| Cost | 0.09 s/query | 0.23 s/query |
+| | none | `cross-encoder` (default) | `llm` |
+|---|---|---|---|
+| Sees | — | one candidate at a time | the whole numbered pool |
+| Needs an endpoint | — | no — a local model name | yes, its own three settings |
+| Need-only phrasing | **33/34** | 30/34 | 31/34 |
+| **Project phrasing** | 27/34 | 27/34 | **32/34** |
+| **Total** | 60/68 | **57/68** | **63/68** |
+| Cost | 0 | 0.09 s/query | 0.23 s/query |
 
-The default is the one that asks nothing of you, not the one that scores best;
+Measured 2026-08-03 on 34 paired needs. The ceiling is 67/68 — what the pool of
+20 contains before either pass touches it — so both of these are being graded
+against how much of an answer they throw away.
+
+**Read the first column before choosing.** `cross-encoder` is the default and
+it scores *below doing nothing*: 57 against 60. It is not paying for itself on
+this corpus and the default is wrong; it stands only until someone decides
+whether to move it to `llm` or to none. `llm` earns its 63 entirely on project
+phrasing (27 → 32) and gives back two cases on need-only (33 → 31) — that loss
+is a positional defect in the ranking prompt, described under *What is not
+settled*, not the price of the approach.
+
 `.env.example` has the full table and the commented-out `llm` block. Its
 endpoint is deliberately separate from `llm_base_url` — that model decomposes
 skills once each, this one runs on every search and wants to be local.
@@ -263,10 +275,12 @@ terminates at runtime, but the catalogue would happily record one and no
 validation would say so.
 
 **The phrasing gap is mostly closed, and how it closed is the lesson.**
-`scripts/eval_retrieval.py` runs seventeen needs in two registers: the need
-alone, and the same need carrying a real project's proper nouns. Only the
-second occurs in production. With a cross-encoder second pass those scored
-16/17 and 14/17; with the `llm` pass, **16/17 and 16/17**.
+`scripts/eval_retrieval.py` runs each need in two registers: the need alone,
+and the same need carrying a real project's proper nouns. Only the second
+occurs in production. The three paragraphs that follow are how that was first
+measured, at seventeen pairs — kept because the reasoning still holds and the
+numbers no longer do. With a cross-encoder second pass those scored 16/17 and
+14/17; with the `llm` pass, **16/17 and 16/17**.
 
 Two stronger cross-encoders were tried first and both lost — `bge-reranker-base`
 25/34, `bge-reranker-v2-m3` 29/34, against MiniLM's 30/34. The fix was never a
@@ -299,6 +313,15 @@ relevance estimate, so nothing asks it to *reorder* rather than reselect. That
 is the first thing to try. What is settled is smaller than it looked a week
 ago: the listwise shape beat the pointwise one, and the rest was measured on a
 sample too small to show this.
+
+**The default second pass scores below no second pass.** Run over the same 34
+pairs, `cross-encoder` totals 57/68 against 60/68 for the dense top six alone —
+it is subtracting on need-only phrasing (33 → 30) and adding nothing on project
+phrasing (27 → 27), which is the axis it was there for. At seventeen pairs the
+dense baseline was never scored on both axes, so nothing in the eval could say
+this. The default stands until someone chooses between `llm` and none; it is
+not defensible as it is, and it is called out here rather than changed quietly
+because changing what every install does is not a documentation edit.
 
 The remaining recall failure is separate. *Proving the whole path works end to
 end* misses the dense top 6 outright — its target sits deep in the pool — so
