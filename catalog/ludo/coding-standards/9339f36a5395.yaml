@@ -1,0 +1,365 @@
+id: ludo/coding-standards
+version: 9339f36a5395
+source:
+  url: https://github.com/ludo-technologies/python-best-practices
+  path: coding-standards/SKILL.md
+  sha256: 9339f36a5395705ea1c3e14a62f680153fe1b81f55ac89ce704161651bfdab4b
+license: MIT
+kind: reference
+stacks: []
+document_kinds: []
+summary: Python coding standards and best practices covering error handling, performance optimization,
+  async patterns, SOLID design principles, documentation, data validation, and object-oriented
+  programming. Use when writing, reviewing, or refactoring Python code, or when the user asks
+  about Python style, design, or best practices.
+decomposed_by: author
+parts:
+- id: async-context-manager
+  title: Resource Management with async with
+  applies_to: Resource Management with async with — Prevent resource leaks + guaranteed cleanup.
+  file: rules/async-context-manager.md
+  spans:
+  - - 1
+    - 66
+  tags:
+  - async
+  - asyncio
+  - context-manager
+  - resource-management
+  sha256: 4b54b5b98a49a5124ab39405acf15f35ea7b1dc3c874d51f6b4dbedfacc3da28
+- id: async-create-task
+  title: Proper Background Task Creation
+  applies_to: Proper Background Task Creation — Prevent GC issues by holding task references.
+  file: rules/async-create-task.md
+  spans:
+  - - 1
+    - 81
+  tags:
+  - async
+  - asyncio
+  - task
+  - background
+  sha256: c2a3365ba7b305b5cd048f260146ceee66306e6e6eb3aae1e55fc3a6a8c63946
+- id: async-gather
+  title: Use asyncio.gather for Independent Tasks
+  applies_to: Use asyncio.gather for Independent Tasks — Significant reduction in I/O wait
+    time.
+  file: rules/async-gather.md
+  spans:
+  - - 1
+    - 68
+  tags:
+  - async
+  - asyncio
+  - concurrency
+  - gather
+  sha256: d72dc9238d6c980b1231e3ab7d25730296e1785f37ee087701340d1bcca0fee2
+- id: async-semaphore
+  title: Limit Concurrency with Semaphores
+  applies_to: Limit Concurrency with Semaphores — Prevent resource exhaustion and rate limiting
+    issues.
+  file: rules/async-semaphore.md
+  spans:
+  - - 1
+    - 72
+  tags:
+  - async
+  - asyncio
+  - semaphore
+  - concurrency-control
+  sha256: 4527323b65ffb41f568e51900d8aba468362e7b8906d475bf9dd9c46c14dd59b
+- id: design-dependency-injection
+  title: Loose Coupling with Dependency Injection
+  applies_to: Loose Coupling with Dependency Injection — Improved testability and flexibility.
+  file: rules/design-dependency-injection.md
+  spans:
+  - - 1
+    - 85
+  tags:
+  - design
+  - dependency-injection
+  - testing
+  - decoupling
+  sha256: b9387ea3758105634153b624b5a81b7d291798cf782fd2ced174858e75dbfd59
+- id: design-early-return
+  title: Reduce Nesting with Early Returns
+  applies_to: Reduce Nesting with Early Returns — Improved readability and reduced cognitive
+    load.
+  file: rules/design-early-return.md
+  spans:
+  - - 1
+    - 78
+  tags:
+  - design
+  - readability
+  - control-flow
+  - guard-clause
+  sha256: aa85cfc0afeaa9c680786804643930c3c1a98021f48f06b2201dea6a0a906651
+- id: design-no-global-singleton
+  title: Avoid Global Singletons and Module-Level Shared Instances
+  applies_to: Avoid Global Singletons and Module-Level Shared Instances — Testable, swappable
+    dependencies without hidden shared state.
+  file: rules/design-no-global-singleton.md
+  spans:
+  - - 1
+    - 119
+  tags:
+  - design
+  - singleton
+  - global-state
+  - dependency-injection
+  - testing
+  sha256: dcfca28ef1d2f71b9e146f663b063cc45b826a2f19fd596334a2890e1eee035a
+- id: design-philosophy
+  title: Software Design Philosophy
+  applies_to: Software Design Philosophy — Maintainable, pragmatic code.
+  file: rules/design-philosophy.md
+  spans:
+  - - 1
+    - 118
+  tags:
+  - design
+  - dry
+  - yagni
+  - kiss
+  - philosophy
+  sha256: bbf46e681523d4e603ca0fe1c4ac934f70a205867ae70729c7b87b6d469914ca
+- id: design-pure-functions
+  title: Prefer Pure Functions Without Side Effects
+  applies_to: Prefer Pure Functions Without Side Effects — Predictable, testable, and parallelizable
+    code.
+  file: rules/design-pure-functions.md
+  spans:
+  - - 1
+    - 82
+  tags:
+  - design
+  - functional
+  - pure-functions
+  - testing
+  sha256: ef9bb34fcd5d98594442068adc1585889ceaba2d68f7343801490f513b8c29a6
+- id: design-single-responsibility
+  title: Single Responsibility Principle
+  applies_to: Single Responsibility Principle — Improved maintainability and testability.
+  file: rules/design-single-responsibility.md
+  spans:
+  - - 1
+    - 97
+  tags:
+  - design
+  - solid
+  - srp
+  - maintainability
+  sha256: fcf550f08de1c01d1e1cb79b4f4515e96c75ddd2a574120510ddb8f71cc77b85
+- id: doc-docstring
+  title: Document Public APIs with Google Style Docstrings
+  applies_to: Document Public APIs with Google Style Docstrings — Clear API contracts for
+    humans, agents, and generated documentation.
+  file: rules/doc-docstring.md
+  spans:
+  - - 1
+    - 89
+  tags:
+  - documentation
+  - docstring
+  - public-api
+  - google-style
+  sha256: 91ef4dc33aee42f08eb17d5b5523f1173ab448f9100bd0d9b703a7094518ce94
+- id: doc-type-hints
+  title: Require Type Hints for Public APIs
+  applies_to: Require Type Hints for Public APIs — Explicit contracts that improve correctness,
+    tooling, and agent reliability.
+  file: rules/doc-type-hints.md
+  spans:
+  - - 1
+    - 60
+  tags:
+  - documentation
+  - typing
+  - type-hints
+  - public-api
+  sha256: 9ec6afddafd0fbcab9042a61c3d006d4d0034c0e1017577d39697294c89d32f6
+- id: error-no-silent-exceptions
+  title: Never Swallow Exceptions
+  applies_to: Never Swallow Exceptions — Prevent silent failures and hidden data loss.
+  file: rules/error-no-silent-exceptions.md
+  spans:
+  - - 1
+    - 56
+  tags:
+  - exceptions
+  - errors
+  - logging
+  - reliability
+  sha256: 09f4b0f28149b4d6457c0582321aac32cc50e221b004e406e61efd2d97e1186f
+- id: oop-composition-over-inheritance
+  title: Prefer Composition Over Inheritance
+  applies_to: Prefer Composition Over Inheritance — More flexible and maintainable class design.
+  file: rules/oop-composition-over-inheritance.md
+  spans:
+  - - 1
+    - 94
+  tags:
+  - oop
+  - composition
+  - inheritance
+  - flexibility
+  sha256: 179cda927607ded67b5077e9f0c3285ffa898086328510a074ba5db4763523cf
+- id: oop-dataclass
+  title: Use Dataclass for Data Containers
+  applies_to: Use Dataclass for Data Containers — Less boilerplate, better semantics.
+  file: rules/oop-dataclass.md
+  spans:
+  - - 1
+    - 84
+  tags:
+  - oop
+  - dataclass
+  - data-structures
+  - boilerplate
+  sha256: fdc04711913248428cc6b62a8e6a3a76ffa5222740037893ef9c76aa3f319679
+- id: oop-property
+  title: Use Property Instead of Getters
+  applies_to: Use Property Instead of Getters — Pythonic attribute access with encapsulation.
+  file: rules/oop-property.md
+  spans:
+  - - 1
+    - 108
+  tags:
+  - oop
+  - property
+  - encapsulation
+  - pythonic
+  sha256: 5ae92e645c496b05c2ca32588ff75312dccaa286ca8db6d7c0494c3439b235e3
+- id: oop-protocol
+  title: Prefer Protocol Over Abstract Base Classes
+  applies_to: Prefer Protocol Over Abstract Base Classes — Structural typing without inheritance
+    requirements.
+  file: rules/oop-protocol.md
+  spans:
+  - - 1
+    - 120
+  tags:
+  - oop
+  - protocol
+  - typing
+  - duck-typing
+  sha256: acdfa361b3c062115596bd228086e950f69be988c2062053bde6e4e3c81046bb
+- id: perf-dict-get
+  title: Use dict.get() for Efficient Default Values
+  applies_to: Use dict.get() for Efficient Default Values — Avoid KeyError + cleaner code.
+  file: rules/perf-dict-get.md
+  spans:
+  - - 1
+    - 49
+  tags:
+  - performance
+  - dict
+  - defensive-coding
+  sha256: a46bd9a2c5698d63dd73045428170f4279cdcb052a75ad80e278f289e6d89f0a
+- id: perf-generator-expression
+  title: Use Generators for Large Datasets
+  applies_to: Use Generators for Large Datasets — Memory usage O(n) → O(1).
+  file: rules/perf-generator-expression.md
+  spans:
+  - - 1
+    - 42
+  tags:
+  - performance
+  - memory
+  - generator
+  - lazy-evaluation
+  sha256: 39bf886539bfb1d48b11796408cd23324d04e0090a886eb4f74c1ecbf2a50082
+- id: perf-list-comprehension
+  title: Prefer List Comprehensions Over Loops
+  applies_to: Prefer List Comprehensions Over Loops — 1.5-2x faster execution.
+  file: rules/perf-list-comprehension.md
+  spans:
+  - - 1
+    - 44
+  tags:
+  - performance
+  - loops
+  - comprehension
+  sha256: 807de09196656894c2a551635074e455c8fa95fcd5e9796b39df0ca178345676
+- id: perf-set-lookup
+  title: Use Set for Fast Lookups
+  applies_to: Use Set for Fast Lookups — O(n) → O(1) lookup performance.
+  file: rules/perf-set-lookup.md
+  spans:
+  - - 1
+    - 50
+  tags:
+  - performance
+  - data-structures
+  - set
+  - lookup
+  sha256: 71f034c2bb040a0410cf0c335458dcf7af684fabe5532f2c762f0dea58252b22
+- id: perf-str-join
+  title: Use join for String Concatenation
+  applies_to: Use join for String Concatenation — O(n²) → O(n) string building.
+  file: rules/perf-str-join.md
+  spans:
+  - - 1
+    - 50
+  tags:
+  - performance
+  - string
+  - join
+  sha256: f152029411c08dcfd1ae50fdc24bbf128b09fd8a82a07e681f550472a672e8f1
+- id: solid-isp
+  title: Interface Segregation Principle
+  applies_to: Interface Segregation Principle — Small, focused interfaces clients actually
+    use.
+  file: rules/solid-isp.md
+  spans:
+  - - 1
+    - 78
+  tags:
+  - design
+  - solid
+  - isp
+  - protocol
+  - typing
+  sha256: da179a6f3405c6fb74606618b5d5042d9d4bb6fe2ad35d67ab6a64e38a05626b
+- id: solid-lsp
+  title: Liskov Substitution Principle
+  applies_to: Liskov Substitution Principle — Subtypes honor the contract of their abstractions.
+  file: rules/solid-lsp.md
+  spans:
+  - - 1
+    - 66
+  tags:
+  - design
+  - solid
+  - lsp
+  - inheritance
+  - protocol
+  sha256: 92fcd175669e44bdf9cc461585f41fa4dfd188cf78e3a0d937a008e18b9f997c
+- id: solid-ocp
+  title: Open/Closed Principle
+  applies_to: Open/Closed Principle — Extend behavior without modifying existing code.
+  file: rules/solid-ocp.md
+  spans:
+  - - 1
+    - 63
+  tags:
+  - design
+  - solid
+  - ocp
+  - extensibility
+  sha256: babd2bcf202ef41d4ea001892a4b05ba399b4667b0f29ea6e24b42976a44722c
+- id: validation-pydantic
+  title: Use Pydantic for Boundary Data Validation
+  applies_to: Use Pydantic for Boundary Data Validation — Catch invalid input at trust boundaries
+    before it reaches business logic.
+  file: rules/validation-pydantic.md
+  spans:
+  - - 1
+    - 81
+  tags:
+  - validation
+  - pydantic
+  - input-validation
+  - api
+  sha256: 7e0a2551504efe60a04b51672c0fcdd58da493e4e94224089caef9d2c4d511e2

@@ -9,6 +9,7 @@ dependencies = [
     "PyYAML>=6.0",
     "python-dotenv>=1.0",
     "mcp>=1.2",
+    "sentence-transformers>=3.0",
 ]
 
 [project.optional-dependencies]

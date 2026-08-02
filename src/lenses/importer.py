@@ -68,6 +68,11 @@ def read_rules(directory: Path) -> list[RuleFile]:
         if not root.is_dir():
             continue
         for path in sorted(root.rglob("*.md")):
+            if path.name.startswith("_"):
+                # The author's own "not content" convention — a template or a
+                # section index kept alongside the real rules for their own
+                # tooling, not for an agent to cite.
+                continue
             text = path.read_text(encoding="utf-8")
             frontmatter, body = parse_frontmatter(text)
             found.append(

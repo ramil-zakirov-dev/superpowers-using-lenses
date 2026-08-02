@@ -1,9 +1,11 @@
 """MCP adapter: the corpus, exposed to an agent over stdio.
 
-Thin on purpose. Ranking lives in `search`, resolution in `resolve`, and both
-are pure — this module only turns their results into tool responses. Every
-argument about relevance can therefore be settled by a test rather than by
-starting a server.
+Thin on purpose. Ranking lives in `search`, re-ranking in `rerank`, resolution
+in `resolve` — this module only turns their results into tool responses.
+`search.rank` takes a vector, never a model. `rerank.rerank` takes its scorer
+as an injectable argument: the default one loads a cross-encoder, but a test
+swaps in a fake and never touches torch. Either way, arguments about
+relevance can be settled by a test rather than by starting a server.
 
     LENSES_HOME=/path/to/repo python -m lenses.mcp_server
 
@@ -22,10 +24,18 @@ from mcp.server.mcpserver import MCPServer
 
 from .config import Config, ConfigError, load_config
 from .embed import EmbedError, embed_query
+from .rerank import RerankError, confident, rerank
 from .resolve import resolve
 from .search import Corpus, SearchError, load_index, rank
 
 HOME = Path(os.environ.get("LENSES_HOME", "")).expanduser() or Path.cwd()
+
+#: Candidates handed to the reranker before it is cut down to `limit`. A
+#: bigger, loosely-capped pool gives the cross-encoder real breadth to judge
+#: — pre-filtering it down to `limit` with the cosine pass first would just
+#: reproduce the bi-encoder's mistakes one stage later.
+CANDIDATE_POOL = 20
+CANDIDATE_PER_SKILL = 4
 
 server = MCPServer(
     "using-lenses",
@@ -81,9 +91,24 @@ def find_lenses(
     except EmbedError as exc:
         return {"error": f"the embedding endpoint is unreachable or misconfigured: {exc}"}
 
-    hits = rank(vector, corpus.parts, limit=limit, kind=kind, stack=stack)
+    dense_hits = rank(vector, corpus.parts, limit=limit, kind=kind, stack=stack)
+    candidates = rank(
+        vector, corpus.parts,
+        limit=max(CANDIDATE_POOL, limit), per_skill=CANDIDATE_PER_SKILL,
+        kind=kind, stack=stack,
+    )
+    try:
+        reranked_hits = rerank(intent, candidates, top_n=limit)
+    except RerankError as exc:
+        return {"error": f"the reranker is unavailable: {exc}"}
+    # A query the reranker has no opinion about scores its whole pool in a
+    # narrow, uniformly bad band — trusting that ordering anyway is how a
+    # correct dense answer gets silently dropped. See scripts/eval_retrieval.py.
+    trusted_rerank = confident(reranked_hits)
+    hits = reranked_hits if trusted_rerank else dense_hits
     return {
         "intent": intent,
+        "reranked": trusted_rerank,
         "results": [
             {
                 "ref": hit.part.ref,

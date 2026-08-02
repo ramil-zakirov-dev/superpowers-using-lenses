@@ -55,3 +55,11 @@ sources:
     path: wispbit-ai-skills/skills
     url: https://github.com/wispbit/ai-skills
     license: MIT
+
+  # Three focused skills, one rule per file, frontmatter written for machine
+  # consumption (title/impactDescription/tags) — taken whole, same as wondelai
+  # and wispbit above.
+  - label: ludo
+    path: ludo-technologies_python-best-practices/skills
+    url: https://github.com/ludo-technologies/python-best-practices
+    license: MIT

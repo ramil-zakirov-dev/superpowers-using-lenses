@@ -1,0 +1,21 @@
+name: tooling
+label: ludo
+version: b92823e170a6
+sha256: b92823e170a69deae21f301ced7b5d4d26f58468ea7965995ca7edadd97f1c9d
+upstream:
+  url: https://github.com/ludo-technologies/python-best-practices
+  path: tooling/SKILL.md
+license: MIT
+files:
+  README.md: 98cb5147267f656128dd42423035497d847bf621cc4f8286bf9fcfee1085a8f1
+  SKILL.md: f753bddb077625f558999aaf9d325b2359d8e985cfad313992f88299351e1b3a
+  metadata.json: 819c93bab471a9244eec59cadc3917dfcd4faefad367b745f7555fb47305eeca
+  rules/_sections.md: 2543435f1f1693426e32cb1d9d7ac82c69f7e9790f85a9e7b5095ff4109d01bc
+  rules/_template.md: e550fbe1143f6eeb8104cff841b67b1ff8e183366848dfdfc365b2e593e37cab
+  rules/analysis-pyscn.md: 11ab2e5070fedcd174ab24363610842e8dd63e78a4ec89b251e55c29f9e69402
+  rules/fmt-ruff.md: 16b40ba9907978e6dffe5b71c264634bf8208ad4f0c05a0fa4df49c3bd7f4924
+  rules/lint-ruff.md: 6a2842f96b93952bd2bf797d4c7c72911564fa6dd908b92dccb65f3f2d06c12d
+  rules/pkg-pyproject.md: 11bd6ac114f1259550c6dd433355e8c64de3d04db1fecc86d1e938556cb28e19
+  rules/pkg-uv.md: 5be2a18b0d256138d2bb927c0b646a82c064476e045bc8b16020a7a1fd879b1a
+  rules/test-pytest.md: 50c0461902bb1cf72a88e8f0be483d7cf307405d8e94774ccb9d9934cc12feac
+  rules/type-mypy.md: ee93313bed51bda07c02fe33b8796d0b0e4e79eea43444426bd9a1b28490e7a4

@@ -1,0 +1,170 @@
+id: ludo/testing
+version: 4bef0a4a1b6c
+source:
+  url: https://github.com/ludo-technologies/python-best-practices
+  path: testing/SKILL.md
+  sha256: 4bef0a4a1b6c23f3f702336b5697d6d6a62be0bd17ceae92b62b8a4695be8104
+license: MIT
+kind: reference
+stacks: []
+document_kinds: []
+summary: Python test-writing best practices covering test structure, fixtures, parametrization,
+  and mocking with pytest. Use when writing, reviewing, or refactoring tests, adding test
+  coverage, or working in tests directories and conftest.py.
+decomposed_by: author
+parts:
+- id: fixture-conftest
+  title: Place Fixtures in the Nearest conftest.py
+  applies_to: Place Fixtures in the Nearest conftest.py — Keeps fixture origins discoverable
+    as suites grow.
+  file: rules/fixture-conftest.md
+  spans:
+  - - 1
+    - 61
+  tags:
+  - fixtures
+  - conftest
+  - organization
+  sha256: 0566f90ff0200d0579df949a823fa0e4816de9bcd6485f424d47e7cf13bf2d6f
+- id: fixture-factory
+  title: Use Factory Fixtures for Varied Test Data
+  applies_to: Use Factory Fixtures for Varied Test Data — One fixture serves every variation
+    without duplication.
+  file: rules/fixture-factory.md
+  spans:
+  - - 1
+    - 71
+  tags:
+  - fixtures
+  - factory
+  - test-data
+  sha256: 1770c39785d5d67eb657527ab086bd9a5e5dba1a2d57131e5d4bbe5339380e85
+- id: fixture-scope
+  title: Use the Narrowest Fixture Scope That Works
+  applies_to: Use the Narrowest Fixture Scope That Works — Prevents cross-test state leakage
+    and order-dependent failures.
+  file: rules/fixture-scope.md
+  spans:
+  - - 1
+    - 65
+  tags:
+  - fixtures
+  - scope
+  - isolation
+  sha256: 667f4c17e9ed39bc84070d46f96a4fcac0ec7ab3eed0b1319d2f0d49d3a94303
+- id: mock-autospec
+  title: Use autospec to Keep Mocks Faithful to Real Signatures
+  applies_to: Use autospec to Keep Mocks Faithful to Real Signatures — Catches signature drift
+    that plain mocks silently accept.
+  file: rules/mock-autospec.md
+  spans:
+  - - 1
+    - 47
+  tags:
+  - mocking
+  - autospec
+  - refactoring-safety
+  sha256: 21f8ed1dc68f4fde5139f5aa14bfc240382363ed79729d4a933631417a49476b
+- id: mock-boundaries
+  title: Mock External Boundaries, Not Internal Logic
+  applies_to: Mock External Boundaries, Not Internal Logic — Over-mocked tests pass while
+    production breaks.
+  file: rules/mock-boundaries.md
+  spans:
+  - - 1
+    - 54
+  tags:
+  - mocking
+  - boundaries
+  - test-quality
+  sha256: cd34eea7d34b5cb993d88356187a489b4bc4687c057f7b125025660367503af6
+- id: mock-monkeypatch
+  title: Use monkeypatch for Environment Variables and Attributes
+  applies_to: Use monkeypatch for Environment Variables and Attributes — Guaranteed cleanup
+    prevents state leaking between tests.
+  file: rules/mock-monkeypatch.md
+  spans:
+  - - 1
+    - 60
+  tags:
+  - mocking
+  - monkeypatch
+  - environment
+  - isolation
+  sha256: 2b4de025cfc7648db124dd8877100b395ee72a9ed4b4b243b9ac9ce313371351
+- id: param-ids
+  title: Give Parametrized Cases Readable ids
+  applies_to: Give Parametrized Cases Readable ids — Failure output names the scenario, not
+    object reprs.
+  file: rules/param-ids.md
+  spans:
+  - - 1
+    - 55
+  tags:
+  - parametrize
+  - ids
+  - readability
+  sha256: 45078ff7bd8da216602e3559207a0fc3a8458c90eaa69a6e0ac7d12a5cd45a5c
+- id: param-parametrize
+  title: Replace Duplicated Tests with parametrize
+  applies_to: Replace Duplicated Tests with parametrize — Every case runs and reports independently.
+  file: rules/param-parametrize.md
+  spans:
+  - - 1
+    - 54
+  tags:
+  - parametrize
+  - duplication
+  - coverage
+  sha256: 2f5237d8b6cec1884ef224818807388eb5f880243cf3d397cd01e4ce7a760ce8
+- id: struct-aaa-pattern
+  title: Structure Tests as Arrange-Act-Assert
+  applies_to: Structure Tests as Arrange-Act-Assert — Failures are diagnosed from the test
+    body alone.
+  file: rules/struct-aaa-pattern.md
+  spans:
+  - - 1
+    - 62
+  tags:
+  - structure
+  - aaa
+  - readability
+  sha256: 6e12accbfb17605e9898fa9a22e01a4c96b5c3a40d428461f1d2fb3d3310b029
+- id: struct-no-logic
+  title: Keep Conditionals and Loops Out of Tests
+  applies_to: Keep Conditionals and Loops Out of Tests — Eliminates bugs-in-tests and silently
+    skipped assertions.
+  file: rules/struct-no-logic.md
+  spans:
+  - - 1
+    - 61
+  tags:
+  - structure
+  - simplicity
+  - test-quality
+  sha256: a1fe6d086a652196bd577edb7216f3300de66e5cfb8e5b7478265b4e90b300e5
+- id: struct-one-behavior
+  title: Test One Behavior per Test
+  applies_to: Test One Behavior per Test — First failure never masks the remaining defects.
+  file: rules/struct-one-behavior.md
+  spans:
+  - - 1
+    - 58
+  tags:
+  - structure
+  - isolation
+  - granularity
+  sha256: 2a6d7380950bafd5a184828f01ba708969790035ede2a7ff40c6b952ab240c21
+- id: struct-test-naming
+  title: Name Tests After the Behavior They Verify
+  applies_to: Name Tests After the Behavior They Verify — Failure output reads as a spec of
+    what broke.
+  file: rules/struct-test-naming.md
+  spans:
+  - - 1
+    - 46
+  tags:
+  - structure
+  - naming
+  - readability
+  sha256: e417462a07f4af151446de0f0aaf6b875d9dd8016be417ec5a10f79a33efb13d

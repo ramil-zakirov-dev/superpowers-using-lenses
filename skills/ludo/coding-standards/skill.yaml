@@ -1,0 +1,41 @@
+name: coding-standards
+label: ludo
+version: 9339f36a5395
+sha256: 9339f36a5395705ea1c3e14a62f680153fe1b81f55ac89ce704161651bfdab4b
+upstream:
+  url: https://github.com/ludo-technologies/python-best-practices
+  path: coding-standards/SKILL.md
+license: MIT
+files:
+  README.md: b1beca6daf42671c2c9b51140e16144277d49a6ac81c9e557b3307cfa88e2422
+  SKILL.md: 03020b77bd47cf15fa39482ec94afbd03c296d26b8f31744ddf248a935bb500e
+  metadata.json: bd60f5006359042fc5afd734aa79e589b1dd4cea57a0410a968fbe2413b91ec9
+  rules/_sections.md: cf878def0493a794850a8f0a9da5633f30046fd962a75fe7e50210a7ff8e250a
+  rules/_template.md: a188fef8460aa6b53185cfee5977511b893922a21443132b46db56bea890625d
+  rules/async-context-manager.md: c0cf8c8d09c4414849c23908b6c2f42d78419b253e4176c7570306284eec8ef2
+  rules/async-create-task.md: 1bec0e6f6f7c5b9c6b0298afc9143f10981034ef7288f666b906b075b92d52d9
+  rules/async-gather.md: dd3e7d967b1d12ccea4544cb776589e1681ac9b3386b7f8c98dd6839e9d0f6b1
+  rules/async-semaphore.md: ec5337a0fc99350854d76909d11135d821b48d7d79648891746518e309f2f4cf
+  rules/design-dependency-injection.md: 44ccaa14795bce2f2e9ae65290bba0cd3f05dcc402ec4115348f2a90b20c4c10
+  rules/design-early-return.md: 34f9866ce558e8edfffb77ea68b9c14535b1e2572387d174ae52264f24aee16b
+  rules/design-no-global-singleton.md: 697101c9844ef6aea4e887e8a50f6d194496cc4abb550d4dd239ac4950972577
+  rules/design-philosophy.md: d1baf7095dd1593c62b251be5192ee086fe73e0dba3630a1fddf8bb45ca8592c
+  rules/design-pure-functions.md: 581abb03edca17c4752f9ff4858e312258a86b63348a44b79da9d907ad3296e9
+  rules/design-single-responsibility.md: f0852cfa8ad507b6834ee56df81a4eebd74a6ec3884c7d07c9ee164eb7e88e75
+  rules/doc-docstring.md: 8102883b5c74bbf8981dd7396569b4e41bc13a1e17b510d27695f49e14e6b6e9
+  rules/doc-type-hints.md: f67b02cbd17926caaed9469fca661fe0f59e7edc7bb5e99092d69b0eda62bebe
+  rules/error-no-silent-exceptions.md: c493e39890fc5260ef7532092faa33ad938a92a0a675c8e50af0038d00434501
+  rules/oop-composition-over-inheritance.md: 70d8b47ee0ad72a0a13ed91357de85e8ea21e8a3569ddd94b0d3ada6a632646d
+  rules/oop-dataclass.md: 05e7c3bcdca9edaf9aa014576e046daad01dbd4cb242823001ac3858bf0d92cb
+  rules/oop-property.md: ed7d1c78178f806626215b76a5e71f4f5c3bf1b1cf2b0dee695fb261ff130af0
+  rules/oop-protocol.md: 14d4d0a1c28507fbb78ca81d2be538a6bb5d68ad161e517e6984449edb540f88
+  rules/perf-dict-get.md: 0d29ca7b027c26207591ff18c109463c7078ce73b665d78d8ca4083d8c5a5648
+  rules/perf-generator-expression.md: 5efc2175828222333fe778fdd47e043b1a713659175749fdce9f0b7c9de2a218
+  rules/perf-list-comprehension.md: 5a39ea140f38c89c34c2d6fc0d1c116804053e3622a2f9c070a0be647006b4ea
+  rules/perf-set-lookup.md: eb9ae51feb7f414d9cf32e0391902e4e94d8a0448c05b371af4d7018d9e38daf
+  rules/perf-str-join.md: 7c1b8a9ce365054b7b4361713a2386366878090dfb7533eb24c10adc3c5c61ba
+  rules/solid-isp.md: da179a6f3405c6fb74606618b5d5042d9d4bb6fe2ad35d67ab6a64e38a05626b
+  rules/solid-lsp.md: 92fcd175669e44bdf9cc461585f41fa4dfd188cf78e3a0d937a008e18b9f997c
+  rules/solid-ocp.md: babd2bcf202ef41d4ea001892a4b05ba399b4667b0f29ea6e24b42976a44722c
+  rules/validation-pydantic.md: 7e0a2551504efe60a04b51672c0fcdd58da493e4e94224089caef9d2c4d511e2
+  tooling.md: 22f1a8af5c57a43cad032382217492162c039e8c7f99c71d84f5950af430a634

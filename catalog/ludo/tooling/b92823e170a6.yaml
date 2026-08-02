@@ -1,0 +1,108 @@
+id: ludo/tooling
+version: b92823e170a6
+source:
+  url: https://github.com/ludo-technologies/python-best-practices
+  path: tooling/SKILL.md
+  sha256: b92823e170a69deae21f301ced7b5d4d26f58468ea7965995ca7edadd97f1c9d
+license: MIT
+kind: reference
+stacks: []
+document_kinds: []
+summary: Python development tooling configuration and best practices for ruff, mypy, pytest,
+  pyscn, and uv. Use when setting up a Python project, configuring linters, formatters, type
+  checkers, or test frameworks, or when editing pyproject.toml or tool config files.
+decomposed_by: author
+parts:
+- id: analysis-pyscn
+  title: Code Quality Analysis with pyscn
+  applies_to: Code Quality Analysis with pyscn — Automated code quality assessment.
+  file: rules/analysis-pyscn.md
+  spans:
+  - - 1
+    - 92
+  tags:
+  - pyscn
+  - analysis
+  - complexity
+  - dead-code
+  - dependencies
+  sha256: 1806268ffc87c469281de7618e04a123efd507e7f78e7da6cecf4e95f8d5d9ab
+- id: fmt-ruff
+  title: Formatting with Ruff
+  applies_to: Formatting with Ruff — Consistent code style.
+  file: rules/fmt-ruff.md
+  spans:
+  - - 1
+    - 108
+  tags:
+  - ruff
+  - formatting
+  - black
+  - isort
+  sha256: 176733ba4de4ed1292bf9d645040039073420a51085d5f91690f98d44d1c6f58
+- id: lint-ruff
+  title: Linting with Ruff
+  applies_to: Linting with Ruff — Fast, comprehensive linting.
+  file: rules/lint-ruff.md
+  spans:
+  - - 1
+    - 124
+  tags:
+  - ruff
+  - linting
+  - pyproject.toml
+  - configuration
+  sha256: b707619a9f400a3ec48c4dbb8575f17873617bfde1b00fc30c35c484da3049d2
+- id: pkg-pyproject
+  title: Project Configuration with pyproject.toml
+  applies_to: Project Configuration with pyproject.toml — Modern unified configuration.
+  file: rules/pkg-pyproject.md
+  spans:
+  - - 1
+    - 138
+  tags:
+  - pyproject.toml
+  - packaging
+  - pep621
+  - dependencies
+  sha256: d0e9da3f561b09288eb5ddb41668d4c9e9ed52bc6e63d34106fead21bed8f74f
+- id: pkg-uv
+  title: Package Management with uv
+  applies_to: Package Management with uv — 10-100x faster dependency management.
+  file: rules/pkg-uv.md
+  spans:
+  - - 1
+    - 102
+  tags:
+  - uv
+  - package-management
+  - pip
+  - virtualenv
+  - lock-file
+  sha256: 0a068d9038b37bfb9fa3757d0e301a919e215225080f95ff5fa2c40b51f4eb86
+- id: test-pytest
+  title: Testing with Pytest
+  applies_to: Testing with Pytest — Reliable test execution.
+  file: rules/test-pytest.md
+  spans:
+  - - 1
+    - 149
+  tags:
+  - pytest
+  - testing
+  - fixtures
+  - coverage
+  sha256: 426249f3bc9e4fe9c1045ec189e1047b39204fec6069931804c475b7a130b8e3
+- id: type-mypy
+  title: Type Checking with Mypy
+  applies_to: Type Checking with Mypy — Static type safety.
+  file: rules/type-mypy.md
+  spans:
+  - - 1
+    - 109
+  tags:
+  - mypy
+  - type-checking
+  - typing
+  - pyproject.toml
+  sha256: 7eea78665dbae37d339e70b0d80b0429793f319c52fb68e0f60bd820947e1349

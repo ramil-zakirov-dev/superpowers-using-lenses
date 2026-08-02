@@ -127,6 +127,23 @@ def test_rules_are_read_in_a_stable_order(tmp_path):
     ]
 
 
+def test_leading_underscore_files_are_not_rules(tmp_path):
+    """Some upstreams keep authoring scaffolding (a template, a section index)
+    inside rules/ alongside the real content. It carries no applies_to worth
+    indexing — `_template.md` even has *placeholder* frontmatter that reads
+    like a real part until you look at what it says. The leading underscore
+    is the upstream's own "not content" convention; honour it rather than
+    catalogue a part nobody can use."""
+    skill = build(tmp_path, {
+        "no-mutable-defaults.md": RULE,
+        "_template.md": RULE,
+        "_sections.md": "# Section Definitions\n\nJust an index, no frontmatter.\n",
+    })
+    assert [rule.relative for rule in read_rules(skill.path.parent)] == [
+        "rules/no-mutable-defaults.md",
+    ]
+
+
 def test_import_makes_one_part_per_file(tmp_path):
     skill = build(tmp_path, {"no-mutable-defaults.md": RULE, "avoid-panic.md": RULE})
     document, problems = import_skill(skill)

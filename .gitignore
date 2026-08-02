@@ -4,6 +4,10 @@
 # Derived artifacts. The catalog YAML is source; the index is rebuilt from it.
 index/
 
+# Model weights fetched by sentence-transformers (HF cache) or downloaded by
+# hand — never vendored content, never committed.
+*.gguf
+
 # Python
 __pycache__/
 *.py[cod]

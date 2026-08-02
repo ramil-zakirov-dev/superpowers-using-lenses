@@ -1,0 +1,26 @@
+name: testing
+label: ludo
+version: 4bef0a4a1b6c
+sha256: 4bef0a4a1b6c23f3f702336b5697d6d6a62be0bd17ceae92b62b8a4695be8104
+upstream:
+  url: https://github.com/ludo-technologies/python-best-practices
+  path: testing/SKILL.md
+license: MIT
+files:
+  README.md: fa34cc0dffed8aa1a9e452f3bac207847ab011f6479f1eefed0ac03e10f9c597
+  SKILL.md: 81c321afdaa2a3bf7075b1eae01d7854eba2043008be8235b92040055dfb3a7f
+  metadata.json: d853c9988348ec2cb1fd3d3bff5f2f429841ca60ecb0fb30b85fa27e3432fccb
+  rules/_sections.md: b5aada3f378a3c0de43639c2cdc5db52f7aed15dbe66bbe29de63f99eb6466ad
+  rules/_template.md: a188fef8460aa6b53185cfee5977511b893922a21443132b46db56bea890625d
+  rules/fixture-conftest.md: 8c57a87a8a9d72b08c9f8ea654fd5deed8aafce65a9896dbb2d82a46f9173c5b
+  rules/fixture-factory.md: 680d85733e21e401047b85243e038f49dcc819eead41e446c1b549fb479584b0
+  rules/fixture-scope.md: 3170cb3778540f55e49d7c056f75c3c713cba3091a4b7ff60f74309205d31514
+  rules/mock-autospec.md: b40a1ec30ac5d7a1ba52ee78529bb977cd6fd37779d6bd51f03b300328a2cb54
+  rules/mock-boundaries.md: de85ceca531a9e1997207f1bf4cab54c41188815440bf47513135cf486243ef0
+  rules/mock-monkeypatch.md: d18a70fd65699cdb7a9fff3a4942d762a8820ca6eb8d921c1e56dc63d8a649a8
+  rules/param-ids.md: b912f1902a5a55f68e0ed435c90bc2b89ee5045ab59e99a07fbd42a19c43d50a
+  rules/param-parametrize.md: 9e3029b98bc504fd942ee588cc8e88820b3f708e7b7e472b831202151a002d77
+  rules/struct-aaa-pattern.md: ba072ad7cb4cfee2373053a1a296b9ce7dc58e5e9e2b48c69cb08f5ff851b279
+  rules/struct-no-logic.md: b0f7d4a7cfb54acb41f0b6650f3cd82c30e7ee5d801944772a939aff6a850ee2
+  rules/struct-one-behavior.md: 562f44f63682c654841d2983a16dbdfc38b39b04555cb0481dc7462785aa71af
+  rules/struct-test-naming.md: f1dbdc44abd00e2a131fab98d760f91a0376a4cb20e70bb6d312f1c23e7db3f4
