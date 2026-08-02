@@ -13,6 +13,19 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 
+#: Kept here rather than in `rerank` so that reading the configuration tells
+#: you what will run without importing torch. Measured against two stronger
+#: candidates and left in place — see .env.example for the numbers.
+DEFAULT_RERANKER = "cross-encoder/ms-marco-MiniLM-L-12-v2"
+
+#: How the candidate pool is narrowed to the answer. `cross-encoder` scores
+#: each candidate against the query independently; `llm` shows one model the
+#: whole numbered pool and takes back an ordering. Named explicitly rather
+#: than inferred from the model string, because the two need different
+#: settings and a typo should fail loudly instead of picking the other one.
+RERANKER_KINDS = ("cross-encoder", "llm")
+
+
 class ConfigError(RuntimeError):
     """A setting is missing or cannot be read."""
 
@@ -36,6 +49,18 @@ class Config:
     #: Where a manifest's relative source paths resolve from. Machine-specific,
     #: which is exactly why it lives here and not in the committed manifest.
     sources_root: Path = Path(".")
+    #: Which second pass runs; one of RERANKER_KINDS.
+    reranker_kind: str = "cross-encoder"
+    #: The model that pass uses. For `cross-encoder` this is a local model
+    #: name with no endpoint — it reads a (query, passage) pair in one forward
+    #: pass, and no OpenAI-compatible server exposes that. For `llm` it is the
+    #: model served at `reranker` below.
+    reranker_model: str = DEFAULT_RERANKER
+    #: Where the `llm` second pass is served. None for `cross-encoder`, which
+    #: needs no endpoint at all. Kept separate from `llm` above: that one is
+    #: the decomposition model and is typically a hosted provider, while this
+    #: one runs on every search and wants to be local.
+    reranker: Endpoint | None = None
 
 
 def _require(name: str) -> str:
@@ -80,6 +105,25 @@ def load_config(env_file: Path | None = None) -> Config:
     llm_api_key = _require("llm_api_key")
     fallback_model = os.environ.get("llm_model_fallback", "").strip()
 
+    reranker_kind = os.environ.get("reranker_kind", "").strip() or "cross-encoder"
+    if reranker_kind not in RERANKER_KINDS:
+        raise ConfigError(
+            f"reranker_kind must be one of {list(RERANKER_KINDS)}, got {reranker_kind!r}"
+        )
+    if reranker_kind == "llm":
+        # Fail closed: an llm second pass with no endpoint would otherwise
+        # fall back to the cross-encoder and quietly rank by the model nobody
+        # configured, which is the kind of silence this project keeps out.
+        reranker_endpoint = Endpoint(
+            base_url=_require("reranker_base_url").rstrip("/"),
+            model=_require("reranker_model"),
+            api_key=_require("reranker_api_key"),
+        )
+        reranker_model = reranker_endpoint.model
+    else:
+        reranker_endpoint = None
+        reranker_model = os.environ.get("reranker_model", "").strip() or DEFAULT_RERANKER
+
     return Config(
         llm=Endpoint(
             base_url=llm_base_url,
@@ -99,4 +143,7 @@ def load_config(env_file: Path | None = None) -> Config:
         embedder_dim=dim,
         min_coverage=min_coverage,
         sources_root=Path(os.environ.get("sources_root", ".").strip() or "."),
+        reranker_kind=reranker_kind,
+        reranker_model=reranker_model,
+        reranker=reranker_endpoint,
     )

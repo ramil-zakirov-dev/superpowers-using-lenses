@@ -1,11 +1,15 @@
 """MCP adapter: the corpus, exposed to an agent over stdio.
 
-Thin on purpose. Ranking lives in `search`, re-ranking in `rerank`, resolution
-in `resolve` — this module only turns their results into tool responses.
-`search.rank` takes a vector, never a model. `rerank.rerank` takes its scorer
-as an injectable argument: the default one loads a cross-encoder, but a test
-swaps in a fake and never touches torch. Either way, arguments about
-relevance can be settled by a test rather than by starting a server.
+Thin on purpose. Ranking lives in `search`, the second pass in `rerank` or
+`llm_rerank`, resolution in `resolve` — this module only turns their results
+into tool responses, and `second_pass` below is the one place that knows which
+of the two is configured.
+
+Every one of them takes its model as an argument rather than reaching for one:
+`search.rank` takes a vector, `rerank.rerank` a scorer, `llm_rerank` a
+completer. A test swaps in a fake and touches neither torch nor a network, so
+arguments about relevance are settled by a test rather than by starting a
+server.
 
     LENSES_HOME=/path/to/repo python -m lenses.mcp_server
 
@@ -18,15 +22,16 @@ from __future__ import annotations
 import os
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from mcp.server.mcpserver import MCPServer
 
 from .config import Config, ConfigError, load_config
 from .embed import EmbedError, embed_query
-from .rerank import RerankError, confident, rerank
+from .llm_rerank import LlmRerankError, completer_for, listwise_rank
+from .rerank import RerankError, rerank, scorer_for
 from .resolve import resolve
-from .search import Corpus, SearchError, load_index, rank
+from .search import Corpus, Hit, SearchError, load_index, rank
 
 HOME = Path(os.environ.get("LENSES_HOME", "")).expanduser() or Path.cwd()
 
@@ -66,6 +71,19 @@ def startup() -> tuple[Config, Corpus]:
     return _config, _corpus
 
 
+def second_pass(config: Config) -> Callable[[str, list[Hit], int], list[Hit]]:
+    """The configured way of cutting the candidate pool down to the answer.
+
+    One signature for both, so `_find_one` holds no branch: they disagree
+    about what a score means, not about what ranking is.
+    """
+    if config.reranker_kind == "llm":
+        complete = completer_for(config.reranker)
+        return lambda intent, hits, limit: listwise_rank(intent, hits, limit, complete)
+    scorer = scorer_for(config.reranker_model)
+    return lambda intent, hits, limit: rerank(intent, hits, top_n=limit, score=scorer)
+
+
 def _find_one(
     intent: str,
     config: Config,
@@ -74,23 +92,22 @@ def _find_one(
     kind: str | None,
     stack: str | None,
 ) -> dict[str, Any]:
-    """One need, searched and reranked. Raises EmbedError or RerankError."""
+    """One need, searched and reordered. Raises EmbedError, RerankError or
+    LlmRerankError."""
     vector = embed_query(config.embedder, intent, config.embedder_dim)
-    dense_hits = rank(vector, corpus.parts, limit=limit, kind=kind, stack=stack)
     candidates = rank(
         vector, corpus.parts,
         limit=max(CANDIDATE_POOL, limit), per_skill=CANDIDATE_PER_SKILL,
         kind=kind, stack=stack,
     )
-    reranked_hits = rerank(intent, candidates, top_n=limit)
-    # A query the reranker has no opinion about scores its whole pool in a
-    # narrow, uniformly bad band — trusting that ordering anyway is how a
-    # correct dense answer gets silently dropped. See scripts/eval_retrieval.py.
-    trusted_rerank = confident(reranked_hits)
-    hits = reranked_hits if trusted_rerank else dense_hits
+    # Kept before the second pass reorders, because that pass may return the
+    # dense score unchanged (llm) or replace it with its own logit
+    # (cross-encoder), and the caller is owed the one that means something.
+    dense_score = {hit.part.ref: hit.score for hit in candidates}
+    hits = second_pass(config)(intent, candidates, limit)
     return {
         "intent": intent,
-        "reranked": trusted_rerank,
+        "ranked_by": config.reranker_kind,
         "results": [
             {
                 "ref": hit.part.ref,
@@ -98,7 +115,11 @@ def _find_one(
                 "applies_to": hit.part.applies_to,
                 "kind": hit.part.kind,
                 "tags": list(hit.part.tags),
-                "score": round(hit.score, 4),
+                # Cosine against the query, NOT the ordering key — the second
+                # pass decided that. It will not descend down the list, and
+                # that is the point: six results all near 0.55 is a corpus
+                # with nothing to say, which an ordering alone always hides.
+                "dense_score": round(dense_score[hit.part.ref], 4),
             }
             for hit in hits
         ],
@@ -114,15 +135,29 @@ def find_lenses(
 ) -> dict[str, Any]:
     """Find the parts of vendored skills that bear on one design need.
 
-    Before writing a milestone brief, a slice spec or a plan, state the need
-    itself, not the project it belongs to: "I need guidance on keeping a
-    call to an external payment API from taking the whole service down"
-    retrieves better than "circuit breaker" — and better than the same need
-    with "because I'm designing the checkout slice" appended, which
-    measurably drags the match toward whatever nouns that clause happens to
-    contain rather than the need (verified: it can bury a part that ranked
-    first without it). Know why the need matters — you want that for the
-    record you leave in `lenses:` — but keep the why out of the query.
+    State the need itself, stripped of the project it arose in:
+
+        best:  "an external call in the request path can hang or be down
+                and must not take the whole service with it"
+        risky: "keeping a call to an external Stripe payment API from
+                hanging and taking the whole checkout service down"
+
+    Same need. The proper nouns in the second — "Stripe", "checkout",
+    "API" — pull the query toward parts that merely share that vocabulary,
+    because `applies_to` is written in the register of moments, not of
+    technologies.
+
+    How much that costs depends on how this server is configured, which is
+    why the first form is worth the habit: it is the one that works either
+    way. Measured on seventeen paired needs, the `llm` second pass absorbs
+    project vocabulary almost completely (16 of 17, against 16 of 17 for
+    need-only phrasing); the `cross-encoder` pass does not (14 of 17), and
+    nothing downstream rescues the difference — narrowing by `stack` first
+    was tried and changed nothing. `ranked_by` in the response says which
+    one answered you.
+
+    Know why the need matters — you want that for the record you leave in
+    `lenses:` — but keep the why out of the query.
 
     One call is one need. To gather everything a milestone or a slice needs
     at once, call find_lenses_batch instead — same phrasing, one need per
@@ -146,8 +181,8 @@ def find_lenses(
         return _find_one(intent, config, corpus, limit, kind, stack)
     except EmbedError as exc:
         return {"error": f"the embedding endpoint is unreachable or misconfigured: {exc}"}
-    except RerankError as exc:
-        return {"error": f"the reranker is unavailable: {exc}"}
+    except (RerankError, LlmRerankError) as exc:
+        return {"error": f"the second ranking pass is unavailable: {exc}"}
 
 
 @server.tool()
@@ -168,7 +203,7 @@ def find_lenses_batch(
     more than it seems to.
 
     `results` is a list in the same order as `intents`, each shaped exactly
-    like a single find_lenses response (`intent`, `reranked`, `results`).
+    like a single find_lenses response (`intent`, `ranked_by`, `results`).
     `limit`, `kind` and `stack` apply to every entry.
     """
     try:
@@ -181,8 +216,8 @@ def find_lenses_batch(
         return {"results": [_find_one(i, config, corpus, limit, kind, stack) for i in intents]}
     except EmbedError as exc:
         return {"error": f"the embedding endpoint is unreachable or misconfigured: {exc}"}
-    except RerankError as exc:
-        return {"error": f"the reranker is unavailable: {exc}"}
+    except (RerankError, LlmRerankError) as exc:
+        return {"error": f"the second ranking pass is unavailable: {exc}"}
 
 
 @server.tool()
