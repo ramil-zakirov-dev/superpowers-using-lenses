@@ -248,6 +248,15 @@ worth paying for only now that something reads the result: `decompose.py` gives
 `requires` one line where `kind` and `applies_to` each get a paragraph, which
 is the likeliest reason for the 6.4%.
 
+**A closure hands you the preamble once per part.** When siblings share a
+`preamble_spans` prefix — 23 of the 26 closures do — each arrives carrying its
+own copy, because each part's text is what its `sha256` covers. Across the
+whole catalogue that is 23 236 duplicated characters of 231 413 returned: 10%,
+rising to 24% on the worst closure. It is not deduplicated on purpose. Trimming
+the repeat would return text that no longer matches the recorded hash, and a
+citation that resolves to different text is the failure this design exists to
+prevent. Ten percent buys every part in the answer being verifiable on its own.
+
 **Nothing rejects a cycle at ingest.** `decompose` refuses unknown part ids and
 self-reference, and stops there. Resolution carries a visited set so a cycle
 terminates at runtime, but the catalogue would happily record one and no

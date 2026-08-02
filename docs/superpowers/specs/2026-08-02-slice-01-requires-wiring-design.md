@@ -197,6 +197,25 @@ the corpus's widest — returns 8 (a closure of 7).
   eliminated. If it bites, the answer is a `follow_requires: bool = True`
   argument — deliberately not added now, because a switch nobody has needed yet
   is a guess about which way they will want it.
+- **A closure repeats the preamble.** Measured against the real catalogue after
+  the slice landed, not predicted before it: 23 of the 26 closures serve
+  siblings that share a `preamble_spans` prefix, so the same upstream lines
+  arrive once per part. 23 236 duplicated characters against 231 413 returned —
+  10% overall, 24% at the worst (`lean-startup#innovation-accounting`, a
+  closure of 2), 3 156 characters at the largest
+  (`team-topologies#quick-diagnostic`, a closure of 7). Longest common prefix,
+  so a lower bound.
+
+  **Deliberately not deduplicated.** Stripping the shared prefix from all but
+  the first part would hand back text that no longer hashes to the part's
+  recorded `sha256`, which is the one thing this catalogue refuses to do — a
+  citation resolving to different text is worse than one that fails, because
+  nobody notices. Ten percent is the price of every part in the answer being
+  independently verifiable, and it is the right trade. Recorded here because
+  §6 named response size and cited the cap and D5 as the mitigations, and
+  neither mitigates this: the cap counts parts, and D5 shows fan-out, while
+  the cost is per-part text nobody asked for twice.
+
 - **Narrow blast radius.** At 6.4% coverage this changes behaviour for 26 of
   405 parts. The value is real but stays small until the coverage slice lands.
   Recorded here so it is not met later as disappointment.
