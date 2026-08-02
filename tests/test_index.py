@@ -69,6 +69,24 @@ def test_an_empty_catalogue_yields_nothing(tmp_path):
     assert catalog_parts(tmp_path) == []
 
 
+def test_an_empty_title_falls_back_to_the_part_id(tmp_path):
+    """`decompose` lets a model return an empty title, and a get-default only
+    fires on an absent key. A row titled "" names nothing in a result list."""
+    document = SkillDoc(
+        id="ecc/adr",
+        version="v",
+        source={},
+        kind="lens",
+        summary="s",
+        parts=[Part(id="capture-adr", title="", applies_to="Use when a.", spans=[(1, 2)], sha256="h")],
+    )
+    target = tmp_path / "adr" / "v.yaml"
+    target.parent.mkdir(parents=True)
+    target.write_text(document.to_yaml(), encoding="utf-8")
+
+    assert catalog_parts(tmp_path)[0]["title"] == "capture-adr"
+
+
 def test_index_is_one_json_object_per_line(tmp_path):
     rows = [{"part_id": "a", "vector": [0.1]}, {"part_id": "b", "vector": [0.2]}]
     target = write_index(tmp_path / "index", rows)

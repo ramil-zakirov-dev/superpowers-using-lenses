@@ -107,7 +107,9 @@ def catalog_parts(catalog_dir: Path) -> list[dict]:
                     "skill_id": document["id"],
                     "version": document["version"],
                     "part_id": part["id"],
-                    "title": part.get("title", part["id"]),
+                    # `or`, not a get-default: decompose lets a model return an
+                    # empty title, and an empty one is not a name to index by.
+                    "title": part.get("title") or part["id"],
                     "kind": part.get("kind") or document.get("kind"),
                     "stacks": document.get("stacks") or [],
                     "tags": part.get("tags") or [],
@@ -245,6 +247,17 @@ def main(argv: list[str] | None = None) -> int:
         rows = catalog_parts(args.out)
         if rows:
             try:
+                # `applies_to` alone, deliberately. Prefixing the title was
+                # tried and measured: it fixes the one thing it should — the
+                # name of a technique becomes searchable, "tracer bullets"
+                # goes from rank >40 to 1 — and costs more than it buys. A
+                # two-to-five word topic noun pulls a 384-dim vector out of
+                # the space of *moments* and into the space of *topics*, which
+                # is the wrong space: find_lenses asks callers for a need, not
+                # a solution. Every need-phrased query got worse (rank 9 -> 14,
+                # 11 -> 26) and the eval went 16/17 -> 15/17. If the lexical
+                # entrance is wanted, it needs a second signal, not a longer
+                # string on this one.
                 vectors = embed_texts(
                     config.embedder,
                     [row["applies_to"] for row in rows],
