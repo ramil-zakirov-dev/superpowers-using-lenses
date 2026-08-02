@@ -1,11 +1,10 @@
 ---
 slice_id: "slice-01-requires-wiring"
 title: "Wiring `requires` — TDD implementation plan"
-status: PLAN_GENERATED
+status: EXECUTION_COMPLETE
 spec: "docs/superpowers/specs/2026-08-02-slice-01-requires-wiring-design.md"
 depends_on: []
 ---
-
 # Wiring `requires` — Implementation Plan
 
 > **For the executing agent:** run this plan through the **Task tool — one plan
