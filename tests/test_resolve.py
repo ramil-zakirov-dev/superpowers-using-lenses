@@ -30,7 +30,7 @@ Never use mutable defaults.
 """
 
 
-def build(tmp_path, *, file_part=False):
+def build(tmp_path, *, file_part=False, requires=()):
     skills = tmp_path / "skills" / "wondelai" / "release-it"
     skills.mkdir(parents=True)
     (skills / "SKILL.md").write_text(SKILL, encoding="utf-8")
@@ -41,14 +41,14 @@ def build(tmp_path, *, file_part=False):
         (skills / "rules" / "r.md").write_text(RULE, encoding="utf-8")
         part = Part(id="circuit-breaker", title="Circuit breaker",
                     applies_to="Use when a dependency fails.", spans=[(1, len(split_lines(RULE)))],
-                    file="rules/r.md", sha256=content_hash(RULE))
+                    file="rules/r.md", sha256=content_hash(RULE), requires=list(requires))
     else:
         # Normalised lines: 1-3 frontmatter, 5 heading, 7 overview,
         # 9 section heading, 11 the section's one sentence.
         preamble, spans = [(5, 7)], [(9, 11)]
         part = Part(id="circuit-breaker", title="Circuit breaker",
                     applies_to="Use when a dependency fails.", spans=spans,
-                    preamble_spans=preamble,
+                    preamble_spans=preamble, requires=list(requires),
                     sha256=content_hash(extract(lines, [*preamble, *spans])))
 
     document = SkillDoc(
@@ -85,6 +85,26 @@ def test_carries_licence_and_provenance(tmp_path):
     found = resolve(REF, catalog, skills)
     assert found.license == "MIT"
     assert found.url == "https://example.invalid"
+
+
+def test_a_part_exposes_what_it_requires(tmp_path):
+    """The catalogue records that a fragment is not self-sufficient. Discarding
+    that at resolution is why the field has never done anything."""
+    catalog, skills = build(tmp_path, requires=["timeouts"])
+    assert resolve(REF, catalog, skills).requires == ("timeouts",)
+
+
+def test_a_part_with_no_requirements_exposes_an_empty_tuple(tmp_path):
+    """Not None — a caller should never have to ask which falsy value it got."""
+    catalog, skills = build(tmp_path)
+    assert resolve(REF, catalog, skills).requires == ()
+
+
+def test_a_resolved_part_is_not_marked_required_by_default(tmp_path):
+    """`resolve` answers about one reference and knows nothing about why it was
+    asked for. Only the caller that pulled a part in can say that."""
+    catalog, skills = build(tmp_path, requires=["timeouts"])
+    assert resolve(REF, catalog, skills).required_by == ()
 
 
 def test_an_edited_vendored_file_is_refused(tmp_path):

@@ -147,6 +147,10 @@ def catalog_parts(catalog_dir: Path) -> list[dict]:
                     # ones before writing a milestone brief against it.
                     "document_kinds": document.get("document_kinds") or [],
                     "tags": part.get("tags") or [],
+                    # Siblings that must be read with this part. Carried so a
+                    # search can say a candidate is not standalone; the
+                    # expansion itself belongs to `get_lenses`.
+                    "requires": part.get("requires") or [],
                     "sha256": part["sha256"],
                     "applies_to": part["applies_to"],
                 }

@@ -46,6 +46,30 @@ def test_a_row_carries_what_a_query_filters_on(tmp_path):
     assert row["kind"] == "lens"
 
 
+def test_a_row_carries_requires(tmp_path):
+    """Carried so `find_lenses` can say a candidate is not standalone before
+    anyone spends a `get_lenses` call finding out."""
+    document = SkillDoc(
+        id="ecc/fastapi-patterns",
+        version="deadbeef1234",
+        source={},
+        kind="reference",
+        summary="s",
+        parts=[
+            Part(id="a", title="a", applies_to="Use when a.", spans=[(1, 2)],
+                 sha256="h", requires=["b"]),
+            Part(id="b", title="b", applies_to="Use when b.", spans=[(3, 4)], sha256="h2"),
+        ],
+    )
+    target = tmp_path / "ecc_fastapi-patterns" / "deadbeef1234.yaml"
+    target.parent.mkdir(parents=True)
+    target.write_text(document.to_yaml(), encoding="utf-8")
+
+    rows = {row["part_id"]: row for row in catalog_parts(tmp_path)}
+    assert rows["a"]["requires"] == ["b"]
+    assert rows["b"]["requires"] == []
+
+
 def test_part_kind_overrides_the_skill_kind(tmp_path):
     document = SkillDoc(
         id="ecc/adr",

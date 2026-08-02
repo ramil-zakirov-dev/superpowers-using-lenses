@@ -30,7 +30,7 @@ from .config import Config, ConfigError, load_config
 from .embed import EmbedError, embed_query
 from .llm_rerank import LlmRerankError, completer_for, listwise_rank
 from .rerank import RerankError, rerank, scorer_for
-from .resolve import resolve
+from .resolve import resolve_all
 from .search import Corpus, Hit, SearchError, load_index, rank
 
 HOME = Path(os.environ.get("LENSES_HOME", "")).expanduser() or Path.cwd()
@@ -115,6 +115,9 @@ def _find_one(
                 "applies_to": hit.part.applies_to,
                 "kind": hit.part.kind,
                 "tags": list(hit.part.tags),
+                # Named, not followed. `get_lenses` on this ref returns these
+                # too; seeing them here is what makes that predictable.
+                "requires": list(hit.part.requires),
                 # Cosine against the query, NOT the ordering key — the second
                 # pass decided that. It will not descend down the list, and
                 # that is the point: six results all near 0.55 is a corpus
@@ -228,33 +231,41 @@ def get_lenses(refs: list[str]) -> dict[str, Any]:
     when it was catalogued. A reference whose text has changed is reported as
     an error rather than returned: a citation that resolves to different text
     is worse than one that fails, because nobody notices it.
+
+    A part whose decomposition recorded that it cannot stand alone arrives with
+    what it needs. Those extra parts are in the same `parts` list, each naming
+    the reference that pulled it in under `required_by`; a part you asked for
+    has an empty `required_by`, and that is the distinction to cite from —
+    `lenses:` should record what you chose, not what came along with it.
+
+    Nothing is dropped in silence. A requirement that will not resolve, and a
+    request whose requirements outgrow the per-reference ceiling, are named in
+    `errors` while everything that did resolve is still returned.
     """
     try:
         startup()
     except (ConfigError, SearchError) as exc:
         return {"error": str(exc)}
 
-    parts: list[dict[str, Any]] = []
-    errors: list[str] = []
-    for ref in refs:
-        try:
-            found = resolve(ref, HOME / "catalog", HOME / "skills")
-        except SearchError as exc:
-            errors.append(str(exc))
-            continue
-        parts.append(
+    found, errors = resolve_all(refs, HOME / "catalog", HOME / "skills")
+    return {
+        "parts": [
             {
-                "ref": found.ref,
-                "title": found.title,
-                "applies_to": found.applies_to,
-                "kind": found.kind,
-                "tags": list(found.tags),
-                "license": found.license,
-                "source": found.url or found.file,
-                "text": found.text,
+                "ref": part.ref,
+                "title": part.title,
+                "applies_to": part.applies_to,
+                "kind": part.kind,
+                "tags": list(part.tags),
+                "requires": list(part.requires),
+                "required_by": list(part.required_by),
+                "license": part.license,
+                "source": part.url or part.file,
+                "text": part.text,
             }
-        )
-    return {"parts": parts, "errors": errors}
+            for part in found
+        ],
+        "errors": errors,
+    }
 
 
 @server.tool()

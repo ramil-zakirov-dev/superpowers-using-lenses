@@ -145,6 +145,18 @@ def test_an_index_written_before_document_kinds_still_loads(tmp_path):
     assert load_index(path)[0].document_kinds == ()
 
 
+def test_an_index_written_before_requires_still_loads(tmp_path):
+    """Same reason as document_kinds above: the field appears after the next
+    ingest, and until then an index on disk must load as empty rather than
+    force a rebuild nobody asked for."""
+    path = write_index(tmp_path, [{
+        "skill_id": "a/b", "version": "abcdef123456", "part_id": "p",
+        "title": "P", "kind": "lens", "sha256": "h",
+        "applies_to": "Use when p.", "vector": [1.0, 0.0],
+    }])
+    assert load_index(path)[0].requires == ()
+
+
 def test_document_kinds_do_not_narrow_a_search():
     """Reported, not filtered: the caller naming a stage before knowing the
     answer's stage would drop correct parts, and the measurement says a filter

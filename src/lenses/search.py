@@ -39,6 +39,11 @@ class IndexedPart:
     #: Reported, never filtered on — see `catalog_parts` for the measurement
     #: that decided it. Empty means the skill was never classified.
     document_kinds: tuple[str, ...] = ()
+    #: Sibling part ids that must be read with this one. Reported by a search,
+    #: expanded only by `get_lenses` — a candidate is something the caller is
+    #: still deciding about, and pulling its dependencies in would spend their
+    #: `limit` on parts they have not chosen.
+    requires: tuple[str, ...] = ()
 
     @property
     def ref(self) -> str:
@@ -118,6 +123,7 @@ def load_index(path: Path, expected_dim: int | None = None) -> list[IndexedPart]
                 stacks=tuple(row.get("stacks") or ()),
                 tags=tuple(row.get("tags") or ()),
                 document_kinds=tuple(row.get("document_kinds") or ()),
+                requires=tuple(row.get("requires") or ()),
             )
         )
     return parts

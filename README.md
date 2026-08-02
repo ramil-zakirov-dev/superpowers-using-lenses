@@ -80,6 +80,31 @@ parts here, **108 arrived free** this way.
 merely incomplete, it can be actively wrong. `sha256` exists because a citation
 by name alone starts meaning something else the day upstream is rewritten.
 
+`requires` is the case a preamble cannot carry: not a heading but a whole
+sibling section. `get_lenses` follows it — the full closure, not one hop — so a
+part whose decomposition recorded that it cannot stand alone never arrives
+alone. The extra parts come back in the same `parts` list, each naming what
+pulled it in:
+
+```json
+{"ref": "…#configuration@…", "required_by": ["…#app-factory-lifespan@…"]}
+```
+
+A part you asked for has an empty `required_by`. Cite what you chose, not what
+came with it. Nothing is dropped in silence: a requirement that will not
+resolve, and a closure that outgrows the ceiling of 12 parts per reference,
+are both named in `errors` while everything that did resolve is still returned.
+`find_lenses` reports `requires` and does not follow it — a candidate is
+something you are still deciding about, and expanding it there would spend your
+`limit` on parts you never chose.
+
+Measured over the catalogue as committed: 76 edges across 26 parts in 11 of 41
+skills, no cycles at any length, widest closure 7 (at
+`wondelai/pragmatic-programmer#common-pragmatic-mistakes`). The visited set is
+not decoration — `decompose` rejects unknown ids and self-reference but not
+`a → b → a`, so that zero is an observation about one model's output rather
+than a property of the format.
+
 ## Setup
 
 ```bash
@@ -213,6 +238,20 @@ rather than served.
 ## What is not settled
 
 Honest status, because the numbers are thin.
+
+**`requires` is wired, but only 6.4% of the corpus writes it.** 26 parts of 405
+carry the field, so following it changes what an agent receives for those 26
+and nothing else. Half the corpus — 204 parts — carries neither `requires` nor
+`preamble_spans`, which is to say nothing travels with it at all. Raising that
+is a decompose-prompt change plus a paid re-ingest of every skill, and it is
+worth paying for only now that something reads the result: `decompose.py` gives
+`requires` one line where `kind` and `applies_to` each get a paragraph, which
+is the likeliest reason for the 6.4%.
+
+**Nothing rejects a cycle at ingest.** `decompose` refuses unknown part ids and
+self-reference, and stops there. Resolution carries a visited set so a cycle
+terminates at runtime, but the catalogue would happily record one and no
+validation would say so.
 
 **The phrasing gap is mostly closed, and how it closed is the lesson.**
 `scripts/eval_retrieval.py` runs seventeen needs in two registers: the need
