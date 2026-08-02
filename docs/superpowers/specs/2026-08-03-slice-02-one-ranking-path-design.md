@@ -1,7 +1,8 @@
 ---
 slice_id: "slice-02-one-ranking-path"
-title: "One ranking path: delete the cross-encoder, derive the rest, degrade instead of failing"
-status: DRAFT_SPEC
+title: "One ranking path: delete the cross-encoder, derive the rest, degrade instead
+  of failing"
+status: SPEC_APPROVED
 target_version: "0.3.0"
 depends_on: []
 lenses:
