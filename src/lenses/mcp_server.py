@@ -57,7 +57,12 @@ def startup() -> tuple[Config, Corpus]:
     global _config, _corpus
     if _config is None or _corpus is None:
         _config = load_config(HOME / ".env")
-        _corpus = Corpus(load_index(HOME / "index" / "embeddings.jsonl"))
+        # The width is checked against the configured embedder here, at launch,
+        # rather than being discovered as bad answers later: a query and an
+        # index built by different models score against each other silently.
+        _corpus = Corpus(
+            load_index(HOME / "index" / "embeddings.jsonl", _config.embedder_dim)
+        )
     return _config, _corpus
 
 
@@ -219,10 +224,14 @@ def get_lenses(refs: list[str]) -> dict[str, Any]:
 
 @server.tool()
 def list_skills() -> dict[str, Any]:
-    """What the corpus holds: every skill, its part count and its kinds.
+    """What the corpus holds: every skill, its parts, kinds and document kinds.
 
-    Use it to see whether the corpus covers a domain at all before concluding
-    from an empty-looking search that nothing applies.
+    Read it *before* writing the needs you will search with, not after a search
+    comes back thin. `coverage` counts the skills bearing on a milestone brief,
+    a slice spec and a plan; a stage the corpus barely covers is a stage whose
+    needs you will have to source elsewhere, and the only way to know that is
+    to look. `document_kinds` is reported, never filtered on — it shapes the
+    questions worth asking, not the ranking of the answers.
     """
     try:
         _, corpus = startup()
@@ -230,20 +239,35 @@ def list_skills() -> dict[str, Any]:
         return {"error": str(exc)}
 
     skills = []
+    coverage: dict[str, int] = {}
+    unclassified = 0
     for skill_id, parts in sorted(corpus.skills.items()):
         kinds: dict[str, int] = {}
         for part in parts:
             kinds[part.kind] = kinds.get(part.kind, 0) + 1
+        document_kinds = sorted({dk for part in parts for dk in part.document_kinds})
+        for document_kind in document_kinds:
+            coverage[document_kind] = coverage.get(document_kind, 0) + 1
+        unclassified += 0 if document_kinds else 1
         skills.append(
             {
                 "skill_id": skill_id,
                 "version": parts[0].version,
                 "parts": len(parts),
                 "kinds": kinds,
+                "document_kinds": document_kinds,
                 "stacks": sorted({stack for part in parts for stack in part.stacks}),
             }
         )
-    return {"home": str(HOME), "skills": skills, "total_parts": len(corpus.parts)}
+    return {
+        "home": str(HOME),
+        "skills": skills,
+        "total_parts": len(corpus.parts),
+        # Skills per document kind, plus the ones nobody has classified —
+        # reported rather than folded into the counts, because "unknown" read
+        # as "covers everything" is how a gap stops being visible.
+        "coverage": {**coverage, "unclassified": unclassified},
+    }
 
 
 def main() -> int:

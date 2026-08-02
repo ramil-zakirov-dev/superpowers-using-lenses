@@ -11,13 +11,14 @@ from lenses.ingest import catalog_parts, write_index
 from lenses.model import Part, SkillDoc
 
 
-def catalogue(tmp_path, skill_id, part_ids, kind="lens"):
+def catalogue(tmp_path, skill_id, part_ids, kind="lens", document_kinds=()):
     document = SkillDoc(
         id=skill_id,
         version="deadbeef1234",
         source={"path": "SKILL.md", "sha256": "d"},
         kind=kind,
         summary="s",
+        document_kinds=list(document_kinds),
         parts=[
             Part(id=pid, title=pid, applies_to=f"Use when {pid}.", spans=[(1, 2)], sha256=f"h-{pid}")
             for pid in part_ids
@@ -63,6 +64,19 @@ def test_part_kind_overrides_the_skill_kind(tmp_path):
 
     kinds = {row["part_id"]: row["kind"] for row in catalog_parts(tmp_path)}
     assert kinds == {"a": "lens", "b": "pipeline"}
+
+
+def test_document_kinds_reach_the_index(tmp_path):
+    """They are written by decomposition and were dropped here, so nothing
+    downstream could report which stages the corpus actually covers."""
+    catalogue(tmp_path, "wondelai/37signals-way", ["a"], document_kinds=("milestone", "plan"))
+    assert catalog_parts(tmp_path)[0]["document_kinds"] == ["milestone", "plan"]
+
+
+def test_an_unclassified_skill_carries_no_document_kinds(tmp_path):
+    """Empty must stay empty: read as "covers every stage", it hides the gap."""
+    catalogue(tmp_path, "ecc/api-design", ["a"])
+    assert catalog_parts(tmp_path)[0]["document_kinds"] == []
 
 
 def test_an_empty_catalogue_yields_nothing(tmp_path):

@@ -39,9 +39,11 @@ def embed_texts(
     """Embed in batches, asserting the dimension the caller expects.
 
     A silent dimension mismatch produces an index that every query misses, so
-    it fails the run instead. `bge-small-en-v1.5` is natively 384; if the
-    configured value disagrees, one of the two is wrong and guessing which
-    would be worse than stopping.
+    it fails the run instead. `bge-base-en-v1.5` is natively 768 — the width of
+    a vector, not the 512-token window it reads; if the configured value
+    disagrees, one of the two is wrong and guessing which would be worse than
+    stopping. `search.load_index` makes the matching check against the index
+    already written, which is the half this one cannot see.
     """
     if not texts:
         return []

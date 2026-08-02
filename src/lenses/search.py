@@ -35,6 +35,10 @@ class IndexedPart:
     vector: tuple[float, ...]
     stacks: tuple[str, ...] = ()
     tags: tuple[str, ...] = ()
+    #: Which documents this part's skill bears on: milestone, spec, plan.
+    #: Reported, never filtered on — see `catalog_parts` for the measurement
+    #: that decided it. Empty means the skill was never classified.
+    document_kinds: tuple[str, ...] = ()
 
     @property
     def ref(self) -> str:
@@ -64,16 +68,43 @@ def _unit(vector: list[float]) -> tuple[float, ...]:
     return tuple(value / norm for value in vector)
 
 
-def load_index(path: Path) -> list[IndexedPart]:
-    """Read embeddings.jsonl, normalising every vector once at load."""
+def load_index(path: Path, expected_dim: int | None = None) -> list[IndexedPart]:
+    """Read embeddings.jsonl, normalising every vector once at load.
+
+    `expected_dim` is the width the configured embedder produces. Checking it
+    here is the only place the mismatch can be caught: `similarity` zips the
+    query against the row, and zip stops at the shorter one — so a 384-wide
+    query against a 768-wide index scores the halves that happen to line up
+    and returns confident nonsense with no exception at all (observed: a
+    resilience query answering with legacy-code and ADR parts at 0.10). The
+    index is derived, so this state is one forgotten reindex away after any
+    change of embedder.
+    """
     path = Path(path)
     if not path.is_file():
         raise SearchError(f"no index at {path}. Run lenses.ingest first")
     parts: list[IndexedPart] = []
+    width: int | None = None
     for line in path.read_text(encoding="utf-8").splitlines():
         if not line.strip():
             continue
         row = json.loads(line)
+        vector = row["vector"]
+        if width is None:
+            width = len(vector)
+            if expected_dim is not None and width != expected_dim:
+                raise SearchError(
+                    f"{path} holds {width}-dimensional vectors but embedder_dim "
+                    f"is {expected_dim}. The index was built with a different "
+                    f"embedder — re-run lenses.ingest, or put the previous "
+                    f"embedder_model back in .env."
+                )
+        elif len(vector) != width:
+            # A run that died partway leaves exactly this.
+            raise SearchError(
+                f"{path} mixes {width}- and {len(vector)}-dimensional vectors "
+                f"at {row.get('skill_id')}#{row.get('part_id')}. Re-run lenses.ingest"
+            )
         parts.append(
             IndexedPart(
                 skill_id=row["skill_id"],
@@ -83,9 +114,10 @@ def load_index(path: Path) -> list[IndexedPart]:
                 applies_to=row["applies_to"],
                 kind=row.get("kind") or "reference",
                 sha256=row["sha256"],
-                vector=_unit(row["vector"]),
+                vector=_unit(vector),
                 stacks=tuple(row.get("stacks") or ()),
                 tags=tuple(row.get("tags") or ()),
+                document_kinds=tuple(row.get("document_kinds") or ()),
             )
         )
     return parts

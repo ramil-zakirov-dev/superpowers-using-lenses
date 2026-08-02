@@ -89,9 +89,14 @@ cp .env.example .env
 ```
 
 Two OpenAI-compatible endpoints: a chat model for decomposition, an embedding
-model for the index. They can be one server. `embedder_dim` is asserted against
-the vectors actually returned — a mismatch stops the run rather than producing
-an index that answers nothing. `bge-small-en-v1.5` is 384.
+model for the index. They can be one server. `embedder_dim` is the vector
+width, not the model's context length — `bge-base-en-v1.5` is 768 wide with a
+512-token window, and the two are easy to confuse. It is asserted twice: against
+the vectors the server returns, and against the index already on disk. Both
+matter, because a query and an index built by different models score against
+each other silently and answer with confident nonsense. Changing the embedder
+means rebuilding the index — the catalogue is unaffected, being the model's
+work rather than the embedder's.
 
 `sources.yaml` says which upstreams to vendor from and which of their skills to
 take; `sources_root` in `.env` keeps the machine-specific part out of it.

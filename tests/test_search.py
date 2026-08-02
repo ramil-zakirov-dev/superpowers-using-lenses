@@ -127,10 +127,74 @@ def test_index_loads_and_normalises(tmp_path):
         "skill_id": "a/b", "version": "abcdef123456", "part_id": "p",
         "title": "P", "kind": "lens", "sha256": "h",
         "applies_to": "Use when p.", "vector": [3.0, 4.0], "tags": ["x"],
+        "document_kinds": ["milestone"],
     }])
     loaded = load_index(path)[0]
     assert loaded.vector == pytest.approx((0.6, 0.8))
     assert loaded.tags == ("x",)
+    assert loaded.document_kinds == ("milestone",)
+
+
+def test_an_index_written_before_document_kinds_still_loads(tmp_path):
+    """The index is derived and rebuilt, but a half-rebuilt one must not crash."""
+    path = write_index(tmp_path, [{
+        "skill_id": "a/b", "version": "abcdef123456", "part_id": "p",
+        "title": "P", "kind": "lens", "sha256": "h",
+        "applies_to": "Use when p.", "vector": [1.0, 0.0],
+    }])
+    assert load_index(path)[0].document_kinds == ()
+
+
+def test_document_kinds_do_not_narrow_a_search():
+    """Reported, not filtered: the caller naming a stage before knowing the
+    answer's stage would drop correct parts, and the measurement says a filter
+    buys nothing here anyway."""
+    parts = [
+        part(pid="milestone-only", vector=(1.0, 0.0)),
+        part(skill="a/b", pid="unclassified", vector=(0.9, 0.1)),
+    ]
+    assert len(rank([1.0, 0.0], parts, limit=6)) == 2
+
+
+def row(pid="p", vector=(1.0, 0.0)):
+    return {
+        "skill_id": "a/b", "version": "abcdef123456", "part_id": pid,
+        "title": pid, "kind": "lens", "sha256": "h",
+        "applies_to": f"Use when {pid}.", "vector": list(vector),
+    }
+
+
+def test_an_index_of_the_wrong_width_is_refused(tmp_path):
+    """`similarity` zips query against row and zip stops at the shorter one,
+    so a mismatch scores the overlapping halves and answers with confident
+    nonsense. Nothing downstream can notice; this is the only place that can."""
+    path = write_index(tmp_path, [row(vector=(1.0, 0.0))])
+    with pytest.raises(SearchError, match="embedder_dim is 768"):
+        load_index(path, expected_dim=768)
+
+
+def test_the_refusal_names_both_ways_out(tmp_path):
+    path = write_index(tmp_path, [row(vector=(1.0, 0.0))])
+    with pytest.raises(SearchError, match="re-run lenses.ingest"):
+        load_index(path, expected_dim=384)
+
+
+def test_a_matching_width_loads(tmp_path):
+    path = write_index(tmp_path, [row(vector=(3.0, 4.0))])
+    assert load_index(path, expected_dim=2)[0].vector == pytest.approx((0.6, 0.8))
+
+
+def test_an_index_of_mixed_widths_is_refused(tmp_path):
+    """What a run that died partway through embedding leaves behind."""
+    path = write_index(tmp_path, [row("p", (1.0, 0.0)), row("q", (1.0, 0.0, 0.0))])
+    with pytest.raises(SearchError, match="mixes 2- and 3-dimensional"):
+        load_index(path)
+
+
+def test_width_is_unchecked_when_nothing_is_expected(tmp_path):
+    """Tools that only read the corpus need not know the embedder config."""
+    path = write_index(tmp_path, [row(vector=(1.0, 0.0))])
+    assert len(load_index(path)) == 1
 
 
 def test_a_missing_index_says_what_to_run(tmp_path):

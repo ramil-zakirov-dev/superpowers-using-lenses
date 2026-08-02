@@ -112,6 +112,16 @@ def catalog_parts(catalog_dir: Path) -> list[dict]:
                     "title": part.get("title") or part["id"],
                     "kind": part.get("kind") or document.get("kind"),
                     "stacks": document.get("stacks") or [],
+                    # Which documents this skill bears on. Carried to the index
+                    # for `list_skills` to report coverage from, deliberately
+                    # not as a search filter: measured on this corpus, the
+                    # target part is already at dense rank 1-3 in sixteen of
+                    # seventeen eval cases, so a filter has nothing to remove
+                    # — and the one case it could help still misses the top six
+                    # after filtering. What it does buy is a caller who can see
+                    # that the corpus holds one org lens and no operations
+                    # ones before writing a milestone brief against it.
+                    "document_kinds": document.get("document_kinds") or [],
                     "tags": part.get("tags") or [],
                     "sha256": part["sha256"],
                     "applies_to": part["applies_to"],
@@ -251,13 +261,19 @@ def main(argv: list[str] | None = None) -> int:
                 # tried and measured: it fixes the one thing it should — the
                 # name of a technique becomes searchable, "tracer bullets"
                 # goes from rank >40 to 1 — and costs more than it buys. A
-                # two-to-five word topic noun pulls a 384-dim vector out of
-                # the space of *moments* and into the space of *topics*, which
-                # is the wrong space: find_lenses asks callers for a need, not
-                # a solution. Every need-phrased query got worse (rank 9 -> 14,
+                # two-to-five word topic noun pulls the vector out of the
+                # space of *moments* and into the space of *topics*, which is
+                # the wrong space: find_lenses asks callers for a need, not a
+                # solution. Every need-phrased query got worse (rank 9 -> 14,
                 # 11 -> 26) and the eval went 16/17 -> 15/17. If the lexical
                 # entrance is wanted, it needs a second signal, not a longer
                 # string on this one.
+                #
+                # Measured on bge-small (384). The embedder has since moved to
+                # bge-base (768), which fixed that same tracer-bullets case on
+                # its own — dense rank 58 -> 8, enough to reach the reranker's
+                # pool. So the finding stands unretested rather than refuted:
+                # the reason to try the prefix again is gone, not disproved.
                 vectors = embed_texts(
                     config.embedder,
                     [row["applies_to"] for row in rows],

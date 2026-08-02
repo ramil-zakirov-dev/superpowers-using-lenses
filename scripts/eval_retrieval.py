@@ -172,7 +172,7 @@ def show(label: str, case: Case, hits) -> bool:
 
 def main() -> int:
     config = load_config(REPO / ".env")
-    parts = load_index(REPO / "index" / "embeddings.jsonl")
+    parts = load_index(REPO / "index" / "embeddings.jsonl", config.embedder_dim)
     print(f"corpus: {len(parts)} parts\n")
 
     dense_failures = reranked_failures = gated_failures = 0
