@@ -53,6 +53,30 @@ def build_plan(
     return plan[:limit] if limit else plan
 
 
+def catalog_target(skill: VendoredSkill, out: Path) -> Path:
+    """Where this skill at this version sits in the catalogue, present or not.
+
+    Keyed by version, so an unchanged skill resolves to a file that already
+    exists — which is what makes a re-run free.
+    """
+    return Path(out) / skill.label / skill.name / f"{skill.version}.yaml"
+
+
+def plan_mode(skill: VendoredSkill, out: Path, force: bool) -> str:
+    """What this run will do with one skill: skip, import or decompose.
+
+    The single definition of that, because two of them disagreed. The
+    confirmation below counts model calls, and counting every non-import skill
+    instead made it fire on a run that spends nothing — rebuilding the index
+    over a catalogue that is already complete. An operator who meets a
+    confirmation on a free run learns to pass --yes without reading it, and
+    then it is not there on the run that does spend money.
+    """
+    if catalog_target(skill, out).exists() and not force:
+        return "skip"
+    return "import" if has_parts_on_disk(skill.path.parent) else "decompose"
+
+
 def decompose_file(skill: VendoredSkill, config: Config) -> tuple[SkillDoc, list[str]]:
     """Decompose one vendored skill. Returns the document and gate failures."""
     raw = skill.path.read_text(encoding="utf-8")
@@ -197,16 +221,21 @@ def main(argv: list[str] | None = None) -> int:
         count = sum(1 for skill in plan if skill.label == label)
         print(f"{label}: {count} skill(s)")
 
-    paid = [skill for skill in plan if not has_parts_on_disk(skill.path.parent)]
+    # Decided once and reused, so the confirmation, the dry run and the loop
+    # cannot disagree about what this run is going to do.
+    modes = {skill: plan_mode(skill, args.out, args.force) for skill in plan}
+    paid = [skill for skill in plan if modes[skill] == "decompose"]
 
     if args.dry_run:
         # Deliberately before any model call. "Show me what this would do" must
         # not itself be the expensive thing, or it is useless as a safety check.
         for skill in plan:
-            mode = "decompose" if skill in paid else "import   "
-            print(f"  {mode}  {skill.id} @ {skill.version}")
-        print(f"done: {len(plan)} planned — {len(paid)} decomposed, "
-              f"{len(plan) - len(paid)} imported; nothing called, nothing written")
+            print(f"  {modes[skill]:<9}  {skill.id} @ {skill.version}")
+        counts = {mode: sum(1 for m in modes.values() if m == mode)
+                  for mode in ("decompose", "import", "skip")}
+        print(f"done: {len(plan)} planned — {counts['decompose']} decomposed, "
+              f"{counts['import']} imported, {counts['skip']} already catalogued; "
+              f"nothing called, nothing written")
         return 0
 
     if len(paid) > CONFIRM_ABOVE and not args.yes:
@@ -220,8 +249,8 @@ def main(argv: list[str] | None = None) -> int:
 
     written = skipped = failed = 0
     for skill in plan:
-        target = args.out / skill.label / skill.name / f"{skill.version}.yaml"
-        if target.exists() and not args.force:
+        target = catalog_target(skill, args.out)
+        if modes[skill] == "skip":
             print(f"  skip     {skill.id} (already at {skill.version})")
             skipped += 1
             continue
