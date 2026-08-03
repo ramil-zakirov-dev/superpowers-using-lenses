@@ -323,8 +323,32 @@ uncovered needs to a plausible category; the same labels carrying scope and
 exclusions sent five of five to NONE. Upgrading the model from `e2b` to `e4b`
 was worth +2 on that set; writing the exclusions was worth +4.
 
-Seventeen probes are still probes, and they are self-authored. The eval has no
-negative cases yet, so nothing regression-tests this.
+`scripts/eval_retrieval.py` now carries twelve of these as `UNCOVERED` cases,
+in both registers, so the signal is regression-tested rather than probed.
+Measured across all of them:
+
+| | |
+|---|---|
+| covered needs that kept a subject | **68/68** — no false abstentions |
+| uncovered needs abstained, caller's phrasing | **12/12** |
+| uncovered needs abstained, need-only phrasing | **6/12** |
+
+**The two registers swap places here**, which nothing else in this project
+does. Proper nouns carry the domain: *"our restaurant's dinner service is
+bottlenecking on the pass"* is plainly not software, while the same need
+stripped to *"work piles up at one station while everything upstream keeps
+arriving"* describes a queue in a system, and a subject area is not a stupid
+answer to it.
+
+So the guidance `find_lenses` gives its caller — state the need without the
+project, because that is what ranking wants — is the same act that costs the
+coverage signal its domain. That tension is real and unresolved; it is here so
+it is not met later as a surprise.
+
+Only false abstentions gate the eval. A missed abstention leaves the caller
+exactly where they were before this existed; a false one puts a warning on a
+good answer and teaches them to stop reading warnings, which costs the
+mechanism itself.
 
 Probed by hand — five needs deliberately outside a catalogue of design,
 product and engineering lenses, against two known hits:

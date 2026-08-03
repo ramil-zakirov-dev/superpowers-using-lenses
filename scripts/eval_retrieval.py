@@ -53,6 +53,35 @@ Only the `intent` axis sets the exit code. `concrete` is reported and not
 gated on deliberately — it is failing now, and a gate that is red on arrival
 is one everybody learns to pass without reading, which is how it comes to be
 absent on the day it would have caught something.
+
+## Coverage, and the register working the other way
+
+`UNCOVERED` holds twelve needs the catalogue genuinely cannot answer, in the
+same two registers. They exist because every `Case` has a right answer here,
+which left the suite blind to six plausible results for a question nothing in
+the corpus addresses. Measured 2026-08-03 on `gemma-4-e4b-it-qat`:
+
+    covered needs that kept a subject   68/68
+    uncovered needs abstained, concrete 12/12
+    uncovered needs abstained, intent    6/12
+
+**The registers swap places here, and that is the finding.** Everywhere else
+in this project the caller's own phrasing is the weaker axis; for abstention
+it is the stronger one, because proper nouns carry the domain. *"Our
+restaurant's dinner service is bottlenecking on the pass"* is obviously not
+software. The same need stripped to *"work piles up at one station while
+everything upstream keeps arriving, and the queue never drains"* is a
+description of a queue in a system, and `resilience-and-release` is not a
+stupid answer to it.
+
+Which puts two mechanisms in tension, and it is a real one rather than a bug:
+`find_lenses` tells its caller to strip the project from the need, because
+that is what ranking wants. Stripping is exactly what costs the coverage
+signal its domain. Nothing here resolves that — it is recorded so the next
+person does not discover it as a surprise.
+
+The six `intent` leaks are left as they are. Rewriting a probe until it passes
+measures the rewriting.
 """
 
 from __future__ import annotations
@@ -67,7 +96,9 @@ sys.path.insert(0, str(REPO / "src"))
 from lenses.config import load_config  # noqa: E402
 from lenses.embed import embed_query  # noqa: E402
 from lenses.mcp_server import second_pass  # noqa: E402
+from lenses.llm_rerank import completer_for  # noqa: E402
 from lenses.search import load_index, rank  # noqa: E402
+from lenses.taxonomy import classify, load_taxonomy  # noqa: E402
 
 #: Mirrors mcp_server.CANDIDATE_POOL / CANDIDATE_PER_SKILL — kept as literals
 #: here rather than imported, so this eval reflects what find_lenses actually
@@ -84,6 +115,31 @@ class Case:
     intent: str
     concrete: str
     expect_any: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class Uncovered:
+    """A need this catalogue genuinely cannot answer, in both registers.
+
+    These exist because every `Case` above has a right answer in the corpus,
+    which made the suite blind to the failure that costs a calling agent most:
+    six plausible results for a need nothing here addresses, cited into a
+    `lenses:` block because the response looked identical either way.
+
+    They are all outside software, and that is the boundary the taxonomy draws
+    — a need about building or running software gets a label even when it names
+    a tool this catalogue holds no manual for, because the label says which
+    shelf was searched. An earlier draft drew the line at how *specific* a
+    question was and sent a question about evicted pods to NONE while the
+    corpus held two skills that would have changed the answer.
+
+    Half of them borrow systems vocabulary on purpose — bottlenecks, backlogs,
+    throughput, rebalancing, dependencies. A classifier that reads the words
+    rather than the domain passes the easy ones and fails these.
+    """
+    scenario: str
+    intent: str
+    concrete: str
 
 
 CASES = [
@@ -379,6 +435,99 @@ CASES = [
 ]
 
 
+UNCOVERED = [
+    # Adversarial: another domain wearing this one's vocabulary. A classifier
+    # reading words rather than domains passes the plain cases and fails these.
+    Uncovered(
+        scenario="A kitchen whose throughput collapses at peak",
+        intent="work piles up at one station while everything upstream keeps "
+        "arriving, and the queue never drains",
+        concrete="our restaurant's dinner service is bottlenecking on the pass "
+        "and tickets are backing up faster than we clear them",
+    ),
+    Uncovered(
+        scenario="A warehouse whose pickers walk too far",
+        intent="ordering a sequence of stops so the total distance travelled "
+        "stops dominating the time it takes",
+        concrete="our warehouse pickers walk four miles a shift and we need to "
+        "re-sequence the pick paths across the racking",
+    ),
+    Uncovered(
+        scenario="An emergency department deciding who is seen first",
+        intent="ranking arrivals by urgency when capacity is fixed and the "
+        "cost of waiting is not the same for everyone",
+        concrete="our A&E department needs a triage protocol for the overnight "
+        "shift when only two consultants are on",
+    ),
+    Uncovered(
+        scenario="A portfolio that has drifted from its target weights",
+        intent="rebalancing an allocation that has drifted, without incurring "
+        "more cost than the drift is worth",
+        concrete="we need to rebalance the fixed-income allocation in the "
+        "pension fund before year end",
+    ),
+    Uncovered(
+        scenario="A curriculum whose topics depend on each other",
+        intent="ordering a body of material so nothing is taught before what "
+        "it depends on",
+        concrete="our sixth-form maths curriculum teaches integration before "
+        "limits and the students are lost",
+    ),
+    Uncovered(
+        scenario="A rehearsal calendar with scarce people",
+        intent="scheduling sessions around the availability of the few people "
+        "every session needs",
+        concrete="the choir needs a rehearsal schedule that works around the "
+        "soloists' availability before the December concert",
+    ),
+
+    # Plainly another profession. These should be easy, and they are here
+    # because a suite that only tested the hard ones could not show that.
+    Uncovered(
+        scenario="A machined part coming off the mill with chatter",
+        intent="choosing a cutting strategy that leaves an acceptable surface "
+        "without the tool resonating",
+        concrete="our CNC shop gets chatter marks milling the 6061 housings "
+        "and we need a better toolpath",
+    ),
+    Uncovered(
+        scenario="A trial deciding how much to give and when",
+        intent="setting an escalation schedule where the risk of too much and "
+        "the risk of too little are both serious",
+        concrete="our oncology trial needs a dose-escalation schedule for the "
+        "phase II cohort",
+    ),
+    Uncovered(
+        scenario="A lease with a clause worth renegotiating",
+        intent="reopening one term of a long agreement without reopening the "
+        "whole of it",
+        concrete="our lease on the Berlin office has a break clause we want to "
+        "renegotiate before the notice period closes",
+    ),
+    Uncovered(
+        scenario="A policy that has to satisfy a statute",
+        intent="writing an internal policy that satisfies a statutory minimum "
+        "without promising more than intended",
+        concrete="our HR team needs a parental-leave policy that complies with "
+        "German law",
+    ),
+    Uncovered(
+        scenario="A greenhouse crop showing a deficiency",
+        intent="diagnosing a growing problem from its symptoms and correcting "
+        "the inputs",
+        concrete="the greenhouse tomatoes are showing blossom end rot and we "
+        "need a feeding plan",
+    ),
+    Uncovered(
+        scenario="A drivetrain geared wrong for the terrain",
+        intent="choosing ratios so the effort stays in a usable band across "
+        "the range of conditions",
+        concrete="my gravel bike is geared too tall for the climbs on the "
+        "Dolomites route and I need to change the cassette",
+    ),
+]
+
+
 def matched(case: Case, hits) -> bool:
     refs = [hit.part.ref for hit in hits]
     return any(needle in ref for needle in case.expect_any for ref in refs)
@@ -405,11 +554,62 @@ def pipeline(intent: str, parts, config):
     return dense_hits, second_pass(config)(intent, candidates, FINAL_LIMIT)
 
 
+def coverage(config) -> int:
+    """Whether the catalogue says so when it cannot answer.
+
+    Two numbers, and they are not symmetric. A **missed abstention** is the
+    status quo this was built to improve: the caller gets what they always got.
+    A **false abstention** is new harm — a warning on an answer that was fine,
+    which teaches a caller to ignore the warning, and the warning is the whole
+    mechanism. So only false abstentions gate.
+
+    Returns the number of false abstentions.
+    """
+    if config.classifier is None:
+        print("no classifier configured — coverage not measured\n")
+        return 0
+
+    taxonomy = load_taxonomy(REPO / "catalog" / "taxonomy.yaml")
+    complete = completer_for(config.classifier)
+    decide = lambda need: classify(need, taxonomy, complete)  # noqa: E731
+
+    print(f"=== coverage: {config.classifier.model} against "
+          f"{len(taxonomy.labels)} subject areas ===")
+
+    false_abstentions = []
+    for case in CASES:
+        for axis, need in (("intent", case.intent), ("concrete", case.concrete)):
+            if decide(need) is None:
+                false_abstentions.append((axis, case.scenario))
+
+    missed = []
+    for case in UNCOVERED:
+        for axis, need in (("intent", case.intent), ("concrete", case.concrete)):
+            label = decide(need)
+            if label is not None:
+                # UNREADABLE ("") is not abstention and is not a miss either —
+                # a model that answered nothing made no claim. Reported as a
+                # label of '' so it is visible rather than silently counted.
+                missed.append((axis, case.scenario, label or "<unreadable>"))
+
+    covered = 2 * len(CASES)
+    uncovered = 2 * len(UNCOVERED)
+    print(f"  covered needs kept a subject : {covered - len(false_abstentions)}/{covered}")
+    for axis, scenario in false_abstentions:
+        print(f"     FALSE ABSTENTION [{axis:8}] {scenario}")
+    print(f"  uncovered needs abstained    : {uncovered - len(missed)}/{uncovered}")
+    for axis, scenario, label in missed:
+        print(f"     leaked -> {label:32} [{axis:8}] {scenario}")
+    print()
+    return len(false_abstentions)
+
+
 def main() -> int:
     config = load_config(REPO / ".env")
     parts = load_index(REPO / "index" / "embeddings.jsonl", config.embedder_dim)
     print(f"corpus: {len(parts)} parts")
     print(f"second pass: {config.reranker.model if config.reranker else 'none'}\n")
+    false_abstentions = coverage(config)
 
     dense_failures = ranked_failures = concrete_failures = 0
     lost_to_phrasing = []
@@ -445,9 +645,11 @@ def main() -> int:
         print(f"  lost: {scenario}")
     print(f"total across both axes: "
           f"{2 * total - ranked_failures - concrete_failures}/{2 * total}")
-    # Only the need axis gates. See the module docstring for why a red-on-
-    # arrival gate is worse than a reported number.
-    return 1 if ranked_failures else 0
+    # Only the need axis and false abstentions gate. See the module docstring
+    # for why a red-on-arrival gate is worse than a reported number, and
+    # `coverage` for why a missed abstention is not new harm while a false one
+    # is.
+    return 1 if (ranked_failures or false_abstentions) else 0
 
 
 if __name__ == "__main__":
