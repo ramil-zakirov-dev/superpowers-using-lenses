@@ -45,6 +45,20 @@ on every run and is gitignored. That direction is what lets a citation survive
 a rebuild, and lets a contributor propose a change as a pull request rather
 than as a row in somebody's database.
 
+## Where the idea came from
+
+[SkillLens](https://arxiv.org/abs/2605.08386) named the tension this is built
+around — a library serving whole, single-resolution skills forces a choice
+between relevance and cost — and answered it with mixed granularity: skills as
+a four-layer graph of policies, strategies, procedures and primitives,
+retrieved at whatever resolution the task needs. Cutting skills into parts and
+ranking those rather than their parents is that idea, taken directly. What is
+deliberately not taken is the other half: its verifier decides per unit whether
+to accept, decompose, **rewrite** or skip, and rewriting is what the invariant
+above forbids — a part arrives as its upstream author wrote it, or it does not
+arrive. Its graph is also where this is thinnest: `requires` is the whole of
+that mechanism here, and 6.4% of the catalogue writes it.
+
 ## Two ways in
 
 Which one applies is decided by the skill's own shape, not by a flag.
