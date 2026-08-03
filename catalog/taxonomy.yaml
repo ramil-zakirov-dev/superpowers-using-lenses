@@ -15,11 +15,23 @@
 # `boundary` below is stated once and applies to every label.
 
 boundary: >-
-  This catalogue is about designing and writing application software, and the
-  product and team decisions around it. It is written by practitioners about
-  practice, not about any one company's systems. It holds nothing about
-  operating a specific piece of infrastructure, tuning a language runtime, or
-  any industry other than software.
+  This catalogue is about building and running software, and the product and
+  team decisions around it. It is written by practitioners about practice, so
+  it holds no product manual for any particular tool — but a question about
+  software belongs to one of these labels even when it names a tool the
+  catalogue does not document, because the label says which shelf was
+  searched. Answer NONE only for a need outside software practice altogether:
+  another industry, another profession, a personal or commercial matter.
+
+# The boundary above is drawn by *domain*, not by how specific the question is,
+# and that was a decision rather than an accident. An earlier draft excluded
+# "operating infrastructure" and "tuning a language runtime", which sent a
+# question about pod eviction during a nightly batch to NONE — while the corpus
+# holds `release-it` on blocked threads and unbounded result sets, and
+# `system-design` on reliability, both of which would change what that spec
+# said. Refusing there loses a real answer to buy a refusal nobody asked for.
+# The harm actually measured ran the other way and was entirely a domain error:
+# a milling-toolpath question answered with a usability heuristic.
 
 labels:
 
@@ -49,9 +61,12 @@ labels:
     getting changes into production safely: timeouts, circuit breakers,
     cascading failure, deployment, capacity planning, what to observe.
   excludes: >-
-    Configuring a specific orchestrator, cloud service or language runtime.
-    This is about how an application is designed and released to survive
-    production, not about the machinery production runs on.
+    Nothing in software. This catalogue holds no product manual for any
+    orchestrator, cloud service or language runtime, so it will not tell you
+    which flag to set — but a question about surviving production belongs here
+    even when it names the platform it runs on, because what this catalogue
+    says about slow responses, blocked threads and unbounded results is what
+    changes the design either way.
   skills: [wondelai/release-it]
 
 - id: api-and-interface-design
