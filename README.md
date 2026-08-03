@@ -133,7 +133,15 @@ is not a setting — it is whether you configured an endpoint for it:
 | Need-only phrasing | **33/34** | 32/34 |
 | **Project phrasing** | 27/34 | **33/34** |
 | **Total** | 60/68 | **65/68** |
-| Cost | 0 | 0.23 s/query |
+| Cost | 0 | 2.3 s/query on `gemma-4-e4b-it-qat` |
+
+That cost line was `0.23 s/query` until 2026-08-03, and it was wrong twice
+over. It was measured on `gemma-4-e2b-it-qat`, which the larger model replaced
+at ten times the latency for identical retrieval scores; and it only ever
+counted the ranking call. A whole `find_lenses` is **~4.4 s** end to end, of
+which **2.05 s is the embedding call** nobody had timed. The coverage
+classification below adds ~0.02 s, because it runs alongside those two rather
+than behind them.
 
 Measured 2026-08-03 on 34 paired needs. The ceiling is 67/68 — what the pool of
 20 contains before anything reorders it — so this is being graded on how much
@@ -291,11 +299,32 @@ with a digit, the same gemma scored 23/34; shown all twenty at once and asked
 which six are best, 32/34. Small models have no stable absolute scale — *"is
 this a 7 or an 8?"* — but comparison inside a visible set needs no scale.
 
-**Nothing measures what happens when the corpus has no answer, and the score
-does not tell you.** All 34 eval cases have a right answer in the catalogue,
-so the suite cannot see the failure that matters most to a calling agent: six
-plausible results for a need this catalogue knows nothing about, cited into a
-`lenses:` block because the response looks identical either way.
+**The search now says when the catalogue does not cover the need — and the
+score never could.** All 34 eval cases have a right answer in the catalogue,
+so the suite could not see the failure that matters most to a calling agent:
+six plausible results for a need this catalogue knows nothing about, cited
+into a `lenses:` block because the response looked identical either way.
+
+`catalog/taxonomy.yaml` holds nineteen subject areas, derived from the corpus
+so that they cover it by construction, each carrying what it does *not* cover.
+Every search classifies the need against them. `subject` names the shelf that
+was searched; when none fits, a `warning` says so and **the results still come
+back**. Reported, never filtered — the model behind the label is the same one
+that showed a register bias above, and filtering on its judgement would trade
+a visible wrong label for an invisible missing answer.
+
+Measured on seventeen probes in the register that occurs in production, all
+carrying project proper nouns: **9/9** software needs labelled correctly,
+**8/8** non-software needs abstained. The strongest of those is a restaurant
+service bottleneck, phrased in queueing vocabulary throughout.
+
+The mechanism is the wording, not the model. Bare labels sent four of five
+uncovered needs to a plausible category; the same labels carrying scope and
+exclusions sent five of five to NONE. Upgrading the model from `e2b` to `e4b`
+was worth +2 on that set; writing the exclusions was worth +4.
+
+Seventeen probes are still probes, and they are self-authored. The eval has no
+negative cases yet, so nothing regression-tests this.
 
 Probed by hand — five needs deliberately outside a catalogue of design,
 product and engineering lenses, against two known hits:
