@@ -1,13 +1,13 @@
 """MCP adapter: the corpus, exposed to an agent over stdio.
 
-Thin on purpose. Ranking lives in `search`, the second pass in `rerank` or
-`llm_rerank`, resolution in `resolve` — this module only turns their results
-into tool responses, and `second_pass` below is the one place that knows which
-of the two is configured.
+Thin on purpose. Ranking lives in `search`, the second pass in `llm_rerank`,
+resolution in `resolve` — this module only turns their results into tool
+responses, and `second_pass` below is the one place that knows whether a
+second pass is configured at all.
 
 Every one of them takes its model as an argument rather than reaching for one:
-`search.rank` takes a vector, `rerank.rerank` a scorer, `llm_rerank` a
-completer. A test swaps in a fake and touches neither torch nor a network, so
+`search.rank` takes a vector, `llm_rerank` a completer. A test swaps in a fake
+and touches no network, so
 arguments about relevance are settled by a test rather than by starting a
 server.
 
@@ -29,16 +29,15 @@ from mcp.server.mcpserver import MCPServer
 from .config import Config, ConfigError, load_config
 from .embed import EmbedError, embed_query
 from .llm_rerank import LlmRerankError, completer_for, listwise_rank
-from .rerank import RerankError, rerank, scorer_for
 from .resolve import resolve_all
 from .search import Corpus, Hit, SearchError, load_index, rank
 
 HOME = Path(os.environ.get("LENSES_HOME", "")).expanduser() or Path.cwd()
 
-#: Candidates handed to the reranker before it is cut down to `limit`. A
-#: bigger, loosely-capped pool gives the cross-encoder real breadth to judge
-#: — pre-filtering it down to `limit` with the cosine pass first would just
-#: reproduce the bi-encoder's mistakes one stage later.
+#: Candidates handed to the second pass before it is cut down to `limit`. A
+#: bigger, loosely-capped pool gives it real breadth to judge — pre-filtering
+#: down to `limit` with the cosine pass first would just reproduce the
+#: bi-encoder's mistakes one stage later.
 CANDIDATE_POOL = 20
 CANDIDATE_PER_SKILL = 4
 
@@ -247,8 +246,6 @@ def find_lenses(
         return _find_one(intent, config, corpus, limit, kind, stack)
     except EmbedError as exc:
         return {"error": f"the embedding endpoint is unreachable or misconfigured: {exc}"}
-    except RerankError as exc:
-        return {"error": f"the second ranking pass is unavailable: {exc}"}
 
 
 @server.tool()
@@ -282,8 +279,6 @@ def find_lenses_batch(
         return {"results": [_find_one(i, config, corpus, limit, kind, stack) for i in intents]}
     except EmbedError as exc:
         return {"error": f"the embedding endpoint is unreachable or misconfigured: {exc}"}
-    except RerankError as exc:
-        return {"error": f"the second ranking pass is unavailable: {exc}"}
 
 
 @server.tool()

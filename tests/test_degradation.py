@@ -130,6 +130,22 @@ def test_one_failing_intent_does_not_erase_a_batch(monkeypatch, config, corpus):
     assert "warning" not in answer["results"][0]
 
 
+def test_nothing_imports_sentence_transformers():
+    """It was a required dependency for exactly one import, powering a second
+    pass that scored 57/68 against 60/68 for having no second pass at all."""
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parent.parent
+    guilty = [
+        str(path.relative_to(root))
+        for path in (root / "src").rglob("*.py")
+        if "sentence_transformers" in path.read_text(encoding="utf-8")
+    ]
+    assert guilty == [], f"still imported by {guilty}"
+    assert "sentence-transformers" not in (root / "pyproject.toml").read_text(
+        encoding="utf-8")
+
+
 def test_startup_probes_a_configured_ranking_endpoint(monkeypatch):
     """A typo in .env must be a server that does not start, not a server that
     answers every query five points worse than it says it does."""
