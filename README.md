@@ -318,15 +318,34 @@ internal logic*, the reply went `4,5,17,18,19,20` → `4,5,17,16,18,20`, and
 candidate — is still discarded. So the cause was never that the model did not
 know the list was ordered.
 
-**What the chosen entries share is register, and that is a corpus problem.**
-Every one of the six opens *"Use when …"*; the one it will not pick opens with
-a title. **108 of 405 parts** carry an `applies_to` outside that register, and
-they are exactly the parts that arrived through `importer` rather than
-`decompose` — the field is the upstream author's frontmatter there, not a
-model's sentence, and all 108 sit in eight skills. A ranker that reads
-`applies_to` and prefers one phrasing therefore has a structural blind spot
-over a quarter of the corpus, and no query-side work reaches it. Normalising
-the imported register at ingest is the next thing to measure.
+**What the chosen entries share is register.** Every one of the six opens
+*"Use when …"*; the one it will not pick opens with a title. **108 of 405
+parts** carry an `applies_to` outside that register, and they are exactly the
+parts that arrived through `importer` rather than `decompose` — the field is
+the upstream author's frontmatter there, not a model's sentence.
+
+Measured across all 34 needs, with the dense pass as a control because nothing
+in it knows about phrasing:
+
+| | share of results that are title-style |
+|---|---|
+| the corpus | 26.7% |
+| the pools the ranker was shown | 23.8% |
+| **dense top six — register-blind** | **26.5%** |
+| **the six the ranker returned** | **17.2%** |
+
+The control is what makes this readable. A register-blind pass returns these
+parts at almost exactly their share of the corpus, so on average they are not
+less relevant; the ranker selects 21.6% of the ones it sees against 32.6% of
+the others, cutting them by about a third.
+
+**That is a bias, not a blind spot** — they still make up a sixth of what
+comes back, and the ranker with the bias scores 65/68 against the neutral
+pass's 60/68, so the discount is not uniformly wrong. What is unarguable is
+that it cost the right answer at least once, in the case above. Normalising
+the imported register at ingest is the next thing to measure, and until it is
+measured this is one observed failure and one skewed proportion, not a
+diagnosis.
 
 The remaining recall failure is separate. *Proving the whole path works end to
 end* misses the dense top 6 outright — its target sits deep in the pool — so

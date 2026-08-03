@@ -43,11 +43,26 @@ them opens "Use when …"; the one it will not pick opens with a title. That
 split is not incidental — **108 of 405 parts** carry an `applies_to` that is
 not in the "Use when" register, and they are exactly the parts that arrived
 through `importer` rather than `decompose`, where the field is the upstream
-author's frontmatter instead of the model's sentence. Every one of the 108 is
-in one of eight skills. A ranker that reads `applies_to` and prefers one
-register therefore has a structural blind spot over a quarter of the corpus,
-and no query-side work reaches it. Normalising the imported register at
-ingest is the next thing to measure; nothing here does it.
+author's frontmatter instead of the model's sentence.
+
+Measured across all 34 needs, against the dense pass as a control, since
+nothing in a cosine knows about phrasing:
+
+    corpus                          26.7% title-style
+    the pools this pass was shown   23.8%
+    dense top six (register-blind)  26.5%
+    the six this pass returned      17.2%
+
+A register-blind pass returns them at their share of the corpus, so on
+average they are not less relevant. This one selects 21.6% of the title-style
+candidates it sees against 32.6% of the others — a third fewer.
+
+Call it a bias and not a blind spot: they are still a sixth of what comes
+back, and this pass with the bias scores 65/68 where the neutral one scores
+60/68, so the discount is not uniformly wrong. It cost the right answer at
+least once, above. Normalising the imported register at ingest is the next
+thing to measure, and until that is measured this is one observed failure and
+one skewed proportion rather than a diagnosis.
 """
 
 from __future__ import annotations
