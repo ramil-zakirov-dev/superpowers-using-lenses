@@ -288,16 +288,34 @@ measured, at seventeen pairs — kept because the reasoning still holds and the
 numbers no longer do. With a cross-encoder second pass those scored 16/17 and
 14/17; with the `llm` pass, **16/17 and 16/17**.
 
-Two stronger cross-encoders were tried first and both lost — `bge-reranker-base`
-25/34, `bge-reranker-v2-m3` 29/34, against MiniLM's 30/34. The fix was never a
-bigger model of the same shape. A cross-encoder compares two strings; it cannot
-know that *"keeping a Stripe call from hanging"* is a resilience need. An
-instruction-tuned model can, and one 0.23-second call does it.
+Every score in these three paragraphs is out of **34 needs — 17 pairs across
+two axes**, not out of the 34 *cases* the eval carries today. The
+denominators collide and the older ones are the smaller measurement.
 
-The shape mattered more than the model. Asked to score candidates one at a time
-with a digit, the same gemma scored 23/34; shown all twenty at once and asked
-which six are best, 32/34. Small models have no stable absolute scale — *"is
-this a 7 or an 8?"* — but comparison inside a visible set needs no scale.
+Two stronger cross-encoders were tried first and both lost — `bge-reranker-base`
+25, `bge-reranker-v2-m3` 29, against MiniLM's 30. The fix was never a bigger
+model of the same shape. A cross-encoder scores a (query, passage) pair and can
+only ever answer how alike two strings are; it cannot know that *"keeping a
+Stripe call from hanging"* is a resilience need, because `applies_to` is
+written in the register of moments and the query carries a project's nouns. A
+larger cross-encoder is a better answer to the wrong question. An
+instruction-tuned model reads past it.
+
+The shape mattered more than the model, and this is the number to remember.
+Asked to score candidates one at a time with a digit, the same gemma scored
+**23**; shown all twenty at once and asked which six are best, **32**. Small
+models have no stable absolute scale — *"is this a 7 or an 8?"* — but
+comparison inside a visible set needs no scale. Changing the question was
+worth +9. No change of model ever came close.
+
+**What the retirement of `bge-reranker-v2-m3` does not rest on is a solid
+margin.** One case separated it from MiniLM, at half today's sample, and both
+were later beaten by a listwise pass that made the comparison moot. Twice
+since, a conclusion drawn at 17 pairs inverted at 34 — the cross-encoder went
+from defensible default to below having no second pass at all. The reasoning
+that retired it still holds, because it is about shape rather than score; the
+number that accompanied it was one case wide, and slice 02 deleted the code
+that could re-take it.
 
 **The search now says when the catalogue does not cover the need — and the
 score never could.** All 34 eval cases have a right answer in the catalogue,
