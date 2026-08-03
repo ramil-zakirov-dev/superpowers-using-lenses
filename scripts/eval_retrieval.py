@@ -410,7 +410,7 @@ def main() -> int:
     config = load_config(REPO / ".env")
     parts = load_index(REPO / "index" / "embeddings.jsonl", config.embedder_dim)
     print(f"corpus: {len(parts)} parts")
-    print(f"second pass: {config.reranker_kind} — {config.reranker_model}\n")
+    print(f"second pass: {config.reranker.model if config.reranker else 'none'}\n")
 
     dense_failures = ranked_failures = concrete_failures = 0
     lost_to_phrasing = []

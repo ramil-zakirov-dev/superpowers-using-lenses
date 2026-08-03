@@ -235,7 +235,7 @@ def test_find_lenses_reports_requirements_without_expanding_them(monkeypatch):
 
     answer = mcp_server._find_one(
         "anything",
-        config=SimpleNamespace(embedder=None, embedder_dim=2, reranker_kind="llm"),
+        config=SimpleNamespace(embedder=None, embedder_dim=2, reranker=None),
         corpus=Corpus([indexed("alpha", ["beta"]), indexed("beta")]),
         limit=1, kind=None, stack=None,
     )

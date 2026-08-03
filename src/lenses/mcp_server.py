@@ -71,17 +71,17 @@ def startup() -> tuple[Config, Corpus]:
     return _config, _corpus
 
 
-def second_pass(config: Config) -> Callable[[str, list[Hit], int], list[Hit]]:
+def second_pass(config: Config) -> Callable[[str, list[Hit], int], list[Hit]] | None:
     """The configured way of cutting the candidate pool down to the answer.
 
-    One signature for both, so `_find_one` holds no branch: they disagree
-    about what a score means, not about what ranking is.
+    `None` means none is configured, which is a supported answer and not a
+    failure: the dense ordering is then what `_find_one` returns, and it says
+    so in `ranked_by`.
     """
-    if config.reranker_kind == "llm":
-        complete = completer_for(config.reranker)
-        return lambda intent, hits, limit: listwise_rank(intent, hits, limit, complete)
-    scorer = scorer_for(config.reranker_model)
-    return lambda intent, hits, limit: rerank(intent, hits, top_n=limit, score=scorer)
+    if config.reranker is None:
+        return None
+    complete = completer_for(config.reranker)
+    return lambda intent, hits, limit: listwise_rank(intent, hits, limit, complete)
 
 
 def _find_one(
@@ -104,10 +104,11 @@ def _find_one(
     # dense score unchanged (llm) or replace it with its own logit
     # (cross-encoder), and the caller is owed the one that means something.
     dense_score = {hit.part.ref: hit.score for hit in candidates}
-    hits = second_pass(config)(intent, candidates, limit)
+    ranker = second_pass(config)
+    hits = candidates[:limit] if ranker is None else ranker(intent, candidates, limit)
     return {
         "intent": intent,
-        "ranked_by": config.reranker_kind,
+        "ranked_by": "dense" if ranker is None else "llm",
         "results": [
             {
                 "ref": hit.part.ref,

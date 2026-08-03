@@ -9,7 +9,6 @@ does not need a real model to verify.
 
 import pytest
 
-from lenses.config import DEFAULT_RERANKER, ConfigError, load_config
 from lenses.rerank import RerankError, _models, rerank, scorer_for
 from lenses.search import Hit, IndexedPart, SearchError
 
@@ -71,45 +70,6 @@ def test_top_n_below_one_is_refused():
         rerank("intent", [hit("p", "x")], top_n=0, score=by_length)
 
 
-# Which cross-encoder runs. Unlike the embedder this is a local model name
-# rather than an endpoint, and unlike the embedder a wrong value writes no
-# artefact — so it is optional, and the default has to hold.
-
-@pytest.fixture
-def env(monkeypatch, tmp_path):
-    """A hermetic environment: every required setting, no .env on disk."""
-    for name, value in {
-        "llm_base_url": "https://example.invalid/v1",
-        "llm_model": "m",
-        "llm_api_key": "k",
-        "embedder_base_url": "https://example.invalid/v1",
-        "embedder_model": "e",
-        "embedder_api_key": "k",
-        "embedder_dim": "768",
-        "min_coverage": "0.5",
-    }.items():
-        monkeypatch.setenv(name, value)
-    for name in ("reranker_model", "reranker_kind", "reranker_base_url",
-                 "reranker_api_key"):
-        monkeypatch.delenv(name, raising=False)
-    return tmp_path / "absent.env"
-
-
-def test_the_reranker_defaults_when_unset(env):
-    assert load_config(env).reranker_model == DEFAULT_RERANKER
-
-
-def test_an_explicit_reranker_wins(env, monkeypatch):
-    monkeypatch.setenv("reranker_model", "BAAI/bge-reranker-base")
-    assert load_config(env).reranker_model == "BAAI/bge-reranker-base"
-
-
-def test_a_blank_reranker_falls_back_rather_than_naming_nothing(env, monkeypatch):
-    """A commented-out line left as `reranker_model=` must not load model ''."""
-    monkeypatch.setenv("reranker_model", "   ")
-    assert load_config(env).reranker_model == DEFAULT_RERANKER
-
-
 def test_asking_for_a_scorer_does_not_load_the_model():
     """Building the scorer must stay free — importing torch at config time
     would put half a gigabyte in the path of every run that never searches."""
@@ -128,50 +88,3 @@ def test_a_broken_model_is_reported_as_a_rerank_failure(monkeypatch):
     monkeypatch.setitem(_models, "broken/model", Exploding())
     with pytest.raises(RerankError, match="broken/model"):
         scorer_for("broken/model")("intent", ["a document"])
-
-
-# Which *kind* of second pass runs. The cross-encoder needs no endpoint; the
-# llm needs one, and must say so rather than quietly running the other.
-
-def test_the_cross_encoder_is_the_zero_config_default(env):
-    config = load_config(env)
-    assert config.reranker_kind == "cross-encoder"
-    assert config.reranker is None
-
-
-def test_an_unknown_kind_is_refused(env, monkeypatch):
-    monkeypatch.setenv("reranker_kind", "crossencoder")
-    with pytest.raises(ConfigError, match="reranker_kind"):
-        load_config(env)
-
-
-def test_the_llm_kind_needs_its_endpoint(env, monkeypatch):
-    """Fail closed. Falling back to the cross-encoder here would rank by a
-    model nobody configured, and say nothing about having done so."""
-    monkeypatch.setenv("reranker_kind", "llm")
-    monkeypatch.setenv("reranker_model", "gemma-4-e2b-it-qat")
-    with pytest.raises(ConfigError, match="reranker_base_url"):
-        load_config(env)
-
-
-def test_the_llm_kind_reads_its_own_endpoint(env, monkeypatch):
-    monkeypatch.setenv("reranker_kind", "llm")
-    monkeypatch.setenv("reranker_base_url", "http://localhost:1234/v1/")
-    monkeypatch.setenv("reranker_model", "gemma-4-e2b-it-qat")
-    monkeypatch.setenv("reranker_api_key", "k")
-    config = load_config(env)
-    assert config.reranker.base_url == "http://localhost:1234/v1"   # trailing / trimmed
-    assert config.reranker.model == "gemma-4-e2b-it-qat"
-    assert config.reranker_model == "gemma-4-e2b-it-qat"
-
-
-def test_the_ranking_endpoint_is_not_the_decomposition_one(env, monkeypatch):
-    """`llm_*` is the hosted model that cuts skills up; this one runs on every
-    search and wants to be local. Sharing the setting would send every query
-    to a paid provider."""
-    monkeypatch.setenv("reranker_kind", "llm")
-    monkeypatch.setenv("reranker_base_url", "http://localhost:1234/v1")
-    monkeypatch.setenv("reranker_model", "gemma-4-e2b-it-qat")
-    monkeypatch.setenv("reranker_api_key", "k")
-    config = load_config(env)
-    assert config.reranker.base_url != config.llm.base_url

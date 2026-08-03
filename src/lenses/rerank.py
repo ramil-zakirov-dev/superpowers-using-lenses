@@ -16,13 +16,14 @@ from __future__ import annotations
 
 from typing import Callable
 
-from .config import DEFAULT_RERANKER
 from .search import Hit, SearchError
 
 Scorer = Callable[[str, list[str]], list[float]]
 
-#: Re-exported so callers that only want the default need not import config.
-MODEL_NAME = DEFAULT_RERANKER
+#: Was `config.DEFAULT_RERANKER` until this path stopped being selectable.
+#: Nothing configures it any more — the constant is here only so this module
+#: still imports until it is deleted.
+MODEL_NAME = "cross-encoder/ms-marco-MiniLM-L-12-v2"
 
 # There was a confidence gate here: below a raw logit of -8.0 the reranked
 # ordering was discarded and the dense one served instead. It is gone, and the
