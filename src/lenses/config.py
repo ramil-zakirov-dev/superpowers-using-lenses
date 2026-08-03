@@ -43,12 +43,18 @@ class Config:
     #: wants to be local.
     reranker: Endpoint | None = None
     #: Where a need is classified against `catalog/taxonomy.yaml`. Same server
-    #: and key as `reranker`, possibly a different model, because the two jobs
-    #: measure differently: ranking scores the same on a 2B and a 4B model
-    #: while the 2B is ten times faster, and classifying is 8/8 on the 4B
-    #: against 2/5 on the 2B. `None` exactly when `reranker` is None — one
-    #: endpoint, so configuring neither is a choice and configuring only the
-    #: classifier is a typo.
+    #: and key as `reranker`, optionally a different model.
+    #:
+    #: Leave it unset. It exists because the two jobs looked like they wanted
+    #: different models — classifying is 8/8 on a 4B and 2/5 on a 2B, and the
+    #: 2B appeared to rank ten times faster for the same score. The second half
+    #: of that did not survive measurement: this server spends ~2.1s of fixed
+    #: overhead per request whatever the model, so a 2B and a 4B rank in 2.25s
+    #: and 2.32s and splitting buys nothing. Kept because it costs nothing and
+    #: the overhead may not be permanent.
+    #:
+    #: `None` exactly when `reranker` is None — one endpoint, so configuring
+    #: neither is a choice and configuring only the classifier is a typo.
     classifier: Endpoint | None = None
 
 

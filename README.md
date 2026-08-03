@@ -135,13 +135,25 @@ is not a setting — it is whether you configured an endpoint for it:
 | **Total** | 60/68 | **65/68** |
 | Cost | 0 | 2.3 s/query on `gemma-4-e4b-it-qat` |
 
-That cost line was `0.23 s/query` until 2026-08-03, and it was wrong twice
-over. It was measured on `gemma-4-e2b-it-qat`, which the larger model replaced
-at ten times the latency for identical retrieval scores; and it only ever
-counted the ranking call. A whole `find_lenses` is **~4.4 s** end to end, of
-which **2.05 s is the embedding call** nobody had timed. The coverage
-classification below adds ~0.02 s, because it runs alongside those two rather
-than behind them.
+That cost line said `0.23 s/query` until 2026-08-03 and it was wrong three
+ways. It counted only the ranking call; it was inherited from an earlier
+session and never re-taken; and the thing it appeared to measure is not the
+model at all.
+
+**This server costs ~2.1 s of fixed overhead per request.** A three-token
+prompt to `gemma-4-e2b-it-qat` takes 2.13 s, the same prompt to `e4b` takes
+2.15 s, and embedding the single word *hello* on `bge-base-en-v1.5` — a 110M
+encoder, milliseconds of actual compute — takes 2.05 s. Prompt size and model
+size are both invisible next to it. On real prompts the two gemmas rank in
+2.25 s and 2.32 s.
+
+Two things follow. A whole `find_lenses` is **~4.4 s**, which is two
+round-trips: embed, then rank, with the coverage classification overlapped so
+it costs ~0.02 s rather than its own 2.2 s. And **choosing a smaller ranking
+model to save latency does not work here** — a plan to run a 2B for ranking
+and a 4B for classification was built and measured and gained nothing, which
+is why `classifier_model` exists and is left unset. Whatever produces the
+2.1 s, it is not something this repository can rank its way out of.
 
 Measured 2026-08-03 on 34 paired needs. The ceiling is 67/68 — what the pool of
 20 contains before anything reorders it — so this is being graded on how much

@@ -77,9 +77,9 @@ def test_the_classifier_falls_back_to_the_ranking_model(env, monkeypatch):
 
 
 def test_a_named_classifier_model_shares_the_endpoint(env, monkeypatch):
-    """Measured: the two jobs want different models. Ranking scores the same
-    on e2b and e4b while e2b is ten times faster; classifying is 8/8 on e4b
-    against 2/5 on e2b. Same server, same key, two model names."""
+    """Two model names on one server. Nothing needs this today - the ranking
+    latency that motivated it was ~2.1s of per-request overhead rather than
+    the model - but the setting is what a future measurement would use."""
     monkeypatch.setenv("reranker_base_url", "http://localhost:1234/v1")
     monkeypatch.setenv("reranker_model", "gemma-4-e2b-it-qat")
     monkeypatch.setenv("reranker_api_key", "k")

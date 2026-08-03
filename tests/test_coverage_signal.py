@@ -124,6 +124,46 @@ def test_without_a_ranking_endpoint_there_is_no_coverage_signal(
     assert answer["ranked_by"] == "dense"
 
 
+def test_startup_probes_the_classifier_model_too(monkeypatch):
+    """Observed 2026-08-03: pointing classifier_model at a model the server
+    had not loaded made every search return `subject: null` and no warning,
+    for hours, indistinguishable from a corpus that simply had no opinion.
+    `_coverage` swallowing the failure is right at query time and wrong at
+    launch — and the probe doubles as the thing that gets the model resident,
+    so the first real search is not the one paying to load it."""
+    from lenses.config import ConfigError
+
+    probed = []
+
+    def completer(endpoint, **kwargs):
+        def complete(system, user):
+            probed.append(endpoint.model)
+            if endpoint.model == "absent-model":
+                raise LlmRerankError("model_not_found")
+            return "1"
+        return complete
+
+    monkeypatch.setattr(mcp_server, "_config", None)
+    monkeypatch.setattr(mcp_server, "_corpus", None)
+    monkeypatch.setattr(mcp_server, "load_index", lambda path, dim: [])
+    monkeypatch.setattr(mcp_server, "load_taxonomy", lambda path: TAXONOMY)
+    monkeypatch.setattr(mcp_server, "completer_for", completer)
+    monkeypatch.setattr(
+        mcp_server, "load_config",
+        lambda path: SimpleNamespace(
+            embedder=None, embedder_dim=2,
+            reranker=SimpleNamespace(base_url="http://local/v1", model="ranker",
+                                     api_key="k"),
+            classifier=SimpleNamespace(base_url="http://local/v1",
+                                       model="absent-model", api_key="k"),
+        ),
+    )
+    with pytest.raises(ConfigError, match="classifier_model"):
+        mcp_server.startup()
+    assert "ranker" in probed, "the ranking model is probed first, as before"
+    assert "absent-model" in probed, "and the classifier model is probed too"
+
+
 def test_a_ranking_failure_and_an_uncovered_need_are_both_reported(
     monkeypatch, config, corpus
 ):

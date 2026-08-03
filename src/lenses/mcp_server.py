@@ -43,6 +43,12 @@ HOME = Path(os.environ.get("LENSES_HOME", "")).expanduser() or Path.cwd()
 CANDIDATE_POOL = 20
 CANDIDATE_PER_SKILL = 4
 
+#: How long the startup probe waits for the classifier. Generous on purpose,
+#: and nothing like the five seconds a search allows: a server that loads
+#: weights on first use takes tens of seconds for that one call, and paying it
+#: once at launch is what lets every search afterwards keep the short timeout.
+CLASSIFIER_WARMUP = 180.0
+
 server = MCPServer(
     "using-lenses",
     instructions=(
@@ -89,6 +95,26 @@ def startup() -> tuple[Config, Corpus]:
                     f"reranker_base_url is configured but the ranking endpoint "
                     f"did not answer: {exc}. Remove the three reranker_* "
                     f"settings to search without a second pass."
+                ) from exc
+        # The classifier is probed separately because it can name a different
+        # model on the same reachable endpoint, and `_coverage` is built to
+        # swallow its failures — which is right at query time and would
+        # otherwise mean a typo here produced `subject: null` on every search
+        # forever, indistinguishable from a corpus with no opinion. Observed
+        # exactly that. The probe also leaves the model resident, so the first
+        # real search is not the one paying to load it.
+        if config.classifier is not None and (
+            config.reranker is None or config.classifier.model != config.reranker.model
+        ):
+            try:
+                completer_for(config.classifier, timeout=CLASSIFIER_WARMUP)(
+                    "reply with the word ok", "ok?"
+                )
+            except LlmRerankError as exc:
+                raise ConfigError(
+                    f"classifier_model is set to {config.classifier.model!r} but "
+                    f"that model did not answer: {exc}. Remove classifier_model "
+                    f"to classify with the ranking model instead."
                 ) from exc
         # Assigned only once every check has passed, so a failed probe leaves
         # startup retryable rather than caching a half-built state.
