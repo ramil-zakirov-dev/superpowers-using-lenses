@@ -373,10 +373,22 @@ the others, cutting them by about a third.
 **That is a bias, not a blind spot** — they still make up a sixth of what
 comes back, and the ranker with the bias scores 65/68 against the neutral
 pass's 60/68, so the discount is not uniformly wrong. What is unarguable is
-that it cost the right answer at least once, in the case above. Normalising
-the imported register at ingest is the next thing to measure, and until it is
-measured this is one observed failure and one skewed proportion, not a
-diagnosis.
+that it cost the right answer at least once, in the case above.
+
+**A bigger ranking model does not move it.** Re-measured on
+`gemma-4-e4b-it-qat` against the `e2b` figures above: 16.7% returned against
+17.2%, selecting 21.0% of the title-style candidates it sees against 32.8% of
+the others — the same numbers inside the noise of 34 queries. Two model sizes
+behaving identically is what makes this a property of the field rather than of
+the reader, and it is why normalising the imported register at ingest is the
+fix rather than a better ranker.
+
+**The same upgrade left retrieval untouched and moved which cases fail.**
+`e4b` scores 65/68, exactly as `e2b` did, but not on the same cases: it
+recovers *tests that over-mock* — the flagship failure described above — and
+loses *comments that describe the code instead of the reasoning*. Read 65/68
+as a number with a failure set that moves under it, not as a stable ranking of
+two models.
 
 The remaining recall failure is separate. *Proving the whole path works end to
 end* misses the dense top 6 outright — its target sits deep in the pool — so
