@@ -1,0 +1,187 @@
+# The subject areas this catalogue covers, and — as load-bearing as the areas
+# themselves — what each one does not cover.
+#
+# Derived from the corpus rather than borrowed: the local model named the
+# subject area of each of the 41 skills, and these labels are those answers
+# grouped. That direction matters. A taxonomy that covers the catalogue by
+# construction is what lets "no label fits" mean "the catalogue does not cover
+# this" instead of "the taxonomy was written by someone with other interests".
+#
+# `excludes` is not commentary. Measured on 2026-08-03 over five needs the
+# corpus genuinely cannot answer, bare labels sent 4 of 5 to a plausible-looking
+# category; the same labels carrying an explicit scope and exclusions sent 5 of
+# 5 to NONE. The exclusion lines are the mechanism.
+#
+# `boundary` below is stated once and applies to every label.
+
+boundary: >-
+  This catalogue is about designing and writing application software, and the
+  product and team decisions around it. It is written by practitioners about
+  practice, not about any one company's systems. It holds nothing about
+  operating a specific piece of infrastructure, tuning a language runtime, or
+  any industry other than software.
+
+labels:
+
+- id: application-architecture
+  scope: >-
+    Where responsibilities live inside one codebase: layers, boundaries,
+    modules, domain models, how general an interface should be.
+  excludes: >-
+    How services are arranged across a network, and the shape of a contract
+    offered to another program — those are distributed-systems-design and
+    api-and-interface-design.
+  skills: [wondelai/clean-architecture, wondelai/domain-driven-design,
+           wondelai/software-design-philosophy, ecc/hexagonal-architecture]
+
+- id: distributed-systems-design
+  scope: >-
+    How data and work are spread across machines: replication, consistency,
+    partitioning, storage engines, the shape of a system too big for one box.
+  excludes: >-
+    Operating any particular cluster or scheduler, and query-level work inside
+    one database.
+  skills: [wondelai/ddia-systems, wondelai/system-design]
+
+- id: resilience-and-release
+  scope: >-
+    Keeping a running system answering when a dependency is slow or down, and
+    getting changes into production safely: timeouts, circuit breakers,
+    cascading failure, deployment, capacity planning, what to observe.
+  excludes: >-
+    Configuring a specific orchestrator, cloud service or language runtime.
+    This is about how an application is designed and released to survive
+    production, not about the machinery production runs on.
+  skills: [wondelai/release-it]
+
+- id: api-and-interface-design
+  scope: >-
+    The contract one program offers another: resource shape, versioning,
+    pagination, error semantics, and the tools an agent or client is given.
+  excludes: >-
+    User interfaces meant for a person.
+  skills: [ecc/api-design, wispbit/graphql-expert-best-practices,
+           ecc/mcp-server-patterns]
+
+- id: data-and-storage
+  scope: >-
+    Working with a database the team owns: schema design, indexing, query
+    performance, data types, migrations run against live data.
+  excludes: >-
+    Spreading data across regions or machines, which is distributed-systems-design.
+  skills: [ecc/postgres-patterns, wispbit/postgresql-expert-best-practices-code-review,
+           wispbit/sqlalchemy-alembic-expert-best-practices-code-review]
+
+- id: code-quality-and-refactoring
+  scope: >-
+    Making existing code readable and changeable: naming, function size,
+    smells, named transformations, and getting untested legacy code under
+    control before changing it.
+  excludes: >-
+    Idiomatic use of one language's own constructs, which is language-idiom.
+  skills: [wondelai/clean-code, wondelai/refactoring-patterns,
+           wondelai/working-with-legacy-code, wondelai/pragmatic-programmer]
+
+- id: language-idiom
+  scope: >-
+    Using one programming language the way its community does: its type system,
+    its concurrency constructs, its collections, its ownership rules.
+  excludes: >-
+    Language-neutral questions about structure or readability.
+  skills: [ecc/python-patterns, ludo/coding-standards,
+           wispbit/python-expert-best-practices-code-review,
+           wispbit/rust-expert-best-practices-code-review]
+
+- id: error-handling
+  scope: >-
+    What a failure carries and where it is caught: error types, propagation
+    across layers, retry and fallback decisions in application code.
+  excludes: >-
+    System-level failure propagation between services, which is
+    resilience-and-release.
+  skills: [ecc/error-handling]
+
+- id: testing-practice
+  scope: >-
+    Writing and structuring automated tests: what to mock, fixtures,
+    parametrisation, what a test's name and body should say.
+  excludes: >-
+    Manual research with users.
+  skills: [ecc/python-testing, ludo/testing]
+
+- id: web-service-implementation
+  scope: >-
+    Building a backend web service in a framework: request-scoped dependencies,
+    configuration, lifespan, transactional handlers, authentication wiring.
+  excludes: >-
+    Where the business rules inside it should live, which is
+    application-architecture.
+  skills: [ecc/fastapi-patterns]
+
+- id: frontend-implementation
+  scope: >-
+    Building a user interface in a browser framework and the build that ships
+    it: component patterns, re-render behaviour, bundling, dev server.
+  excludes: >-
+    Whether the resulting interface is understandable, which is
+    usability-and-interaction-design.
+  skills: [ecc/react-patterns, ecc/react-performance, ecc/vite-patterns]
+
+- id: accessibility
+  scope: >-
+    Whether an interface can be operated without a mouse, without sight, or
+    without hearing — keyboard reachability, assistive-technology semantics,
+    contrast, target size.
+  skills: [ecc/accessibility]
+
+- id: usability-and-interaction-design
+  scope: >-
+    Whether a person can understand and operate an interface: affordances,
+    mental models, error prevention, heuristic evaluation of a screen.
+  excludes: >-
+    Deciding what to build at all, which is product-discovery.
+  skills: [wondelai/design-everyday-things, wondelai/ux-heuristics]
+
+- id: product-discovery
+  scope: >-
+    Learning what users of a software product actually need, and testing that
+    before building: interviews, opportunity framing, assumption testing,
+    validated learning.
+  excludes: >-
+    Choosing between things already understood, which is product-strategy.
+  skills: [wondelai/jobs-to-be-done, wondelai/continuous-discovery,
+           wondelai/inspired-product, wondelai/lean-startup]
+
+- id: product-strategy
+  scope: >-
+    Deciding what a software product or team works on and why: diagnosis,
+    guiding policy, scoping work to the time it is worth, cutting rather than
+    slipping.
+  excludes: >-
+    Strategy in any industry other than software.
+  skills: [wondelai/good-strategy-bad-strategy, wondelai/37signals-way]
+
+- id: team-and-ownership
+  scope: >-
+    Who owns which part of a software system, how many teams a change needs,
+    and where to draw ownership boundaries.
+  skills: [wondelai/team-topologies]
+
+- id: developer-tooling
+  scope: >-
+    The tools around a codebase rather than in it: linters, type checkers,
+    formatters, and what runs in CI.
+  skills: [ludo/tooling]
+
+- id: decision-recording
+  scope: >-
+    Capturing why a technical decision was made so it survives the people who
+    made it.
+  skills: [ecc/architecture-decision-records]
+
+- id: structured-text-extraction
+  scope: >-
+    Pulling fields out of text that is only mostly regular — where a
+    deterministic parser covers the common case and something else handles
+    the rest.
+  skills: [ecc/regex-vs-llm-structured-text]
