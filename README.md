@@ -140,20 +140,34 @@ ways. It counted only the ranking call; it was inherited from an earlier
 session and never re-taken; and the thing it appeared to measure is not the
 model at all.
 
-**This server costs ~2.1 s of fixed overhead per request.** A three-token
-prompt to `gemma-4-e2b-it-qat` takes 2.13 s, the same prompt to `e4b` takes
-2.15 s, and embedding the single word *hello* on `bge-base-en-v1.5` — a 110M
-encoder, milliseconds of actual compute — takes 2.05 s. Prompt size and model
-size are both invisible next to it. On real prompts the two gemmas rank in
-2.25 s and 2.32 s.
+**It was `localhost`.** Every request to the local endpoint cost a flat ~2.1 s
+that had nothing to do with inference: a three-token prompt to a 2B, the same
+prompt to a 4B, and embedding the single word *hello* on a 110M encoder all
+landed within 0.1 s of each other. On Windows `localhost` resolves to `::1`
+first, and if the server listens on IPv4 only, each request pays a refused
+connection and a retry before any work starts.
 
-Two things follow. A whole `find_lenses` is **~4.4 s**, which is two
-round-trips: embed, then rank, with the coverage classification overlapped so
-it costs ~0.02 s rather than its own 2.2 s. And **choosing a smaller ranking
-model to save latency does not work here** — a plan to run a 2B for ranking
-and a 4B for classification was built and measured and gained nothing, which
-is why `classifier_model` exists and is left unset. Whatever produces the
-2.1 s, it is not something this repository can rank its way out of.
+| endpoint written as | one call |
+|---|---|
+| `http://localhost:1234/v1` | 2.15 s |
+| `http://127.0.0.1:1234/v1` | **0.11 s** |
+
+A whole `find_lenses` went from **4.4 s to 0.47 s** on that one change, and
+`.env.example` now ships the IPv4 literal with the reason beside it.
+
+Two things are worth keeping from how long it hid. It is perfectly disguised
+as a slow model — it scales with nothing, so every comparison between models
+stayed valid while every absolute number was ten times too large — and it
+survived a model upgrade and a plan to split ranking and classification across
+two models to save latency. That plan was built, measured, and gained nothing;
+`classifier_model` is what remains of it, and it ships unset.
+
+What is left is real: ~0.11 s per round-trip, two of them per search, with the
+coverage classification overlapped so it adds ~0.02 s rather than its own call.
+Reusing one HTTP client instead of opening a connection per request measured
+**no** further gain against a local IPv4 endpoint, so it is not done; against a
+hosted endpoint paying a TLS handshake each time it would be a different
+answer.
 
 Measured 2026-08-03 on 34 paired needs. The ceiling is 67/68 — what the pool of
 20 contains before anything reorders it — so this is being graded on how much
