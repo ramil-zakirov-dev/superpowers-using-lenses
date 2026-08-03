@@ -472,6 +472,21 @@ comes back, and the ranker with the bias scores 65/68 against the neutral
 pass's 60/68, so the discount is not uniformly wrong. What is unarguable is
 that it cost the right answer at least once, in the case above.
 
+**And rewriting them into the other register bought nothing. Measured, then
+reverted.** All 108 were rewritten with the local model into *"Use when …"*
+sentences, the index rebuilt, and the whole eval re-run. The deterministic
+dense pass scored **60/68 before and 60/68 after** — 33/34 to 34/34 on
+need-only phrasing, 27/34 to 26/34 on the caller's, one case each way. The
+full pipeline came out at 65/68, exactly as before.
+
+So the skew is real as a proportion and not as a cost, at least at this
+sample. The change was reverted rather than kept for tidiness: it replaces 108
+upstream authors' sentences with a 4B model's, adds a step to a pipeline whose
+import path is otherwise free and byte-stable, and widens the one invariant
+this repository guards hardest — *the model marks up, it never writes* — for
+no measured gain. The script that did it is deleted; this paragraph is what it
+produced.
+
 **A bigger ranking model does not move it.** Re-measured on
 `gemma-4-e4b-it-qat` against the `e2b` figures above: 16.7% returned against
 17.2%, selecting 21.0% of the title-style candidates it sees against 32.8% of

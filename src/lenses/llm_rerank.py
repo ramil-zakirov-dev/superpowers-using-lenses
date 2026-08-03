@@ -60,9 +60,14 @@ candidates it sees against 32.6% of the others — a third fewer.
 Call it a bias and not a blind spot: they are still a sixth of what comes
 back, and this pass with the bias scores 65/68 where the neutral one scores
 60/68, so the discount is not uniformly wrong. It cost the right answer at
-least once, above. Normalising the imported register at ingest is the next
-thing to measure, and until that is measured this is one observed failure and
-one skewed proportion rather than a diagnosis.
+least once, above.
+
+Normalising the imported register was the obvious next move and it was made,
+measured and reverted: all 108 rewritten into "Use when …", the index rebuilt,
+and the deterministic dense pass scored 60/68 either way — one case gained on
+need-only phrasing, one lost on the caller's. The skew is a real proportion
+and not a real cost at this sample. See the README for why it was not kept
+anyway.
 """
 
 from __future__ import annotations
