@@ -20,19 +20,33 @@ and asked which six are best, 32. A small model has no stable absolute scale
 comparison inside a visible set needs no scale at all.
 
 **What the numbers above do not say, and a wider eval does.** They come from
-seventeen pairs. At thirty-four (2026-08-03) this pass scores 31/34 on
-need-only phrasing against the dense pass's 33/34 — it is now subtracting
-from the ranking it was added to improve, and it does so reproducibly, since
-`temperature` is 0 below. The failure is positional, not a matter of taste:
-asked about tests that over-mock, it skips the entry reading "Over-mocked
-tests pass while production breaks" — dense rank 1, +0.14 clear of the next
-candidate — and replies `4,5,17,18,19,20`, which is two picks and then the
-end of the list in order. Three of thirty-four replies end in such a run.
+seventeen pairs. At thirty-four (2026-08-03) this pass scored 31/34 on
+need-only phrasing against the dense pass's 33/34 — it was subtracting from
+the ranking it was added to improve, reproducibly, since `temperature` is 0
+below. Asked about tests that over-mock, it skipped the entry reading
+"Over-mocked tests pass while production breaks" — dense rank 1, +0.14 clear
+of the next candidate — and replied `4,5,17,18,19,20`: two picks and then the
+end of the list in order.
 
-`build_prompt` never tells the model that the entries arrive already sorted
-by a relevance estimate, so nothing asks it to reorder rather than reselect.
-That is the first thing to try, and `scripts/eval_retrieval.py` is the only
-thing that can say whether it worked.
+`build_prompt` now says the entries arrive ordered best first and asks the
+model to move one only where it disagrees. That is worth **31→32 and 32→33**,
+total **63/68 → 65/68**, which is why it is in the prompt.
+
+**It did not fix the case that motivated it, and that is the finding.** On
+the same query the reply went from `4,5,17,18,19,20` to `4,5,17,16,18,20` —
+the entry at rank 1 is still discarded. So the cause was never that the model
+did not know the list was ordered.
+
+What the six chosen entries have in common is their phrasing. Every one of
+them opens "Use when …"; the one it will not pick opens with a title. That
+split is not incidental — **108 of 405 parts** carry an `applies_to` that is
+not in the "Use when" register, and they are exactly the parts that arrived
+through `importer` rather than `decompose`, where the field is the upstream
+author's frontmatter instead of the model's sentence. Every one of the 108 is
+in one of eight skills. A ranker that reads `applies_to` and prefers one
+register therefore has a structural blind spot over a quarter of the corpus,
+and no query-side work reaches it. Normalising the imported register at
+ingest is the next thing to measure; nothing here does it.
 """
 
 from __future__ import annotations
@@ -68,9 +82,11 @@ def build_prompt(intent: str, hits: list[Hit], top_n: int) -> tuple[str, str]:
         "You judge whether a catalogue entry is worth reading for a stated "
         "engineering need. Judge the underlying need, not the vocabulary: a "
         "need naming a specific product, framework or feature is still the "
-        f"general need beneath it. You will see {len(hits)} numbered entries. "
-        f"Reply with the {top_n} most relevant numbers, best first, comma "
-        "separated. Use each number at most once. Numbers only."
+        f"general need beneath it. You will see {len(hits)} numbered entries, "
+        "already ordered best first by an estimate of relevance. Treat that "
+        "order as the starting point: move an entry only where you disagree "
+        f"with it. Reply with the {top_n} most relevant numbers, best first, "
+        "comma separated. Use each number at most once. Numbers only."
     )
     catalogue = "\n".join(
         f"{index + 1}. {hit.part.applies_to}" for index, hit in enumerate(hits)

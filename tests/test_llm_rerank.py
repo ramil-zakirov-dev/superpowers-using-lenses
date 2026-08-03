@@ -51,6 +51,17 @@ def test_the_prompt_states_the_pool_size_and_the_wanted_count():
     assert "the 6 most relevant" in system
 
 
+def test_the_prompt_says_the_entries_are_already_ordered():
+    """Measured 2026-08-03: shown an unlabelled list, the model selects
+    positionally — on one query it skipped the entry reading "Over-mocked
+    tests pass while production breaks", dense rank 1 and +0.14 clear of the
+    runner-up, and answered 4,5,17,18,19,20. Nothing in the prompt told it the
+    list already carried an opinion."""
+    system, _ = build_prompt("a need", pool(20), top_n=6)
+    assert "already ordered" in system.lower()
+    assert "disagree" in system.lower()
+
+
 def test_the_need_reaches_the_model_verbatim():
     _, user = build_prompt("keeping a Stripe call from hanging", pool(2), top_n=1)
     assert "keeping a Stripe call from hanging" in user
