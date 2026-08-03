@@ -47,6 +47,7 @@ def config():
     return SimpleNamespace(
         embedder=None, embedder_dim=2,
         reranker=SimpleNamespace(base_url="http://local/v1", model="m", api_key="k"),
+        classifier=SimpleNamespace(base_url="http://local/v1", model="c", api_key="k"),
     )
 
 
@@ -116,6 +117,7 @@ def test_without_a_ranking_endpoint_there_is_no_coverage_signal(
     configure it, and is documented rather than worked around."""
     monkeypatch.setattr(mcp_server, "second_pass", lambda config: None)
     config.reranker = None
+    config.classifier = None
     answer = mcp_server._find_one("milling aluminium", config, corpus, 2, None, None)
     assert answer["subject"] is None
     assert "warning" not in answer

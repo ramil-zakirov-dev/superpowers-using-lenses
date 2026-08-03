@@ -31,7 +31,8 @@ def corpus() -> Corpus:
 
 @pytest.fixture
 def config():
-    return SimpleNamespace(embedder=None, embedder_dim=2, reranker=None)
+    return SimpleNamespace(embedder=None, embedder_dim=2, reranker=None,
+                           classifier=None)
 
 
 @pytest.fixture(autouse=True)
@@ -156,7 +157,7 @@ def test_startup_probes_a_configured_ranking_endpoint(monkeypatch):
     monkeypatch.setattr(
         mcp_server, "load_config",
         lambda path: SimpleNamespace(
-            embedder=None, embedder_dim=2,
+            embedder=None, embedder_dim=2, classifier=None,
             reranker=SimpleNamespace(base_url="http://nowhere/v1", model="m",
                                      api_key="k"),
         ),
@@ -180,7 +181,8 @@ def test_startup_probes_nothing_when_no_endpoint_is_configured(monkeypatch):
     monkeypatch.setattr(mcp_server, "_corpus", None)
     monkeypatch.setattr(
         mcp_server, "load_config",
-        lambda path: SimpleNamespace(embedder=None, embedder_dim=2, reranker=None),
+        lambda path: SimpleNamespace(embedder=None, embedder_dim=2, reranker=None,
+                           classifier=None),
     )
     monkeypatch.setattr(mcp_server, "load_index", lambda path, dim: [])
     monkeypatch.setattr(

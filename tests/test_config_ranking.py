@@ -65,6 +65,43 @@ def test_the_ranking_endpoint_is_not_the_decomposition_one(env, monkeypatch):
     assert config.reranker.base_url != config.llm.base_url
 
 
+def test_the_classifier_falls_back_to_the_ranking_model(env, monkeypatch):
+    """One model can do both jobs, and until 2026-08-03 one did. Naming a
+    second is an optimisation, not a requirement."""
+    monkeypatch.setenv("reranker_base_url", "http://localhost:1234/v1")
+    monkeypatch.setenv("reranker_model", "gemma-4-e2b-it-qat")
+    monkeypatch.setenv("reranker_api_key", "k")
+    config = load_config(env)
+    assert config.classifier.model == "gemma-4-e2b-it-qat"
+    assert config.classifier.base_url == config.reranker.base_url
+
+
+def test_a_named_classifier_model_shares_the_endpoint(env, monkeypatch):
+    """Measured: the two jobs want different models. Ranking scores the same
+    on e2b and e4b while e2b is ten times faster; classifying is 8/8 on e4b
+    against 2/5 on e2b. Same server, same key, two model names."""
+    monkeypatch.setenv("reranker_base_url", "http://localhost:1234/v1")
+    monkeypatch.setenv("reranker_model", "gemma-4-e2b-it-qat")
+    monkeypatch.setenv("reranker_api_key", "k")
+    monkeypatch.setenv("classifier_model", "gemma-4-e4b-it-qat")
+    config = load_config(env)
+    assert config.reranker.model == "gemma-4-e2b-it-qat"
+    assert config.classifier.model == "gemma-4-e4b-it-qat"
+    assert config.classifier.api_key == config.reranker.api_key
+
+
+def test_a_classifier_model_without_a_ranking_endpoint_is_refused(env, monkeypatch):
+    """It names a model on an endpoint that was never configured. Loading it
+    as if it meant something would search with a classifier and no ranker."""
+    monkeypatch.setenv("classifier_model", "gemma-4-e4b-it-qat")
+    with pytest.raises(ConfigError, match="classifier_model"):
+        load_config(env)
+
+
+def test_no_ranking_endpoint_means_no_classifier(env):
+    assert load_config(env).classifier is None
+
+
 def test_reranker_kind_is_gone(env, monkeypatch):
     """A leftover setting in someone's .env must not silently do nothing that
     looks like something. It is simply not read."""

@@ -105,9 +105,9 @@ def classifier(config: Config) -> Callable[[str], str | None] | None:
     stops reporting its own edges, which is the strongest argument for
     configuring it.
     """
-    if config.reranker is None or _taxonomy is None:
+    if config.classifier is None or _taxonomy is None:
         return None
-    complete = completer_for(config.reranker)
+    complete = completer_for(config.classifier)
     return lambda intent: classify(intent, _taxonomy, complete)
 
 
