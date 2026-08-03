@@ -291,6 +291,37 @@ with a digit, the same gemma scored 23/34; shown all twenty at once and asked
 which six are best, 32/34. Small models have no stable absolute scale — *"is
 this a 7 or an 8?"* — but comparison inside a visible set needs no scale.
 
+**Nothing measures what happens when the corpus has no answer, and the score
+does not tell you.** All 34 eval cases have a right answer in the catalogue,
+so the suite cannot see the failure that matters most to a calling agent: six
+plausible results for a need this catalogue knows nothing about, cited into a
+`lenses:` block because the response looks identical either way.
+
+Probed by hand — five needs deliberately outside a catalogue of design,
+product and engineering lenses, against two known hits:
+
+| need | in the corpus | top `dense_score` |
+|---|---|---|
+| a milling toolpath that avoids chatter | no | 0.525 |
+| a dosing schedule for a phase II trial | no | 0.531 |
+| a break clause in an office lease | no | 0.476 |
+| JVM garbage-collection pause tuning | no | **0.563** |
+| Kubernetes pod autoscaling | no | **0.590** |
+| an external call that can hang | **yes** | **0.561** |
+| where business rules should live | yes | 0.610 |
+
+**The ranges overlap, so no threshold separates them.** JVM tuning, absent
+from the corpus entirely, outscores a genuine hit on `release-it`. The spread
+inside the six does not rescue it either — 0.042–0.074 for the absent needs
+against 0.040–0.112 for the present ones, the real hit being the flattest of
+all. The milling question comes back led by `ux-heuristics#heuristic-conflicts`.
+
+Five probes and two controls is not a distribution, and the honest reading is
+narrow: it is enough to show that one threshold cannot work, not enough to
+characterise how often this bites. What follows for a caller is unchanged
+either way — `list_skills()` first, and treat a `lenses:` citation as a claim
+about a catalogue whose edges nothing currently reports.
+
 **Those numbers came from 17 pairs, and 34 told a different story.** The eval
 now runs 34, chosen to reach the 23 skills of 41 that no earlier expectation
 could reach and to ask, for a third of them, whether a stack-tagged part
