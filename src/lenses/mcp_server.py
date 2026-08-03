@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import os
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any, Callable
 
@@ -31,6 +32,7 @@ from .embed import EmbedError, embed_query
 from .llm_rerank import LlmRerankError, completer_for, listwise_rank
 from .resolve import resolve_all
 from .search import Corpus, Hit, SearchError, load_index, rank
+from .taxonomy import Taxonomy, classify, load_taxonomy
 
 HOME = Path(os.environ.get("LENSES_HOME", "")).expanduser() or Path.cwd()
 
@@ -54,6 +56,7 @@ server = MCPServer(
 
 _config: Config | None = None
 _corpus: Corpus | None = None
+_taxonomy: Taxonomy | None = None
 
 
 def startup() -> tuple[Config, Corpus]:
@@ -65,9 +68,13 @@ def startup() -> tuple[Config, Corpus]:
     mean two unrelated things. Probing at launch leaves it meaning exactly one:
     an endpoint that was working has stopped.
     """
-    global _config, _corpus
+    global _config, _corpus, _taxonomy
     if _config is None or _corpus is None:
         config = load_config(HOME / ".env")
+        # Read at launch, and a hard failure: it is committed beside the
+        # catalogue it describes, and a search that cannot say which subject
+        # areas exist cannot say a need falls outside them either.
+        taxonomy = load_taxonomy(HOME / "catalog" / "taxonomy.yaml")
         # The width is checked against the configured embedder here, at launch,
         # rather than being discovered as bad answers later: a query and an
         # index built by different models score against each other silently.
@@ -85,8 +92,23 @@ def startup() -> tuple[Config, Corpus]:
                 ) from exc
         # Assigned only once every check has passed, so a failed probe leaves
         # startup retryable rather than caching a half-built state.
-        _config, _corpus = config, corpus
+        _config, _corpus, _taxonomy = config, corpus, taxonomy
     return _config, _corpus
+
+
+def classifier(config: Config) -> Callable[[str], str | None] | None:
+    """Decides which subject area a need belongs to, or `None` for none of them.
+
+    Runs on the ranking endpoint, so a caller who configured that has this too
+    and a caller who did not gets neither. That is a real consequence and is
+    documented rather than worked around: without the endpoint the catalogue
+    stops reporting its own edges, which is the strongest argument for
+    configuring it.
+    """
+    if config.reranker is None or _taxonomy is None:
+        return None
+    complete = completer_for(config.reranker)
+    return lambda intent: classify(intent, _taxonomy, complete)
 
 
 def second_pass(config: Config) -> Callable[[str, list[Hit], int], list[Hit]] | None:
@@ -118,13 +140,43 @@ def _dense_answer(
     return rank(vector, corpus.parts, limit=limit, kind=kind, stack=stack)
 
 
+def _coverage(intent: str, config: Config) -> tuple[str | None, str | None]:
+    """Which subject area this need belongs to, and a warning if none does.
+
+    Never raises. The signal is an addition to a search that worked before it
+    existed, so an endpoint that falls over here costs the caller the signal
+    and nothing else — and an unreadable reply is not read as abstention,
+    because a model that answered nothing has made no claim about the corpus.
+    """
+    decide = classifier(config)
+    if decide is None:
+        return None, None
+    try:
+        subject = decide(intent)
+    except LlmRerankError:
+        return None, None
+    if subject is None:
+        return None, (
+            "this catalogue does not cover the need as stated — its subject "
+            "areas are in catalog/taxonomy.yaml, and the results below are "
+            "the nearest text it holds, not an answer to the question"
+        )
+    return (subject or None), None
+
+
 def _response(
     intent: str, ranked_by: str, hits: list[Hit],
     dense_score: dict[str, float], warning: str | None = None,
+    subject: str | None = None,
 ) -> dict[str, Any]:
     answer: dict[str, Any] = {
         "intent": intent,
         "ranked_by": ranked_by,
+        #: Which shelf was searched, `null` when nothing decided. Reported,
+        #: never filtered on: the model behind it showed a register bias
+        #: elsewhere in this project, and a wrong label you can see costs less
+        #: than a wrong label that narrowed the search.
+        "subject": subject,
         "results": [
             {
                 "ref": hit.part.ref,
@@ -165,30 +217,48 @@ def _find_one(
     difference between 65/68 and 60/68. `ranked_by` says who answered and
     `warning` says why it was not the other one.
     """
-    vector = embed_query(config.embedder, intent, config.embedder_dim)
-    ranker = second_pass(config)
-    if ranker is None:
-        hits = _dense_answer(vector, corpus, limit, kind, stack)
-        return _response(intent, "dense", hits,
-                         {hit.part.ref: hit.score for hit in hits})
+    # The coverage question depends on the intent alone, so it does not have to
+    # wait behind the embedding and the ranking call that do. Measured against
+    # the local endpoint: two calls take 5.33s in sequence and 2.50s together,
+    # and embedding overlaps just as well, which is what keeps this signal from
+    # costing the caller its own 2.2s on every search.
+    with ThreadPoolExecutor(max_workers=1) as pool:
+        coverage = pool.submit(_coverage, intent, config)
+        vector = embed_query(config.embedder, intent, config.embedder_dim)
+        ranker = second_pass(config)
 
-    candidates = rank(
-        vector, corpus.parts,
-        limit=max(CANDIDATE_POOL, limit), per_skill=CANDIDATE_PER_SKILL,
-        kind=kind, stack=stack,
-    )
-    dense_score = {hit.part.ref: hit.score for hit in candidates}
-    try:
-        hits = ranker(intent, candidates, limit)
-    except LlmRerankError as exc:
-        fallback = _dense_answer(vector, corpus, limit, kind, stack)
-        return _response(
-            intent, "dense", fallback,
-            {hit.part.ref: hit.score for hit in fallback},
-            warning=f"the ranking pass was unavailable, so these are the dense "
-                    f"results: {exc}",
+        if ranker is None:
+            hits = _dense_answer(vector, corpus, limit, kind, stack)
+            subject, uncovered = coverage.result()
+            return _response(intent, "dense", hits,
+                             {hit.part.ref: hit.score for hit in hits},
+                             warning=uncovered, subject=subject)
+
+        candidates = rank(
+            vector, corpus.parts,
+            limit=max(CANDIDATE_POOL, limit), per_skill=CANDIDATE_PER_SKILL,
+            kind=kind, stack=stack,
         )
-    return _response(intent, "llm", hits, dense_score)
+        dense_score = {hit.part.ref: hit.score for hit in candidates}
+        try:
+            hits = ranker(intent, candidates, limit)
+        except LlmRerankError as exc:
+            fallback = _dense_answer(vector, corpus, limit, kind, stack)
+            # Two independent things can go wrong in one call — the ordering,
+            # and whether the corpus holds the subject at all — and a caller is
+            # owed both rather than whichever happened to be checked last.
+            degraded = (f"the ranking pass was unavailable, so these are the "
+                        f"dense results: {exc}")
+            subject, uncovered = coverage.result()
+            return _response(
+                intent, "dense", fallback,
+                {hit.part.ref: hit.score for hit in fallback},
+                warning=" ".join(n for n in (uncovered, degraded) if n),
+                subject=subject,
+            )
+        subject, uncovered = coverage.result()
+        return _response(intent, "llm", hits, dense_score,
+                         warning=uncovered, subject=subject)
 
 
 @server.tool()
