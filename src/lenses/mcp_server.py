@@ -58,16 +58,35 @@ _corpus: Corpus | None = None
 
 
 def startup() -> tuple[Config, Corpus]:
-    """Load configuration and index once, failing loudly if either is absent."""
+    """Load configuration and index once, failing loudly if either is absent.
+
+    A configured ranking endpoint is probed here, once per process. The reason
+    is that `_find_one` degrades to the dense ordering when that endpoint
+    fails, and a degradation that also covered typos would make its `warning`
+    mean two unrelated things. Probing at launch leaves it meaning exactly one:
+    an endpoint that was working has stopped.
+    """
     global _config, _corpus
     if _config is None or _corpus is None:
-        _config = load_config(HOME / ".env")
+        config = load_config(HOME / ".env")
         # The width is checked against the configured embedder here, at launch,
         # rather than being discovered as bad answers later: a query and an
         # index built by different models score against each other silently.
-        _corpus = Corpus(
-            load_index(HOME / "index" / "embeddings.jsonl", _config.embedder_dim)
+        corpus = Corpus(
+            load_index(HOME / "index" / "embeddings.jsonl", config.embedder_dim)
         )
+        if config.reranker is not None:
+            try:
+                completer_for(config.reranker)("ping", "1. a\n\nTop 1:")
+            except LlmRerankError as exc:
+                raise ConfigError(
+                    f"reranker_base_url is configured but the ranking endpoint "
+                    f"did not answer: {exc}. Remove the three reranker_* "
+                    f"settings to search without a second pass."
+                ) from exc
+        # Assigned only once every check has passed, so a failed probe leaves
+        # startup retryable rather than caching a half-built state.
+        _config, _corpus = config, corpus
     return _config, _corpus
 
 

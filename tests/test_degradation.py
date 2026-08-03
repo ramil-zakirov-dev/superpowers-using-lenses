@@ -130,6 +130,51 @@ def test_one_failing_intent_does_not_erase_a_batch(monkeypatch, config, corpus):
     assert "warning" not in answer["results"][0]
 
 
+def test_startup_probes_a_configured_ranking_endpoint(monkeypatch):
+    """A typo in .env must be a server that does not start, not a server that
+    answers every query five points worse than it says it does."""
+    from lenses.config import ConfigError
+
+    monkeypatch.setattr(mcp_server, "_config", None)
+    monkeypatch.setattr(mcp_server, "_corpus", None)
+    monkeypatch.setattr(
+        mcp_server, "load_config",
+        lambda path: SimpleNamespace(
+            embedder=None, embedder_dim=2,
+            reranker=SimpleNamespace(base_url="http://nowhere/v1", model="m",
+                                     api_key="k"),
+        ),
+    )
+    monkeypatch.setattr(mcp_server, "load_index", lambda path, dim: [])
+
+    def refuse(system, user):
+        raise LlmRerankError("http://nowhere/v1: connection refused")
+
+    monkeypatch.setattr(mcp_server, "completer_for", lambda endpoint, **kw: refuse)
+    with pytest.raises(ConfigError, match="http://nowhere/v1"):
+        mcp_server.startup()
+
+    assert mcp_server._config is None, "a failed probe must leave startup retryable"
+
+
+def test_startup_probes_nothing_when_no_endpoint_is_configured(monkeypatch):
+    """No endpoint is a supported configuration, so there is nothing to probe
+    and startup must not invent a reason to fail."""
+    monkeypatch.setattr(mcp_server, "_config", None)
+    monkeypatch.setattr(mcp_server, "_corpus", None)
+    monkeypatch.setattr(
+        mcp_server, "load_config",
+        lambda path: SimpleNamespace(embedder=None, embedder_dim=2, reranker=None),
+    )
+    monkeypatch.setattr(mcp_server, "load_index", lambda path, dim: [])
+    monkeypatch.setattr(
+        mcp_server, "completer_for",
+        lambda endpoint, **kw: pytest.fail("nothing to probe"),
+    )
+    config, _ = mcp_server.startup()
+    assert config.reranker is None
+
+
 def test_the_ranking_timeout_is_short_enough_to_degrade_from():
     """Measured median for this call is 0.23 s. The old default was 120 s, so
     a hung endpoint cost two minutes before returning nothing - which is the
