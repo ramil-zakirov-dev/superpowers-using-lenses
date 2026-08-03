@@ -1,22 +1,23 @@
 """Second pass by an instruction-tuned model, shown the whole pool at once.
 
-A cross-encoder judges one candidate at a time, so it can only ever answer
-"how well does this passage match this string". That is the wrong question
-for this corpus. Queries arrive carrying a project's proper nouns — Stripe,
-the checkout service, our React dashboard — while `applies_to` is written in
-the register of moments. Vocabulary overlap then decides the ranking, and the
-right part loses to whatever happens to share nouns with the query.
+This is the only second pass. It is optional: with no endpoint configured the
+dense ordering is the answer, and on 34 paired needs that scores 60/68 against
+this pass's **65/68** — five cases, all of them on the axis that occurs in
+production.
 
-An LLM can read past that: the need beneath "keeping a Stripe call from
-hanging" is the need a resilience part states. Measured on seventeen paired
-needs, this pass scored 16/17 on project-flavoured phrasing where the
-cross-encoder scored 14/17, and matched it at 16/17 on need-only phrasing —
-it did not trade one register for the other.
+Why a model at all. Queries arrive carrying a project's proper nouns — Stripe,
+the checkout service, our React dashboard — while `applies_to` is written in
+the register of moments. Anything that compares two strings lets vocabulary
+overlap decide, and the right part loses to whatever shares nouns with the
+query. An LLM reads past that: the need beneath "keeping a Stripe call from
+hanging" is the need a resilience part states. A cross-encoder second pass was
+tried for exactly this and retired on 2026-08-03 at 57/68 — below having no
+second pass at all.
 
 The shape matters as much as the model. Asked to score candidates one by one
-with a digit, the same model scored 23 of those 34 queries; shown all twenty
-and asked which six are best, 32. A small model has no stable absolute scale
-— "is this a 7 or an 8?" is a question it answers inconsistently — but
+with a digit, the same model scored 23 of 34 queries; shown all twenty and
+asked which six are best, 32. A small model has no stable absolute scale —
+"is this a 7 or an 8?" is a question it answers inconsistently — but
 comparison inside a visible set needs no scale at all.
 
 **What the numbers above do not say, and a wider eval does.** They come from

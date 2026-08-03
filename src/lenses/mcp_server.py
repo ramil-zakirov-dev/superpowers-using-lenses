@@ -214,12 +214,16 @@ def find_lenses(
 
     How much that costs depends on how this server is configured, which is
     why the first form is worth the habit: it is the one that works either
-    way. Measured on seventeen paired needs, the `llm` second pass absorbs
-    project vocabulary almost completely (16 of 17, against 16 of 17 for
-    need-only phrasing); the `cross-encoder` pass does not (14 of 17), and
-    nothing downstream rescues the difference — narrowing by `stack` first
-    was tried and changed nothing. `ranked_by` in the response says which
-    one answered you.
+    way. Measured on 34 paired needs, the listwise second pass absorbs
+    project vocabulary almost completely — 33 of 34, against 32 of 34 for
+    need-only phrasing — where the dense ordering alone manages 27 of 34.
+    Nothing downstream rescues that difference; narrowing by `stack` first
+    was tried and changed nothing.
+
+    `ranked_by` says who answered: `"llm"` if that pass ran, `"dense"` if it
+    is not configured or was unavailable. In the second case a `warning` is
+    present saying so, and the results are still the dense ones rather than
+    nothing — worth reading before concluding the corpus is thin.
 
     Know why the need matters — you want that for the record you leave in
     `lenses:` — but keep the why out of the query.

@@ -123,39 +123,36 @@ each other silently and answer with confident nonsense. Changing the embedder
 means rebuilding the index — the catalogue is unaffected, being the model's
 work rather than the embedder's.
 
-A third model narrows the 20 dense candidates to the answer. `reranker_kind`
-picks how:
+A third model can narrow the 20 dense candidates to the answer. Whether it runs
+is not a setting — it is whether you configured an endpoint for it:
 
-| | none | `cross-encoder` (default) | `llm` |
-|---|---|---|---|
-| Sees | — | one candidate at a time | the whole numbered pool |
-| Needs an endpoint | — | no — a local model name | yes, its own three settings |
-| Need-only phrasing | **33/34** | 30/34 | 31/34 |
-| **Project phrasing** | 27/34 | 27/34 | **32/34** |
-| **Total** | 60/68 | **57/68** | **63/68** |
-| Cost | 0 | 0.09 s/query | 0.23 s/query |
+| | no second pass | the listwise pass |
+|---|---|---|
+| Sees | — | the whole numbered pool of 20 |
+| Configuration | leave the three `reranker_*` settings out | set all three |
+| Need-only phrasing | **33/34** | 32/34 |
+| **Project phrasing** | 27/34 | **33/34** |
+| **Total** | 60/68 | **65/68** |
+| Cost | 0 | 0.23 s/query |
 
 Measured 2026-08-03 on 34 paired needs. The ceiling is 67/68 — what the pool of
-20 contains before either pass touches it — so both of these are being graded
-against how much of an answer they throw away.
+20 contains before anything reorders it — so this is being graded on how much
+of an answer it throws away, and it now throws away two.
 
-**Read the first column before choosing.** `cross-encoder` is the default and
-it scores *below doing nothing*: 57 against 60. It is not paying for itself on
-this corpus and the default is wrong; it stands only until someone decides
-whether to move it to `llm` or to none. `llm` earns its 63 entirely on project
-phrasing (27 → 32) and gives back two cases on need-only (33 → 31) — that loss
-is a positional defect in the ranking prompt, described under *What is not
-settled*, not the price of the approach.
+There is no `reranker_kind` and no default to get wrong. The three settings are
+read together or not at all: setting one of them raises at load rather than
+searching without the pass you asked for, and a configured endpoint is probed
+once at startup, so a wrong URL is a server that does not start rather than one
+answering five points worse than it says. If the endpoint fails *later*, the
+dense ordering answers, `ranked_by` says `"dense"`, and a `warning` says why.
 
-`.env.example` has the full table and the commented-out `llm` block. Its
-endpoint is deliberately separate from `llm_base_url` — that model decomposes
-skills once each, this one runs on every search and wants to be local.
+Running without it is supported and costs five cases. The endpoint is
+deliberately separate from `llm_base_url` — that model decomposes skills once
+each, this one runs on every search and wants to be local.
 
-`cross-encoder` takes a model **name**, not a URL: it reads a (query, passage)
-pair in one forward pass and no OpenAI-compatible server exposes that. Pointing
-`embedder_model` at a reranker is a trap worth naming — the server answers 200
-with plausible-looking vectors, every dimension guard passes, and retrieval
-quietly gets worse.
+Pointing `embedder_model` at a reranker is a trap worth naming — the server
+answers 200 with plausible-looking vectors, every dimension guard passes, and
+retrieval quietly gets worse.
 
 `sources.yaml` says which upstreams to vendor from and which of their skills to
 take; `sources_root` in `.env` keeps the machine-specific part out of it.
@@ -208,15 +205,16 @@ the whole service with it"* returns the right part first. Parts are indexed by
 *when they apply*, so proper nouns — `Stripe`, `checkout`, the feature name —
 pull the query toward parts that merely share their vocabulary.
 
-How much that costs depends on `reranker_kind`: the `llm` pass reads past
-project vocabulary almost completely, the `cross-encoder` pass does not. The
-need-only habit is worth keeping because it is the form that works under
-either. `ranked_by` in each response says which one answered.
+How much that costs depends on whether the second pass is configured: it reads
+past project vocabulary almost completely (33/34), the dense ordering alone
+much less (27/34). The need-only habit is worth keeping because it is the form
+that works under either. `ranked_by` in each response says which one answered.
 
-Two operational facts. The index is read **once at startup** — rebuild the
-corpus and the running server will not notice, so restart the client. And
-`find_lenses` needs the embedding endpoint up; without it the tool returns a
-readable error rather than silence.
+Three operational facts. The index is read **once at startup** — rebuild the
+corpus and the running server will not notice, so restart the client. The
+embedding endpoint is not optional: without it `find_lenses` returns a readable
+error rather than silence. The ranking endpoint is: if it stops answering, you
+get the dense results, `ranked_by: "dense"` and a `warning`, never nothing.
 
 ## Citing a part
 
@@ -293,35 +291,42 @@ with a digit, the same gemma scored 23/34; shown all twenty at once and asked
 which six are best, 32/34. Small models have no stable absolute scale — *"is
 this a 7 or an 8?"* — but comparison inside a visible set needs no scale.
 
-**Those numbers came from 17 pairs, and 34 tell a different story.** The eval
+**Those numbers came from 17 pairs, and 34 told a different story.** The eval
 now runs 34, chosen to reach the 23 skills of 41 that no earlier expectation
 could reach and to ask, for a third of them, whether a stack-tagged part
-surfaces from prose that never names the stack. Measured 2026-08-03: dense
-33/34, **ranked 31/34**, concrete 32/34 — 63/68 across both axes.
+surfaces from prose that never names the stack. It paid immediately, and
+against the second pass rather than the corpus.
 
-The second pass is now behind the dense pass it exists to improve, and behind
-deterministically: `temperature` is 0, and six runs of the same query return
-one answer. Asked about *tests that over-mock internal logic*, it discards
+**The cross-encoder was retired on 2026-08-03 at a final 57/68**, against 60/68
+for having no second pass at all: it gave up three cases on need-only phrasing
+and gained none on project phrasing, the axis it was chosen for. At seventeen
+pairs the dense baseline had never been scored on both axes, so nothing in the
+eval could say this. It went, and `sentence-transformers` — and therefore torch
+— went with it, having been a required dependency for one import.
+
+**The listwise pass was two cases behind doing nothing, and the fix was one
+sentence — but not the sentence's stated reason.** At 31/34 need-only against
+the dense pass's 33/34 it was subtracting from the ranking it exists to
+improve, deterministically: `temperature` is 0 and six runs of one query return
+one answer. Telling it in the prompt that entries arrive ordered best first,
+and to move one only where it disagrees, took it to **32/34 need-only, 33/34
+project phrasing, 65/68 total**.
+
+It did not fix the case that motivated it. Asked about *tests that over-mock
+internal logic*, the reply went `4,5,17,18,19,20` → `4,5,17,16,18,20`, and
 `ludo/testing#mock-boundaries` — dense rank 1, +0.14 clear of the next
-candidate, `applies_to` reading *"Over-mocked tests pass while production
-breaks"* — and replies `4,5,17,18,19,20`: two picks, then the tail of the pool
-in order. Three of 34 replies end in such a run; three name fewer than six
-distinct entries.
+candidate — is still discarded. So the cause was never that the model did not
+know the list was ordered.
 
-The prompt never tells the model that its twenty entries arrive sorted by a
-relevance estimate, so nothing asks it to *reorder* rather than reselect. That
-is the first thing to try. What is settled is smaller than it looked a week
-ago: the listwise shape beat the pointwise one, and the rest was measured on a
-sample too small to show this.
-
-**The default second pass scores below no second pass.** Run over the same 34
-pairs, `cross-encoder` totals 57/68 against 60/68 for the dense top six alone —
-it is subtracting on need-only phrasing (33 → 30) and adding nothing on project
-phrasing (27 → 27), which is the axis it was there for. At seventeen pairs the
-dense baseline was never scored on both axes, so nothing in the eval could say
-this. The default stands until someone chooses between `llm` and none; it is
-not defensible as it is, and it is called out here rather than changed quietly
-because changing what every install does is not a documentation edit.
+**What the chosen entries share is register, and that is a corpus problem.**
+Every one of the six opens *"Use when …"*; the one it will not pick opens with
+a title. **108 of 405 parts** carry an `applies_to` outside that register, and
+they are exactly the parts that arrived through `importer` rather than
+`decompose` — the field is the upstream author's frontmatter there, not a
+model's sentence, and all 108 sit in eight skills. A ranker that reads
+`applies_to` and prefers one phrasing therefore has a structural blind spot
+over a quarter of the corpus, and no query-side work reaches it. Normalising
+the imported register at ingest is the next thing to measure.
 
 The remaining recall failure is separate. *Proving the whole path works end to
 end* misses the dense top 6 outright — its target sits deep in the pool — so

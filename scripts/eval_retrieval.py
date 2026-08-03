@@ -29,21 +29,20 @@ those, and roughly a third of them are stack-specific on purpose: the
 server does not make the caller pass `stack`, so whether a stack-tagged
 part surfaces from prose alone is a question worth failing at.
 
-Growing it paid immediately, and not in the direction expected. Measured
-2026-08-03 — dense 33/34, ranked 31/34, `concrete` 32/34, 63/68 across both
-axes — the second pass is now *behind* the dense pass it is supposed to
-improve, and it is behind deterministically (`temperature` is 0). On
-`tests over-mock internal logic and stop meaning anything` it discards
-`ludo/testing#mock-boundaries` — dense rank 1, margin +0.14 over the runner
-up, `applies_to` reading "Over-mocked tests pass while production breaks" —
-and answers `4,5,17,18,19,20`, taking the last four entries of the pool in
-order. Three of thirty-four answers end in such a run. That failure mode
-existed at n=17 and n=17 could not see it.
+Growing it paid immediately, and not in the direction expected. First
+measured 2026-08-03 at dense 33/34, ranked 31/34, `concrete` 32/34 — the
+second pass was *behind* the dense pass it is supposed to improve, and
+behind deterministically (`temperature` is 0). Two changes followed: the
+cross-encoder pass was retired at 57/68, below having no second pass at all,
+and the ranking prompt was told its entries arrive ordered. The suite now
+reads **dense 33/34, ranked 32/34, `concrete` 33/34 — 65/68**, against a
+pool-20 ceiling of 67/68. None of that was visible at n=17.
 
-The `intent` gate is therefore red as of this writing, and is being left
-red. The reasoning below about red-on-arrival gates is about a gate nobody
-can fix; this one is red because the ranker is wrong, which is what a gate
-is for.
+The `intent` gate is red, and is being left red. The reasoning below about
+red-on-arrival gates is about a gate nobody can fix; this one is red on two
+real cases — one part outside the dense top six entirely, and one the ranker
+discards for a reason recorded in `llm_rerank`'s module docstring, which is
+what a gate is for.
 
 `expect_any` is a loose, human-reviewable signal (a substring of a
 `skill_id` or `part_id` known to be in the corpus), not a pinned ref: the
