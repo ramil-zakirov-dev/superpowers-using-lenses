@@ -84,31 +84,29 @@ def second_pass(config: Config) -> Callable[[str, list[Hit], int], list[Hit]] | 
     return lambda intent, hits, limit: listwise_rank(intent, hits, limit, complete)
 
 
-def _find_one(
-    intent: str,
-    config: Config,
-    corpus: Corpus,
-    limit: int,
-    kind: str | None,
-    stack: str | None,
+def _dense_answer(
+    vector: list[float], corpus: Corpus, limit: int,
+    kind: str | None, stack: str | None,
+) -> list[Hit]:
+    """The answer when no second pass ordered it.
+
+    Deliberately not `candidates[:limit]`. The pool is built with
+    `per_skill=CANDIDATE_PER_SKILL` (4) to give the ranker breadth, while
+    `rank`'s own default is 2, so the pool's head is a different list — one
+    that can carry four parts of one skill where the dense answer carries two.
+    The 60/68 baseline in the README was measured with `rank(limit=n)` and its
+    default, and this is the call that reproduces it.
+    """
+    return rank(vector, corpus.parts, limit=limit, kind=kind, stack=stack)
+
+
+def _response(
+    intent: str, ranked_by: str, hits: list[Hit],
+    dense_score: dict[str, float], warning: str | None = None,
 ) -> dict[str, Any]:
-    """One need, searched and reordered. Raises EmbedError, RerankError or
-    LlmRerankError."""
-    vector = embed_query(config.embedder, intent, config.embedder_dim)
-    candidates = rank(
-        vector, corpus.parts,
-        limit=max(CANDIDATE_POOL, limit), per_skill=CANDIDATE_PER_SKILL,
-        kind=kind, stack=stack,
-    )
-    # Kept before the second pass reorders, because that pass may return the
-    # dense score unchanged (llm) or replace it with its own logit
-    # (cross-encoder), and the caller is owed the one that means something.
-    dense_score = {hit.part.ref: hit.score for hit in candidates}
-    ranker = second_pass(config)
-    hits = candidates[:limit] if ranker is None else ranker(intent, candidates, limit)
-    return {
+    answer: dict[str, Any] = {
         "intent": intent,
-        "ranked_by": "dense" if ranker is None else "llm",
+        "ranked_by": ranked_by,
         "results": [
             {
                 "ref": hit.part.ref,
@@ -119,15 +117,60 @@ def _find_one(
                 # Named, not followed. `get_lenses` on this ref returns these
                 # too; seeing them here is what makes that predictable.
                 "requires": list(hit.part.requires),
-                # Cosine against the query, NOT the ordering key — the second
-                # pass decided that. It will not descend down the list, and
-                # that is the point: six results all near 0.55 is a corpus
-                # with nothing to say, which an ordering alone always hides.
+                # Cosine against the query, NOT the ordering key when a second
+                # pass ran. It will not descend down the list, and that is the
+                # point: six results all near 0.55 is a corpus with nothing to
+                # say, which an ordering alone always hides.
                 "dense_score": round(dense_score[hit.part.ref], 4),
             }
             for hit in hits
         ],
     }
+    if warning is not None:
+        answer["warning"] = warning
+    return answer
+
+
+def _find_one(
+    intent: str,
+    config: Config,
+    corpus: Corpus,
+    limit: int,
+    kind: str | None,
+    stack: str | None,
+) -> dict[str, Any]:
+    """One need, searched and ordered. Raises EmbedError and nothing else.
+
+    A ranking failure is not an error here. The dense pool is computed and paid
+    for before the second pass runs, so erasing it to report that the ordering
+    was unavailable costs the caller everything to tell them about the
+    difference between 65/68 and 60/68. `ranked_by` says who answered and
+    `warning` says why it was not the other one.
+    """
+    vector = embed_query(config.embedder, intent, config.embedder_dim)
+    ranker = second_pass(config)
+    if ranker is None:
+        hits = _dense_answer(vector, corpus, limit, kind, stack)
+        return _response(intent, "dense", hits,
+                         {hit.part.ref: hit.score for hit in hits})
+
+    candidates = rank(
+        vector, corpus.parts,
+        limit=max(CANDIDATE_POOL, limit), per_skill=CANDIDATE_PER_SKILL,
+        kind=kind, stack=stack,
+    )
+    dense_score = {hit.part.ref: hit.score for hit in candidates}
+    try:
+        hits = ranker(intent, candidates, limit)
+    except LlmRerankError as exc:
+        fallback = _dense_answer(vector, corpus, limit, kind, stack)
+        return _response(
+            intent, "dense", fallback,
+            {hit.part.ref: hit.score for hit in fallback},
+            warning=f"the ranking pass was unavailable, so these are the dense "
+                    f"results: {exc}",
+        )
+    return _response(intent, "llm", hits, dense_score)
 
 
 @server.tool()
@@ -185,7 +228,7 @@ def find_lenses(
         return _find_one(intent, config, corpus, limit, kind, stack)
     except EmbedError as exc:
         return {"error": f"the embedding endpoint is unreachable or misconfigured: {exc}"}
-    except (RerankError, LlmRerankError) as exc:
+    except RerankError as exc:
         return {"error": f"the second ranking pass is unavailable: {exc}"}
 
 
@@ -220,7 +263,7 @@ def find_lenses_batch(
         return {"results": [_find_one(i, config, corpus, limit, kind, stack) for i in intents]}
     except EmbedError as exc:
         return {"error": f"the embedding endpoint is unreachable or misconfigured: {exc}"}
-    except (RerankError, LlmRerankError) as exc:
+    except RerankError as exc:
         return {"error": f"the second ranking pass is unavailable: {exc}"}
 
 

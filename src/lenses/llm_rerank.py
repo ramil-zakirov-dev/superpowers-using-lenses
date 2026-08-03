@@ -148,8 +148,15 @@ def listwise_rank(
     return [hits[index] for index in chosen[:top_n]]
 
 
-def completer_for(endpoint: Endpoint, timeout: float = 120.0) -> Completer:
-    """A Completer backed by an OpenAI-compatible /chat/completions endpoint."""
+def completer_for(endpoint: Endpoint, timeout: float = 5.0) -> Completer:
+    """A Completer backed by an OpenAI-compatible /chat/completions endpoint.
+
+    Five seconds is roughly twenty times the measured median for this call and
+    sits on every search. The previous 120 s made a hung endpoint cost the
+    caller two minutes before `_find_one` could fall back to the dense
+    ordering, which is the failure a slow response causes and a refused
+    connection does not.
+    """
 
     def complete(system: str, user: str) -> str:
         try:
